@@ -1,0 +1,165 @@
+/*!*TOP NAVBAR BEGAINING*!*/
+
+
+/** {box-sizing: border-box;}*/
+
+/*.header {*/
+    /*position: relative;*/
+    /*overflow: hidden;*/
+    /*background-color: #f1f1f1;*/
+    /*padding:  6px 6px 6px ;*/
+    /*height: 100px;*/
+/*}*/
+
+/*.header a {*/
+    /*float: left;*/
+    /*color: black;*/
+    /*text-align: center;*/
+    /*padding: 6px 6px 6px ;*/
+    /*text-decoration: none;*/
+    /*font-size: 18px;*/
+    /*line-height: 25px;*/
+    /*border-radius: 5px;*/
+/*}*/
+
+/*.header a.logo {*/
+
+    /*border:0;*/
+
+/*}*/
+
+/*.header a:hover {*/
+    /*background-color: #c4c4c4;*/
+    /*color: black;*/
+/*}*/
+
+/*.header a.active {*/
+    /*background-color: #1b92a8;*/
+    /*color: white;*/
+/*}*/
+
+/*.header-right {*/
+    /*float: right;*/
+/*}*/
+
+@media screen and (max-width: 500px) {
+    .header a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
+}
+
+
+
+/*SIDE NAVBAR BEGANING*/
+body {
+    /*font-family: "Lato", sans-serif;*/
+    color: #0c0a0f;
+}
+.sidenav h3{
+    padding-left: 16px;
+    font-weight: bold;
+    font-variant: small-caps;
+    color: whitesmoke;
+}
+
+
+.container{
+    position: fixed;
+    top: 100px;
+    right: 0;
+    bottom: 30px;
+    left: 220px;
+    /*background: url('http://www.wallpapers4u.org/wp-content/uploads/ocean_sand_beach_90883_1920x1080.jpg');*/
+    opacity: 0.6;
+}
+ /*Fixed sidenav, full height*/
+.sidenav {
+    height: 100%;
+    width: 220px;
+    position: fixed;
+    z-index: 1;
+    top: 100px;
+    left: 0;
+    background-color: #1b92a8;
+    overflow-x: hidden;
+    margin-bottom: 30px;
+    opacity: 0.6;
+
+}
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+    padding: 6px 6px 6px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #0c0a0f;
+    display: block;
+    border: none;
+    background: none;
+    /*width: 100%;*/
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+/* On mouse-over */
+ .dropdown-btn:hover {
+    color: white;
+     border-left: 6px  solid white;
+    text-decoration: none;
+}
+.sidenav a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* Main content */
+.main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+    font-size: 20px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+    background-color: #1b9eff;
+    color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+    display: none;
+    background-color: #b0d0ea;
+    padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/*Footer css*/
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #1b9eff;
+    color: white;
+    text-align: right;
+    margin-right: 20px;
+    opacity: 0.6;
+}
+
+
