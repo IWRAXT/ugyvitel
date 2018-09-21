@@ -1,4 +1,4 @@
-basc<?php
+<?php
 
 use Monolog\Handler\StreamHandler;
 

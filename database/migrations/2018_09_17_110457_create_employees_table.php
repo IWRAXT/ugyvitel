@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateEmployeesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
@@ -24,32 +20,16 @@ class CreateEmployeesTable extends Migration
             $table->integer('month_salary');
             $table->boolean('definite_employment');
             $table->date('recruitment_date');
+            $table->string('job');
             $table->string('comment');
 
             $table->timestamps();
 
             $table->integer('principal_id')->nullable();
-            $table->engine = 'InnoDB';
-
-//            $table->integer('user_id');
-//            $table->foreign('user_id')
-//                ->references('id')
-//                ->on('users');
-//
-//            $table->integer('user_email');
-//            $table->foreign('user_email')
-//                ->references('email')
-//                ->on('users');
+            $table->integer('user_id')->default(0);
         });
     }
 
-
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('employees');

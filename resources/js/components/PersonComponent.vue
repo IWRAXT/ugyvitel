@@ -8,7 +8,7 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th width="2%">#</th>
                             <th width="150">Image</th>
                             <th>Name</th>
                             <!--<th>Born</th>-->
@@ -25,7 +25,7 @@
                         <tbody>
                         <tr v-for="person in people">
                             <td>{{person.id}}</td>
-                            <td><img :src="'/images/'+person.image"></td>
+                            <td><img :src="'/images/Harangozó.jpg'"></td>
                             <td>{{ person.last_name }} {{ person.first_name }}</td>
                             <!--<td>{{ person.born }}</td>-->
                             <!--<td>{{ person.address }}</td>-->
@@ -87,18 +87,16 @@
             axios.get('/people')
                 .then(function (response){
                     // response => {
-                    let people = response.data;
+                    // let people = response.data;
                     // people.map(person => {
                     //     person.showModal = false
                     //     return person
                     // })
                     //  this.people = people
 
-                    // app.people=response.data;
+                    app.people=response.data;
 
-                    console.log(people);
-
-
+                    // console.log(people);
 
                 })
 

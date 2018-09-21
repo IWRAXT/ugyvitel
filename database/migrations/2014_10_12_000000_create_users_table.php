@@ -24,6 +24,9 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
 
+            $table->integer('permission_id')->default(2);
+
+
         });
     }
 

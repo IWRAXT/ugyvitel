@@ -47,7 +47,7 @@ class EmployeeController extends Controller
         $person->born = request('born');
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $person->image = $person->lastname.'.jpg';
+            $person->image = $person->last_name.'.jpg';
 
 //            $path=$request->file->store('images');
 //            $img = Image::make($path);
