@@ -5,36 +5,44 @@
 
                 <h1>Dolgozók listája</h1>
                 <div class="panel-body">
-                    <table class="table table-bordered table-striped">
+                    <table class="table-responsive table-bordered table-striped ">
                         <thead>
                         <tr>
                             <th width="2%">#</th>
                             <th width="150">Image</th>
                             <th>Name</th>
-                            <!--<th>Born</th>-->
-                            <!--<th>Address</th>-->
-                            <!--<th>Phone</th>-->
-                            <!--<th>Salary</th>-->
-                            <!--<th>Definite employment?</th>-->
-                            <!--<th>Recruitment date</th>-->
-                            <!--<th>Comment</th>-->
-                            <!--<th>Principal</th>-->
+                            <th>Born</th>
+                            <!--<th>E-mail</th>-->
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Salary</th>
+                            <th>Definite employment?</th>
+                            <th>Recruitment date</th>
+                            <th>Job</th>
+                            <th>Comment</th>
+                            <th>Principal</th>
+                            <th>userID</th>
+                            <!--<th>Permission name</th>-->
                             <th width="240"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="person in people">
                             <td>{{person.id}}</td>
-                            <td><img :src="'/images/Harangozó.jpg'"></td>
+                            <td><img :src="'/images/'+person.image"></td>
                             <td>{{ person.last_name }} {{ person.first_name }}</td>
-                            <!--<td>{{ person.born }}</td>-->
-                            <!--<td>{{ person.address }}</td>-->
-                            <!--<td>{{ person.phone_number }}</td>-->
-                            <!--<td>{{ person.month_salary }}</td>-->
-                            <!--<td>{{ person.definite_employment }}</td>-->
-                            <!--<td>{{ person.recruitment_date }}</td>-->
-                            <!--<td>{{ person.comment }}</td>-->
-                            <!--<td>{{ person.principal_id }}</td>-->
+                            <td>{{ person.born }}</td>
+                            <!--<td>{{person.email}}</td>-->
+                            <td>{{ person.address }}</td>
+                            <td>{{ person.phone_number }}</td>
+                            <td>{{ person.month_salary }}</td>
+                            <td>{{ person.definite_employment }}</td>
+                            <td>{{ person.recruitment_date }}</td>
+                            <td>{{person.job}}</td>
+                            <td>{{ person.comment }}</td>
+                            <td>{{ person.principal_id }}</td>
+                            <td>@{{person.user.name}}</td>
+                            <!--<td>{{person.user().permission()}}</td>-->
 
                             <td>
                                 <!--<button id="show-modal" @click="person.showModal = true"-->

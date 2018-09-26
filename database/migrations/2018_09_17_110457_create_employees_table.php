@@ -15,6 +15,7 @@ class CreateEmployeesTable extends Migration
             $table->string('first_name');
             $table->date('born');
             $table->string('image')->default('default.jpg');
+            $table->string('email');
             $table->string('address');
             $table->string('phone_number');
             $table->integer('month_salary');

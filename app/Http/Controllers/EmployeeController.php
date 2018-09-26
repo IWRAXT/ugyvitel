@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+//use Illuminate\Database\Eloquent\Collection;
 use App\Employee;
 use File;
 use Illuminate\Support\Facades\DB;
@@ -12,13 +14,15 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $people = Employee::all();
-        return view('people.index', compact('people'));
+        return view('people.index');
     }
+
 
     public function getPeople()
     {
-        return Employee::all();
+        $people= Employee::with('user')->get();
+
+        return $people;
     }
 
     public function getDirects($id)
@@ -47,7 +51,7 @@ class EmployeeController extends Controller
         $person->born = request('born');
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $person->image = $person->last_name.'.jpg';
+            $person->image = $person->email.'.jpg';
 
 //            $path=$request->file->store('images');
 //            $img = Image::make($path);
@@ -58,13 +62,16 @@ class EmployeeController extends Controller
 
             $file->move(public_path('images'), $person->image);
         }
+        $person->email=request('email');
         $person->address=request('address');
         $person->phone_number =request('phone_number');
         $person->month_salary =request('month_salary');
         $person->definite_employment =request('definite_employment');
         $person->recruitment_date =request('recruitment_date');
+        $person->job =request('job');
         $person->comment =request('comment');
         $person->principal_id = request('principal_id');
+        $person->user_id = request('user_id');
 
         $person->save();
         return redirect('/people/index')->with('success', 'Person Saved');
@@ -82,7 +89,8 @@ class EmployeeController extends Controller
             'file' => 'mimes:jpeg',
         ]);
         $person = Employee::find($id);
-        $person->name = request('name');
+        $person->last_name = request('last_name');
+        $person->first_name = request('first_name');
         if (DB::table('people')
                 ->where('email', request('email'))
                 ->exists()
@@ -106,6 +114,17 @@ class EmployeeController extends Controller
             File::delete($img_path);
             $person->image = 'default.jpg';
         }
+        $person->address=request('address');
+        $person->phone_number=request('phone_number');
+        $person->month_salary=request('month_salary');
+        $person->definite_employment=request('definite_employment');
+        $person->recruitment_date=request('recruitment_date');
+        $person->job=request('job');
+        $person->comment=request('comment');
+        $person->principal_id=request('principal_id');
+        $person->user_id=request('user_id');
+
+
         $person->save();
         return redirect('/people/index')->with('success', 'Dolgozó adatai frissítve');
     }

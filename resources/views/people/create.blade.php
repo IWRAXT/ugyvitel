@@ -1,4 +1,4 @@
-@extends ('layouts.master')
+@extends ('layouts.master2')
 
 @section ('content')
     <div class="col-lg-8">
@@ -23,6 +23,10 @@
                 <input type="file" class="form-control-file" id="file" name="file">
             </div>
             <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
                 <label for="address">Address</label>
                 <input type="text" class="form-control" id="address" name="address">
             </div>
@@ -43,12 +47,20 @@
                 <input type="date" class="form-control" id="recruitment_date" name="recruitment_date">
             </div>
             <div class="form-group">
+                <label for="job">Job</label>
+                <input type="text" class="form-control" id="job" name="job">
+            </div>
+            <div class="form-group">
                 <label for="comment">Comment</label>
                 <input type="text" class="form-control" id="comment" name="comment">
             </div>
             <div class="form-group">
                 <label for="principal_id">Principal</label>
                 <input type="number" class="form-control" id="principal_id" name="principal_id">
+            </div>
+            <div class="form-group">
+                <label for="user_id">Principal</label>
+                <input type="number" class="form-control" id="user_id" name="user_id">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Rögzít</button>

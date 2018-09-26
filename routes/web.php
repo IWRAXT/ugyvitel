@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/people/user', function () {
+    return view('people.user');
+});
+
 Auth::routes();
 
 

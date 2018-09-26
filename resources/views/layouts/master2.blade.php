@@ -151,8 +151,8 @@ desired effect
                          </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Új munkatárs rögzítése</a></li>
-                        <li><a href="#">Listázás</a></li>
+                        @can('isAdmin')<li><a href="people/create">Új munkatárs rögzítése</a></li>@endcan
+                        <li><a href="people/index">Listázás</a></li>
                         <li><a href="#">Szerkesztő/Törlő</a></li>
                         <li><a href="#">Kimutatások</a></li>
 
@@ -172,7 +172,7 @@ desired effect
 
                     </ul>
                 </li>
-                <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Saját fiók kezelése</span></a></li>
+                <li class="active"><a href="people/user"><i class="fa fa-link"></i> <span>Saját fiók kezelése</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -183,16 +183,7 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                Page Header
-                <small>Optional description</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
-            </ol>
-        </section>
+
 
         <!-- Main content -->
         <section class="content container-fluid">
@@ -210,7 +201,7 @@ desired effect
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            Anything you want
+            <p><?php echo(Date("Y-m-d")) ?></p>
         </div>
         <!-- Default to the left -->
         <strong>Copyright &copy; 2018 <a href="#">Anonymus Kft</a>.</strong> All rights reserved.

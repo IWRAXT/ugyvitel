@@ -1,7 +1,6 @@
-@extends ('layouts.master')
+@extends ('layouts.master2')
 
 @section ('content')
-    {{ Auth::user()->name }}
-    {{ Auth::user()->name }}
+   <p>User</p>
 
 @endsection

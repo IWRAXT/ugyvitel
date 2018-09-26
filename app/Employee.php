@@ -21,9 +21,9 @@ class Employee extends Model
     ];
 
 
-    public function subalterns(){
-        return $this->hasMany(Employee::class, 'principal_id','id');
-    }
+//    public function subalterns(){
+//        return $this->hasMany(Employee::class, 'principal_id','id');
+//    }
 
     public function user(){
         return $this->belongsTo(User::class);
