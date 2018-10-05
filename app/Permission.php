@@ -10,4 +10,8 @@ class Permission extends Model
         'id', 'name', 'sites',
     ];
 
+
+//    public function permission(){
+//        return $this->hasOne(User::class);
+//    }
 }

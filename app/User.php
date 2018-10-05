@@ -12,7 +12,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'image','permission_id'
+        'name', 'email', 'password', 'image','permission_id', 'employee_id'
     ];
 
 
@@ -22,5 +22,8 @@ class User extends Authenticatable
 
     public function permission(){
         return $this->belongsTo(Permission::class);
+    }
+    public function employee(){
+        return $this->hasOne(Employee::class);
     }
 }

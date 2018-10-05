@@ -17,7 +17,7 @@ class CreatePermissionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->boolean('sites'); //1: Csak a sajátját láthtja 0: Összes telephelyet láthatja
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
 

@@ -6,35 +6,24 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name'); //empployee névből lehetne
+            $table->string('email')->unique(); //eployees email is lehetne
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('image')->default('default.jpg');
             $table->rememberToken();
             $table->timestamps();
 
-
-            $table->integer('permission_id')->default(2);
-
-
+            $table->integer('permission_id')->nullable();
+            $table->integer('employee_id')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('users');

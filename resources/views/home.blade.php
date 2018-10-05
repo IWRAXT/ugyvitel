@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-9">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header"><b>{{ Auth::user()->name }} </b>({{ Auth::user()->permission->name }}) <br> Home page</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                        <img src="/images/{{ Auth::user()->employee->image }}" style="" alt="User Image">
                 </div>
             </div>
         </div>

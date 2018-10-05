@@ -17,9 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/people/user', function () {
-    return view('people.user');
-});
+
 
 Auth::routes();
 
@@ -28,17 +26,24 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-
+//Employee table
 Route::get('/people', 'EmployeeController@getPeople');
 Route::get('/getDirects/{id}','EmployeeController@getDirects');
-
-
 Route::get('/people/index','EmployeeController@index');
-
-
 Route::post('/people','EmployeeController@store');
 Route::get('/people/create','EmployeeController@create');
-
 Route::get('/people/{id}/edit','EmployeeController@edit');
 Route::post('/people/{id}/update','EmployeeController@update');
 Route::post('/people/{id}','EmployeeController@destroy');
+Route::post('/userid/{id}','EmployeeController@user_id');
+
+
+//User table
+Route::post('/user','UserController@store');
+
+
+
+//permission table
+Route::get('/permission', 'PermissionController@getPermission');
+
+//RouteGroupe  /people csoportok

@@ -17,7 +17,10 @@ class Employee extends Model
         'definite_employment',
         'recruitment_date',
         'comment',
-        'principal_id'
+        'principal_id',
+        'user_id',
+        'user',
+//        'site_id'
     ];
 
 
@@ -28,6 +31,12 @@ class Employee extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+
+
+//    public function site(){
+//        return $this->belongsTo(Site::class);
+//    }
 
 
 //    public function printSubalterns()

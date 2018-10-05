@@ -21,6 +21,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "admin-lte": "^2.4.8"
+        "admin-lte": "^2.4.8",
+        "bootstrap-vue": "^2.0.0-rc.11"
     }
 }
