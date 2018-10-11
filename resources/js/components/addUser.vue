@@ -20,6 +20,7 @@
                    required  placeholder="****"/>
         </div>
 
+
     <button class="btn btn-primary" @click.prevent="createUser()" >
         <span class="glyphicon glyphicon-plus"></span> ADD
     </button>
@@ -46,7 +47,8 @@
                     'name':  this.last_name+' '+this.first_name,
                     'email': this.email,
                     'password':'',
-                    'permission':'',
+                    'permission':''
+                    // 'employee_id' : this.employee_id
                 }
             }
         },
@@ -69,27 +71,24 @@
                     let input = this.newUser;
                     let id = this.id;
 
+
                     // if (input['permission'] === '' || input['site'] === ''|| input['password'] === '' ) {
                     //     this.hasError = true;
                     // } else {
                     //     this.hasError = false;
-                    console.log("user name: "+input.name);
-                    console.log("user email: "+input.email);
-                    console.log("user pass: "+input.password);
-                    console.log("user permission: "+input.permission);
 
+                    console.log("Eljut");
                     axios.post('/user', input).then(function (response) {
-                        var userid = response.data.id;
-                        console.log('User sorszáma: '+response.data.id);
-                        console.log('employee id: '+id);
-                        axios.post('/userid/' + id, {userID: userid}).then(function (response) {
+                            var userid = response.data.id;
+                            console.log('User sorszáma: '+response.data.id);
+                            console.log('employee id: '+id);
+                            axios.post('/userid/' + id, {userID: userid}).then(function (response) {
 
                                 console.log("Sikerült hozzáadni a UserId-t!!!");
                             }
                         ).catch(function (error) {
                                 alert("Nem sikerült a userId-t hozzáadni !");
                                 console.log(error);
-
                             }
                         );
                         }

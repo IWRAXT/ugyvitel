@@ -2,31 +2,35 @@
 
 
     <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-wrapper">
+            <div class="modal-container">
 
-          <div class="modal-header">
-            <slot name="header">
-              default header
-            </slot>
-          </div>
+                <div class="modal-header">
 
-          <div class="modal-body">
-            <slot name="body">
-              default body
-            </slot>
-          </div>
+                    <slot name="header">
 
-          <div class="modal-footer">
-            <slot name="footer">
-              <!--default footer-->
-              <button class="edit-modal btn btn-outline-secondary" @click="$emit('close')">
-                OK
-              </button>
-            </slot>
-          </div>
+                        default header
+                    </slot>
+                    <button class="edit-modal btn btn-outline-secondary" @click="$emit('close') ">
+                        x
+                    </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <slot name="body">
+                        default body
+                    </slot>
+                </div>
+
+                <div class="modal-footer">
+                    <slot name="footer">
+                        <!--default footer-->
+
+                    </slot>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
 
@@ -54,10 +58,16 @@
     .modal-wrapper {
         display: table-cell;
         vertical-align: middle;
+        overflow: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 
     .modal-container {
-        width: 300px;
+        width: 600px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
@@ -70,11 +80,19 @@
     .modal-header h3 {
         margin-top: 0;
         color: #8a8b84;
+
+
+    }
+    .modal-header button{
+
+        float:right;
     }
 
     .modal-body {
         margin: 20px 0;
     }
+
+
 
     .modal-default-button {
         float: right;

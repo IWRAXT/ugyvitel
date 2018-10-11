@@ -1,10 +1,9 @@
 @extends ('layouts.master2')
 
 @section ('content')
-
     <div id="app" >
-        <employee></employee>
+        <permission></permission>
     </div>
-    @include ('layouts.errors')
+
 
 @endsection

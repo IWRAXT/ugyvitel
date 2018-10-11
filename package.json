@@ -22,6 +22,8 @@
     },
     "dependencies": {
         "admin-lte": "^2.4.8",
-        "bootstrap-vue": "^2.0.0-rc.11"
+        "bootstrap-sass": "^3.3.7",
+        "bootstrap-vue": "^2.0.0-rc.11",
+        "npm": "^6.4.1"
     }
 }

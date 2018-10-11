@@ -19,38 +19,42 @@ class Employee extends Model
         'comment',
         'principal_id',
         'user_id',
-        'user',
-//        'site_id'
+        'site_id',
+
     ];
 
 
-//    public function subalterns(){
-//        return $this->hasMany(Employee::class, 'principal_id','id');
-//    }
+    public function subalterns(){
+        return $this->hasMany(Employee::class, 'principal_id','id');
+    }
 
     public function user(){
         return $this->belongsTo(User::class);
     }
 
+    public function principal(){
+        return $this->belongsTo(Employee::class, 'principal_id');
+    }
 
 
-//    public function site(){
-//        return $this->belongsTo(Site::class);
-//    }
+
+    public function site(){
+        return $this->belongsTo(Site::class);
+    }
 
 
-//    public function printSubalterns()
-//    {
-//        $subalterns = $this->subalterns;users
-//        $result = [];
-//
-//        for ($i = 0, $iMax = count($subalterns); $i < $iMax; $i++) {
+    public function printSubalterns()
+    {
+        $subalterns = $this->subalterns;
+        $result = [];
+
+        for ($i = 0, $iMax = count($subalterns); $i < $iMax; $i++) {
 //            /** @var Person $beosztott */
-//            $beosztott = $subalterns[$i];
-//
-//            $result[$beosztott->name] = $beosztott->printSubalterns();
-//        }
-//
-//        return $result;
-//    }
+            $beosztott = $subalterns[$i];
+
+            $result[$beosztott->last_name] = $beosztott->printSubalterns();
+        }
+
+        return $result;
+    }
 }

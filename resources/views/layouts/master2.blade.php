@@ -66,14 +66,14 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                        <img src="/images/{{ Auth::user()->employee->image }}" class="user-image" alt="User Image">
+                        <img src="/storage/images/{{ Auth::user()->employee->image }}" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="/images/{{ Auth::user()->employee->image }}" class="img-circle" alt="User Image">
+                                <img src="/storage/images/{{ Auth::user()->employee->image }}" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{ Auth::user()->name }}
@@ -116,7 +116,8 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel" style="padding-bottom: 50px">
                 <div class="pull-left image">
-                    <img src="/images/{{ Auth::user()->employee->image }}" style="" alt="User Image">
+                    <img src="/storage/images/{{ Auth::user()->employee->image }}" style="border-radius: 50%; width: 40px;
+        height: 40px;" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->name }}</p>
@@ -140,28 +141,28 @@ desired effect
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">DOLGOZÓK KEZELÉSE MÓD</li>
+                <li class="header"><b>DOLGOZÓK KEZELÉSE MÓD</b></li>
                 <!-- Optionally, you can add icons to the links -->
 
 
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Munkatársak</span>
+                    <a href="#"><i class="fa fa-users"></i> <span>Munkatársak</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
 
                          </span>
                     </a>
                     <ul class="treeview-menu">
-                        @can('isAdmin')<li><a href="people/create">Új munkatárs rögzítése</a></li>@endcan
-                        @can('isAdmin')<li><a href="permission/create">Új jogosultság rögzítése</a></li>@endcan
-                        <li><a href="people/index">Listázás</a></li>
+                        @can('isAdmin')<li><a href="/people/create">Új munkatárs rögzítése</a></li>@endcan
+                        @can('isAdmin')<li><a href="/permission/create">Jogosultság kezelés</a></li>@endcan
+                        <li><a href="/people/index">Listázás</a></li>
                         <li><a href="#">Szerkesztő/Törlő</a></li>
                         <li><a href="#">Kimutatások</a></li>
 
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Telephely</span>
+                    <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
 
@@ -174,7 +175,7 @@ desired effect
 
                     </ul>
                 </li>
-                <li class="active"><a href="/home"><i class="fa fa-link"></i> <span>Saját fiók kezelése</span></a></li>
+                <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -223,7 +224,7 @@ desired effect
                 <h3 class="control-sidebar-heading">Recent Activity</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript:;">
+                        <a href="javascript:">
                             <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
                             <div class="menu-info">

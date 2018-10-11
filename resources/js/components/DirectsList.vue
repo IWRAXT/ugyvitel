@@ -1,9 +1,9 @@
 <template>
     <div>
         <p v-if="directs!=0">
-            <directs :name="name" :directs="directs"></directs>
+            <directs :last_name="last_name" :directs="directs"></directs>
         </p>
-        <h5 v-else>Nincs beosztottja!</h5>
+        <p v-else>Nincs beosztottja!</p>
     </div>
 </template>
 
@@ -12,7 +12,7 @@
         name: "DirectsList",
         props: {
             id: Number,
-            name: String,
+            last_name: String,
         },
         data() {
             return {

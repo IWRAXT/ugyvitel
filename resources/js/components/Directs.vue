@@ -1,9 +1,9 @@
 <template>
     <div>
-        <p>{{ name }}</p>
+        <p>{{ last_name }}</p>
         <ul>
             <li v-for="(value, index) in directs">
-                <directs :name="index" :directs="value"></directs>
+                <directs :last_name="index" :directs="value"></directs>
             </li>
         </ul>
     </div>
@@ -14,7 +14,7 @@
     export default {
         name: "Directs",
         props: {
-            name: String,
+            last_name: String,
             directs: Object
         }
     }

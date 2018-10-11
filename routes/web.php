@@ -32,7 +32,7 @@ Route::get('/getDirects/{id}','EmployeeController@getDirects');
 Route::get('/people/index','EmployeeController@index');
 Route::post('/people','EmployeeController@store');
 Route::get('/people/create','EmployeeController@create');
-Route::get('/people/{id}/edit','EmployeeController@edit');
+Route::get('/people/{id}/edit','EmployeeController@edit');              //ezt kell
 Route::post('/people/{id}/update','EmployeeController@update');
 Route::post('/people/{id}','EmployeeController@destroy');
 Route::post('/userid/{id}','EmployeeController@user_id');
@@ -45,5 +45,7 @@ Route::post('/user','UserController@store');
 
 //permission table
 Route::get('/permission', 'PermissionController@getPermission');
+Route::get('/permission/create', 'PermissionController@create');
+
 
 //RouteGroupe  /people csoportok

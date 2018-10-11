@@ -24,6 +24,6 @@ class User extends Authenticatable
         return $this->belongsTo(Permission::class);
     }
     public function employee(){
-        return $this->hasOne(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 }
