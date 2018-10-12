@@ -20,7 +20,7 @@ class EmployeeController extends Controller
 
     public function getPeople()
     {
-        $people = Employee::with('user', 'user.permission')->get();
+        $people = Employee::with('user', 'user.permission', 'principal')->get();
         return $people;
     }
 

@@ -20,7 +20,6 @@ class Employee extends Model
         'principal_id',
         'user_id',
         'site_id',
-
     ];
 
 
@@ -33,15 +32,12 @@ class Employee extends Model
     }
 
     public function principal(){
-        return $this->belongsTo(Employee::class, 'principal_id');
+        return $this->belongsTo(Employee::class, 'principal_id', 'id');
     }
-
-
 
     public function site(){
         return $this->belongsTo(Site::class);
     }
-
 
     public function printSubalterns()
     {

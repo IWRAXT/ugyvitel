@@ -8,7 +8,6 @@
                 <div class="modal-header">
 
                     <slot name="header">
-
                         default header
                     </slot>
                     <button class="edit-modal btn btn-outline-secondary" @click="$emit('close') ">
@@ -26,7 +25,6 @@
                 <div class="modal-footer">
                     <slot name="footer">
                         <!--default footer-->
-
                     </slot>
                 </div>
             </div>

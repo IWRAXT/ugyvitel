@@ -1,8 +1,19 @@
+//Egy packed regisztálása először, require('packed név')el történik.
+//Utána import  és a Vue.use rész szükséges!!
+
+
+require('vuetable-2');
+
+
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
+import Vuetable from 'vue-tables-2';
 
 
 Vue.use(BootstrapVue);
+// Vue.use(Vuetable);
+Vue.use(Vuetable.ClientTable);
+
 
 
 window._ = require('lodash');
@@ -16,7 +27,6 @@ window.Popper = require('popper.js').default;
 
 try {
     window.$ = window.jQuery = require('jquery');
-
     require('bootstrap');
 } catch (e) {}
 
@@ -31,8 +41,8 @@ window.axios = require('axios');
 window.Vue=Vue;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 require('admin-lte');
+
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

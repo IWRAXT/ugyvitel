@@ -15,9 +15,11 @@ class CreateSitesTable extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('image')->default('default-site.jpg');
             $table->string('name');
             $table->string('address');
             $table->string('leader');
+            $table->integer('employee_id')->nullable();
             $table->timestamps();
         });
     }
