@@ -12,8 +12,5 @@ class PermissionController extends Controller
 //        return redirect('/permission')->with(Permission::all());
         return Permission::all();
     }
-    public function create()
-    {
-        return view('people.createPermission');
-    }
+
 }

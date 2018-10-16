@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -10,6 +9,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
     {{--<link rel="stylesheet" href="/node_modules/admin-lte/dist/css/AdminLTE.min.css">--}}
 
 
@@ -38,9 +40,9 @@ desired effect
 <div class="wrapper" id="app">
 
 
-        <!-- Main Header -->
+    <!-- Main Header -->
 
-    <header class="main-header" >
+    <header class="main-header">
 
         <!-- Logo -->
         <a href="/home" class="logo" style="padding-bottom: 70px">
@@ -66,18 +68,20 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                        <img src="/storage/images/{{ Auth::user()->employee->image }}" class="user-image" alt="User Image">
+                            <img src="/storage/images/{{ Auth::user()->employee->image }}" class="user-image"
+                                 alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="/storage/images/{{ Auth::user()->employee->image }}" class="img-circle" alt="User Image">
+                                <img src="/storage/images/{{ Auth::user()->employee->image }}" class="img-circle"
+                                     alt="User Image">
 
                                 <p>
                                     {{ Auth::user()->name }}
-{{--                                    {{ Auth::user()->permission() }}--}}
+                                    {{--                                    {{ Auth::user()->permission() }}--}}
 
                                 </p>
                             </li>
@@ -92,7 +96,8 @@ desired effect
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -108,36 +113,23 @@ desired effect
     <!-- Left side column. contains the logo and sidebar -->
 
 
-        <aside class="main-sidebar" style="padding-top: 70px">
+    <aside class="main-sidebar" style="padding-top: 70px">
 
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
 
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel" style="padding-bottom: 50px">
-                <div class="pull-left image">
-                    <img src="/storage/images/{{ Auth::user()->employee->image }}" style="border-radius: 50%; width: 40px;
-        height: 40px;" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>{{ Auth::user()->name }}</p>
-
-                    <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> {{ Auth::user()->permission->name }} Online</a>
-                </div>
-            </div>
 
             <!-- search form (Optional) -->
-            {{--<form action="#" method="get" class="sidebar-form">--}}
-                {{--<div class="input-group">--}}
-                    {{--<input type="text" name="q" class="form-control" placeholder="Search...">--}}
-                    {{--<span class="input-group-btn">--}}
-              {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>--}}
-              {{--</button>--}}
-            {{--</span>--}}
-                {{--</div>--}}
-            {{--</form>--}}
-            <!-- /.search form -->
+        {{--<form action="#" method="get" class="sidebar-form">--}}
+        {{--<div class="input-group">--}}
+        {{--<input type="text" name="q" class="form-control" placeholder="Search...">--}}
+        {{--<span class="input-group-btn">--}}
+        {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>--}}
+        {{--</button>--}}
+        {{--</span>--}}
+        {{--</div>--}}
+        {{--</form>--}}
+        <!-- /.search form -->
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
@@ -153,14 +145,19 @@ desired effect
                          </span>
                     </a>
                     <ul class="treeview-menu">
-                        @can('isAdmin')<li><a href="/people/create">Új munkatárs rögzítése</a></li>@endcan
-                        @can('isAdmin')<li><a href="/permission/create">Jogosultság kezelés</a></li>@endcan
+
                         <li><a href="/people/index">Listázás</a></li>
-                        <li><a href="#">Szerkesztő/Törlő</a></li>
-                        <li><a href="#">Kimutatások</a></li>
+                        <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                        <li><a href="/people/index">Szerkesztő/Törlő</a></li>
+                        {{--<li><a href="#">Kimutatások</a></li>--}}
+                        @can('isAdmin')
+                            <li><a href="/people/create">Új munkatárs rögzítése</a></li>@endcan
+                        @can('isAdmin')
+                            <li><a href="/indexUsers">Jogosultság kezelés</a></li>@endcan
 
                     </ul>
                 </li>
+
                 <li class="treeview">
                     <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
                         <span class="pull-right-container">
@@ -169,14 +166,30 @@ desired effect
                          </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Saját telephely</a></li>
-                        <li><a href="#">Összes telephely</a></li>
+                        <li><a href="/mysite">Saját telephely</a></li>
+                        <li><a href="/sites/index">Összes telephely</a></li>
+                        @can('isAdmin')
+                            <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
 
                     </ul>
                 </li>
                 <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a></li>
             </ul>
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel" style="padding-bottom: 50px">
+                <div class="pull-left image">
+                    <img src="/storage/images/{{ Auth::user()->employee->image }}"
+                         style="border-radius: 50%; width: 40px; height: 40px;" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>{{ Auth::user()->name }}</p>
+
+                    <!-- Status -->
+                    <a href="#"><i class="fa fa-circle text-success"></i> {{ Auth::user()->permission->name }}
+                        Online</a>
+                </div>
+            </div>
             <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -291,6 +304,10 @@ desired effect
 
 </body>
 <script src="{{asset('js/app.js')}}"></script>
+//datarange
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 
 

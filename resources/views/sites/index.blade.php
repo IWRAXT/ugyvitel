@@ -2,8 +2,6 @@
 
 @section ('content')
     <div id="app" >
-        <permission></permission>
+        <sites></sites>
     </div>
-
-
 @endsection

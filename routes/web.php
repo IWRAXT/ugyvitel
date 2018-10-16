@@ -26,26 +26,36 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-//Employee table
+//Employees table
 Route::get('/people', 'EmployeeController@getPeople');
 Route::get('/getDirects/{id}','EmployeeController@getDirects');
 Route::get('/people/index','EmployeeController@index');
 Route::post('/people','EmployeeController@store');
 Route::get('/people/create','EmployeeController@create');
-Route::get('/people/{id}/edit','EmployeeController@edit');              //ezt kell
+Route::get('/people/{id}/edit','EmployeeController@edit');
 Route::post('/people/{id}/update','EmployeeController@update');
 Route::post('/people/{id}','EmployeeController@destroy');
 Route::post('/userid/{id}','EmployeeController@user_id');
 
 
-//User table
+//Users table
+Route::get('/people/edit_mount','EmployeeController@edit_mount'); //Auth User
+Route::post('people/editUser','UserController@update');
 Route::post('/user','UserController@store');
+Route::get('/users', 'UserController@getUsers');
+Route::get('/indexUsers', 'UserController@index');
 
 
-
-//permission table
+//permissions table
 Route::get('/permission', 'PermissionController@getPermission');
-Route::get('/permission/create', 'PermissionController@create');
+
+//Sites table
+Route::get('/sites/index','SiteController@index');
+Route::get('/sites', 'SiteController@getSites');
+Route::post('/sites','SiteController@store');
+Route::get('/sites/create','SiteController@create');
+Route::get('/mysite','SiteController@mysite');
+
 
 
 //RouteGroupe  /people csoportok

@@ -44,7 +44,7 @@
                     </div>
                     <div class="checkbox">
                         <label for="definite_employment">Definite employment</label>
-                        <input type="checkbox" id="definite_employment" name="definite_employment" value="true" :value="definite_employment">
+                        <input type="checkbox" id="definite_employment" name="definite_employment"  :value="definite_employment">
                     </div>
                     <div class="form-group">
                         <label for="recruitment_date">Recruitment date</label>
@@ -64,7 +64,18 @@
 
                             <option disabled value="">{{principal_id}}</option>
                             <option v-for="p in people" :value="p.id">
-                                {{p.last_name}} {{p.last_name}}
+                                {{p.last_name}} {{p.first_name}}
+                            </option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site_id">Telephely</label>
+                        <select title="Telephely" id="site_id" name="site_id">
+
+                            <option disabled value="">Please select one</option>
+                            <option v-for="p in people" :value="p.site_id">
+                                {{p.site.name}}
                             </option>
 
                         </select>

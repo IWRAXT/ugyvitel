@@ -10,8 +10,9 @@ import BootstrapVue from 'bootstrap-vue';
 import Vuetable from 'vue-tables-2';
 
 
+
 Vue.use(BootstrapVue);
-// Vue.use(Vuetable);
+Vue.use(Vuetable);
 Vue.use(Vuetable.ClientTable);
 
 

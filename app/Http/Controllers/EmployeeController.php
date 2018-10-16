@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\User;
 use File;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -20,7 +21,7 @@ class EmployeeController extends Controller
 
     public function getPeople()
     {
-        $people = Employee::with('user', 'user.permission', 'principal')->get();
+        $people = Employee::with('user', 'user.permission', 'principal', 'site')->get();
         return $people;
     }
 
@@ -67,6 +68,8 @@ class EmployeeController extends Controller
             $img = Image::make($decode);
             $img->save(storage_path('app/public/images/' . $person->image));
             //Todo: A képet 500x500s formátumba mentse méretarány megtartásával
+        }else{
+            $person->image ='default.jpg';
         }
         $person->born = request('born');
         $person->address = request('address');
@@ -77,6 +80,7 @@ class EmployeeController extends Controller
         $person->job = request('job');
         $person->comment = request('comment');
         $person->principal_id = request('principal_id');
+        $person->site_id = request('site_id');
         $person->save();
         return $person;
     }
@@ -86,11 +90,13 @@ class EmployeeController extends Controller
         $person = Employee::with('user', 'user.permission')->find($id);
         return view('people.edit', compact('person'));
     }
-//    public function edit_mount($id)
-//    {
-//        $person = Employee::with('user', 'user.permission')->find($id);
-//        return view('people.edit', compact('person'));
-//    }
+    public function edit_mount() //Auth User
+    {
+        $id=Auth::user()->employee_id;
+        $person = Employee::with('user', 'user.permission')->find($id);
+        return $person;
+
+    }
 
     public function update(Request $request, $id)
     {
@@ -144,6 +150,7 @@ class EmployeeController extends Controller
         $person->job = request('job');
         $person->comment = request('comment');
         $person->principal_id = request('principal_id');
+        $person->site_id = request('site_id');
 
         $person->save();
         return $person;
