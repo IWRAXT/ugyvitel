@@ -21,31 +21,17 @@
                                     Edit
                                 </button>
 
-                                <!--<modal v-if="props.row.showModal_edit"-->
-                                       <!--@close=" props.row.showModal_edit = false; init()">-->
+                                <modal v-if="props.row.showModal_edit"
+                                       @close=" props.row.showModal_edit = false; init()">
 
-                                    <!--<h3 slot="header">Edit <b>{{ props.row.last_name }} {{props.row.first_name }} </b>-->
-                                    <!--</h3>-->
-                                    <!--<p slot="body">-->
-                                        <!--<edit_employee :id="props.row.id"-->
-                                                       <!--:image="props.row.image"-->
-                                                       <!--:last_name="props.row.last_name"-->
-                                                       <!--:first_name="props.row.first_name"-->
-                                                       <!--:born="props.row.born"-->
-                                                       <!--:email="props.row.email"-->
-                                                       <!--:address="props.row.address"-->
-                                                       <!--:phone_number="props.row.phone_number"-->
-                                                       <!--:month_salary="props.row.month_salary"-->
-                                                       <!--:definite_employment="props.row.definite_employment"-->
-                                                       <!--:recruitment_date="props.row.recruitment_date"-->
-                                                       <!--:job="props.row.job"-->
-                                                       <!--:comment="props.row.comment"-->
-                                                       <!--:principal="props.row.principal_id"-->
-                                        <!--&gt;</edit_employee>-->
+                                    <h3 slot="header">Edit <b>{{ props.row.name }} </b>
+                                    </h3>
+                                    <p slot="body">
+                                        <edit_site :id="props.row.id"></edit_site>
 
-                                    <!--</p>-->
+                                    </p>
 
-                                <!--</modal>-->
+                                </modal>
 
                                 <!--Directs - Át kell írni lastname firstname-re-->
                                 <button @click="props.row.showModal_employees = true"

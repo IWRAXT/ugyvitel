@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="card">
             <div class="card-header">
                 <b> {{person.last_name }} {{person.first_name }} </b>{{ person.job }}
@@ -13,10 +12,7 @@
                 <h5>User adatlap: </h5>
                 <img :src="'/storage/images/'+person.image" style="min-width: 120px " alt="User Image">
                 <table class=" table table-striped">
-
-
                     <tbody>
-
                     <tr>
                         <td><span><i class="fa fa-address-book"></i> Email:</span></td>
                         <td>{{person.email }}</td>
@@ -71,7 +67,7 @@
 
         </div>
 
-        <div v-show="edit" class="row justify-content-center">
+        <div v-if="edit" class="row justify-content-center">
             <div class="col-lg-9">
 
                 <form id="editForm" name="editForm" enctype="multipart/form-data">
@@ -97,7 +93,7 @@
                     </div>
 
 
-                    <div class="btn btn-primary" @click.prevent="updateEmployee()">
+                    <div class="btn btn-primary" @click.prevent="updateEmployee(); edit=false">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
 
@@ -131,8 +127,8 @@
 
             return {
                 url: '',
-                image:'',
-                person: [],
+                image: '',
+                person: {},
                 delete: false, //kép törlése
                 edit: false,
                 id: '',
@@ -144,8 +140,8 @@
                 .then(response => {
                     this.person = response.data;
                     console.log(response.data);
-                    // this.image=this.person.image;
-                    this.url = "/storage/images/"+this.person.image;
+                    this.image=this.person.image;
+                    this.url = "/storage/images/" + this.person.image;
                 })
                 .catch(function (error) {
                     alert("Hiba történt a user adatok betöltése során!");
@@ -190,9 +186,14 @@
                 axios.post('/people/' + this.person.id + '/update', formData,
 
                     {headers: {'Content-Type': 'multipart/form-data'}}
-                ).then(response => this.person = response.data
+                ).then(function (response) {
+                        //TODO: myuser adatok frissítése nem automatikus, kell az oldal újratöltés
+                        // this.person=response.data.person;
+                        showNotification(response.data.notification, response.data.notificationType);
+                    }
                 ).catch(function (error) {
                         alert("User adatok frissítése sikertelen!!");
+                        showNotification('User adatok frissítése sikertelen!!', 'alert-error');
                         console.log(error);
                     }
                 );

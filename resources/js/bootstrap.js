@@ -15,7 +15,11 @@ Vue.use(BootstrapVue);
 Vue.use(Vuetable);
 Vue.use(Vuetable.ClientTable);
 
+window.showNotification = function(message, type = 'alert-primary') {
+    window.events.$emit('showNotification', message, type);
+};
 
+window.events = new Vue();
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;

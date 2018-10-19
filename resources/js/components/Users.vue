@@ -9,11 +9,15 @@
                 <div id="users">
                     <v-client-table :data="users" :columns="columns" :options="options">
                         <!--<template slot="employee.image" slot-scope="props">-->
-                            <!--<div><img :src="'/storage/images/'+props.row.image">-->
-                            <!--</div>-->
+                        <!--<div><img :src="'/storage/images/'+props.row.image">-->
+                        <!--</div>-->
                         <!--</template>-->
                         <template slot="permission_id" slot-scope="props">
                             {{props.row.permission.name}}
+                        </template>
+                        <template slot="permission.sites" slot-scope="props">
+                            <span v-if="props.row.permission.sites=='1'" >Listázhatja a telephelyeket</span>
+                            <span v-else>Csak a saját telephelyét</span>
                         </template>
                         <template slot="buttons" slot-scope="props">
                             <div class="table-button-container">
@@ -23,31 +27,17 @@
                                     Edit
                                 </button>
 
-                                <!--<modal v-if="props.row.showModal_edit"-->
-                                <!--@close=" props.row.showModal_edit = false; init()">-->
+                                <modal v-if="props.row.showModal_edit"
+                                @close=" props.row.showModal_edit = false; init()">
 
-                                <!--<h3 slot="header">Edit <b>{{ props.row.last_name }} {{props.row.first_name }} </b>-->
-                                <!--</h3>-->
-                                <!--<p slot="body">-->
-                                <!--<edit_employee :id="props.row.id"-->
-                                <!--:image="props.row.image"-->
-                                <!--:last_name="props.row.last_name"-->
-                                <!--:first_name="props.row.first_name"-->
-                                <!--:born="props.row.born"-->
-                                <!--:email="props.row.email"-->
-                                <!--:address="props.row.address"-->
-                                <!--:phone_number="props.row.phone_number"-->
-                                <!--:month_salary="props.row.month_salary"-->
-                                <!--:definite_employment="props.row.definite_employment"-->
-                                <!--:recruitment_date="props.row.recruitment_date"-->
-                                <!--:job="props.row.job"-->
-                                <!--:comment="props.row.comment"-->
-                                <!--:principal="props.row.principal_id"-->
-                                <!--&gt;</edit_employee>-->
+                                <h3 slot="header">Edit <b> {{props.row.name }} </b>
+                                </h3>
+                                <p slot="body">
+                                <edit_user :id="props.row.id"></edit_user>
 
-                                <!--</p>-->
+                                </p>
 
-                                <!--</modal>-->
+                                </modal>
 
                                 <!--Delete-->
                                 <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteUser(props.row)">
@@ -73,14 +63,20 @@
             return {
                 users: [],
                 hasError: true,
-                columns: ['id','name', 'email', 'password', 'permission_id', 'buttons'],
+
+                columns: ['id', 'name', 'email', 'permission_id', 'permission.sites', 'buttons'],
 
                 options: {
                     filterByColumn: true,
+                    filterable: ['name', 'email','permission_id'],
+                    columnsDropdown: true,
+                    clientMultiSorting: true,
+                    columnsDisplay: {},
                     headings: {
                         name: 'Name',
                         id: '#',
-                        permission_id: 'Permission'
+                        permission_id: 'Permission',
+                        'permission.sites': 'Permission to site handle'
                     },
                 },
 
@@ -120,14 +116,19 @@
 
             deleteUser: function (user) {
 
-                let conf = confirm("Tényleg törli a telephelyet?");
+                let conf = confirm("Tényleg törli a usert?");
                 if (conf === true) {
 
                     axios.post('/users/' + user.id)
-                        .then(response => this.users = response.data)
+                        .then(function (response) {
+                            console.log('Sikerült a usert törölni !');
+                            this.users = response.data.users;
+                            showNotification(response.data.notification, response.data.notificationType);
+                        })
 
                         .catch(function (error) {
                                 alert("Nem sikerült törölni!");
+                                showNotification('Nem sikerült a usert törölni!', 'alert-error');
                                 console.log(error);
 
                             }

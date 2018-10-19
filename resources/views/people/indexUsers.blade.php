@@ -3,7 +3,8 @@
 @section ('content')
     <div id="app" >
         <permission></permission>
+        <users></users>
     </div>
 
-
+    @include ('layouts.errors')
 @endsection

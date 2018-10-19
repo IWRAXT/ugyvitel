@@ -16,7 +16,7 @@
                             <!--Képet külön appenddel kell hozzáadni-->
                             <div v-if="!url">
                                 <h5>Select an image</h5>
-                                <input type="file"  @change="onFileChange" id="file" name="file"/>
+                                <input type="file" @change="onFileChange" id="file" name="file"/>
                             </div>
                             <div v-else>
                                 <img :src="url"/>
@@ -35,17 +35,7 @@
                                 <label for="leader">Leader</label>
                                 <input type="text" class="form-control" id="leader" name="leader">
                             </div>
-                            <!--<div class="form-group">-->
-                                <!--<label for="leader">Leader</label>-->
-                                <!--<select title="leader" id="leader" name="leader">-->
 
-                                    <!--<option disabled value="">Please select one</option>-->
-                                    <!--<option v-for="s in sites" :value="s.site_id">-->
-                                        <!--{{p.site.name}}-->
-                                    <!--</option>-->
-
-                                <!--</select>-->
-                            <!--</div>-->
 
                             <div class="btn btn-primary" @click.prevent="createSite()">
                                 <button type="submit" class="btn btn-primary">Rögzít</button>
@@ -85,7 +75,7 @@
                 let myForm = document.getElementById('myForm');
 
                 const formData = new FormData(myForm);
-                if(this.image!==''){
+                if (this.image !== '') {
                     formData.append('image', (new Blob([this.image])));
                 }
 
@@ -94,9 +84,11 @@
                     {headers: {'Content-Type': 'multipart/form-data'}}
                 ).then(function (response) {
                         console.log('Sikerült a telephelyet hozzáadni !');
+                        showNotification(response.data.notification, response.data.notificationType);
                     }
                 ).catch(function (error) {
                         alert("Nem sikerült a telephelyet hozzáadni !");
+                        showNotification('Nem sikerült a telephelyet hozzáadni!', 'alert-error')
                         console.log(error);
                     }
                 );

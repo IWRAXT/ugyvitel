@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row justify-content-center">
-            <div class="col-lg-9">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <h1>Új alkalmazott rögzítése</h1></div>
@@ -63,12 +63,12 @@
                                 <input type="text" class="form-control" id="comment" name="comment">
                             </div>
                             <div class="form-group">
-                                <label for="principal_id">Felettes</label>
-                                <select title="Felettes" id="principal_id" name="principal_id">
+                                <label for="principal_id">Felettes: </label>
+                                <select title="principal_id" id="principal_id" name="principal_id">
 
                                     <option disabled value="">Please select one</option>
                                     <option v-for="p in people" :value="p.id">
-                                        {{p.last_name}} {{p.first_name}}
+                                        <span v-if="p.principal_id!==null">{{p.last_name}} {{p.first_name}}</span>
                                     </option>
 
                                 </select>
@@ -76,11 +76,11 @@
 
                             <div class="form-group">
                                 <label for="site_id">Telephely</label>
-                                <select title="Telephely" id="site_id" name="site_id">
+                                <select title="site_id" id="site_id" name="site_id">
 
                                     <option disabled value="">Please select one</option>
-                                    <option v-for="p in people" :value="p.site_id">
-                                        {{p.site.name}}
+                                    <option v-for="s in sites" :value="site_id=s.id">
+                                        <span v-if="s.id!==null">{{s.name}}</span>
                                     </option>
 
                                 </select>
@@ -106,6 +106,7 @@
                 image: '',
                 url: null,
                 people: [],
+                sites: [],
               }
         },
         mounted() {
@@ -113,10 +114,17 @@
             axios.get('/people')
                 .then(response => {
                     this.people = response.data;
-
                 })
                 .catch(function (error) {
                     alert("Hiba történt a dolgozók betöltése során!");
+                    console.log(error);
+                });
+            axios.get('/sites')
+                .then(response => {
+                    this.sites = response.data;
+                })
+                .catch(function (error) {
+                    alert("Hiba történt a telephelyek betöltése során!");
                     console.log(error);
                 });
         },
@@ -138,22 +146,21 @@
                 if(this.image!==''){
                     formData.append('image', (new Blob([this.image])));
                 }
-
+//ToDo: Főnöke ne lehessen önmaga!
                 axios.post('/people', formData,
 
                     {headers: {'Content-Type': 'multipart/form-data'}}
                 ).then(function (response) {
                         console.log('Sikerült a dolgozót hozzáadni !');
+                        showNotification(response.data.notification, response.data.notificationType);
                     }
                 ).catch(function (error) {
                         alert("Nem sikerült a dolgozót hozzáadni !");
+                        showNotification('Nem sikerült a dolgozót hozzáadni!', 'alert-error');
                         console.log(error);
                     }
                 );
-                // axios.get('/people/index').then().catch(function (error) {
-                //     alert("Hiba történt a dolgozók betöltése során!");
-                //     console.log(error);
-                // });
+
             },
             onFileChange(e) {
                 //Image prev

@@ -2,11 +2,11 @@
     <div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-9">
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header">
 
-                            <h1>Jogosultságok listája</h1></div>
+                            <h4>Jogosultságok listája</h4></div>
                         <div class="card-body">
                             <table id="table_id" class="table  ">
                                 <thead>
@@ -21,7 +21,8 @@
                                 <tr v-for="permission in permissions">
                                     <td>{{permission.id}}</td>
                                     <td>{{ permission.name }}</td>
-                                    <td>{{ permission.sites }}</td>
+                                    <td v-if="permission.sites==1" > Listázhatja a telephelyeket</td>
+                                    <td v-if="permission.sites==0" >Csak a saját telephelyét</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -30,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <users></users>
+
     </div>
 
 </template>

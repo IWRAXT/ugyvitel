@@ -16,6 +16,7 @@ class UserController extends Controller
     {
         $users =User::with( 'permission')->get();
         return $users;
+
     }
 
     public function store(Request $request)
@@ -33,19 +34,34 @@ class UserController extends Controller
 
 
         $user->save();
+        return response()->json(['user' => $user, 'notification' => 'A usert sikeresen hozzáadta!', 'notificationType' => 'alert-success']);
+    }
+    public function edit($id)
+    {
+        $user = User::with('permission')->find($id);
         return $user;
     }
 
 
     public function update(Request $request, $id){
 
-        $user = User::find($id);
+        $user = User::with('permission')->find($id);
 
         $user->name=request('name');
         $user->email=request('email');
         $user->password=bcrypt(request('password'));
         $user->permission_id=request('permission');
 
-        return $user;
+        return response()->json(['user' => $user, 'notification' => 'A user sikeresen frissítve!', 'notificationType' => 'alert-success']);
+
+    }
+    public function destroy($id)
+    {
+        //Todo:Splice() jobb megoldás lenne
+
+        $user = User::find($id);
+
+        $user->delete();
+        return response()->json(['user' => User::all(), 'notification' => 'A user sikeresen törölve!', 'notificationType' => 'alert-success']);
     }
 }

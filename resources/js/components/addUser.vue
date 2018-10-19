@@ -43,6 +43,8 @@
         data: function () {
             return{
                 permissions: [],
+
+                //nem kell formdata mert nem küldünk filet!
                 newUser:{
                     'name':  this.last_name+' '+this.first_name,
                     'email': this.email,
@@ -61,7 +63,8 @@
                     console.log(permissions);
                 })
                 .catch(function (error) {
-                    alert("Hiba történt a jogosultságok betöltése során!");
+                    // alert("Hiba történt a jogosultságok betöltése során!");
+                    showNotification('Hiba történt a jogosultságok betöltése során!','alert-error');
                     console.log(error);
                 });
         },
@@ -77,7 +80,6 @@
                     // } else {
                     //     this.hasError = false;
 
-                    console.log("Eljut");
                     axios.post('/user', input).then(function (response) {
                             var userid = response.data.id;
                             console.log('User sorszáma: '+response.data.id);
@@ -85,14 +87,18 @@
                             axios.post('/userid/' + id, {userID: userid}).then(function (response) {
 
                                 console.log("Sikerült hozzáadni a UserId-t!!!");
+                                showNotification(response.data.notification, response.data.notificationType);
+
                             }
                         ).catch(function (error) {
+                                showNotification('Nem sikerült a userId-t hozzáadni !', 'alert-error');
                                 alert("Nem sikerült a userId-t hozzáadni !");
                                 console.log(error);
                             }
                         );
                         }
                     ).catch(function (error) {
+                                showNotification('Nem sikerült a jogosultságot hozzáadni ', 'alert-error');
                                 alert("Nem sikerült a jogosultságot hozzáadni !");
                                 console.log(error);
                             }

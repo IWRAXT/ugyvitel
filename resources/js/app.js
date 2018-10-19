@@ -9,9 +9,10 @@ import 'vuetable-2/dist/vuetable-2-full'
 window.Vue = require('vue');
 
 Vue.component('modal', require('./components/Modal'));
+Vue.component('notification', require('./components/Notification'));
 
 //Employees
-Vue.component('people', require('./components/PersonComponent.vue'));
+Vue.component('people', require('./components/Employees.vue'));
 Vue.component('directs',require('./components/Directs'));
 Vue.component('directsList',require('./components/DirectsList'));
 Vue.component('employee',require('./components/addEmployee'));
@@ -22,10 +23,13 @@ Vue.component('addUser',require('./components/addUser'));
 Vue.component('users',require('./components/Users'));
 Vue.component('my_user',require('./components/myUser'));
 Vue.component('permission',require('./components/addPermission'));
+Vue.component('edit_user',require('./components/editUser'));
 
 //Sites
-Vue.component('sites',require('./components/SitesComponent'));
+Vue.component('index_sites',require('./components/Sites'));
 Vue.component('create_site',require('./components/addSite'));
+Vue.component('edit_site',require('./components/editSite'));
+
 
 // function install(Vue){
 //     Vue.component("vuetable", Vuetable);
@@ -35,11 +39,8 @@ Vue.component('create_site',require('./components/addSite'));
 // }
 
 
-const app = new Vue({
-    el: '#app',
-    data: {
-
-    }
+let app = new Vue({
+    el: '#app'
 
 });
 

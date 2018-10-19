@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\User;
-use File;
 use Auth;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Input;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
@@ -68,8 +69,8 @@ class EmployeeController extends Controller
             $img = Image::make($decode);
             $img->save(storage_path('app/public/images/' . $person->image));
             //Todo: A képet 500x500s formátumba mentse méretarány megtartásával
-        }else{
-            $person->image ='default.jpg';
+        } else {
+            $person->image = 'default.jpg';
         }
         $person->born = request('born');
         $person->address = request('address');
@@ -82,19 +83,20 @@ class EmployeeController extends Controller
         $person->principal_id = request('principal_id');
         $person->site_id = request('site_id');
         $person->save();
-        return $person;
+        return response()->json(['person' => $person, 'notification' => 'A dolgozó sikeresen rögzítve!', 'notificationType' => 'alert-success']);
     }
 
     public function edit($id)
     {
-        $person = Employee::with('user', 'user.permission')->find($id);
-        return view('people.edit', compact('person'));
+        $person = Employee::with('user', 'user.permission', 'site')->find($id);
+        return $person;
     }
+
     public function edit_mount() //Auth User
     {
-        $id=Auth::user()->employee_id;
+        $id = Auth::user()->employee_id;
         $person = Employee::with('user', 'user.permission')->find($id);
-        return $person;
+        return response($person);
 
     }
 
@@ -106,6 +108,7 @@ class EmployeeController extends Controller
         $person = Employee::find($id);
         $person->last_name = request('last_name');
         $person->first_name = request('first_name');
+        //Todo: DB-t átírni modellekre
         if (DB::table('employees')
                 ->where('email', request('email'))
                 ->exists()
@@ -116,7 +119,6 @@ class EmployeeController extends Controller
 
             if ($person->image !== 'default.jpg' && $person->image !== $person->email) {
                 //felül kell írni a file nevét az új e-mailcímre
-
                 File::move(storage_path('app/public/images/' . $person->image), storage_path('app/public/images/' . $person->email . '.jpg'));
                 $person->image = $person->email . '.jpg';
             }
@@ -127,13 +129,11 @@ class EmployeeController extends Controller
             $img = Image::make($decode);
 
             if ($person->image == 'default.jpg') {
-
                 $person->image = $person->email . '.jpg';
                 $img->save(storage_path('app/public/images/' . $person->image)); //mentem a mostanit
             } else
-//ha nem default és nem ugyan az volt a file név, akkor felül kell írni a file nevét az új e-mailcímre
-
-            File::delete(storage_path('app/public/images/' . $person->image)); //törlöm az előző file-t
+                //ha nem default és nem ugyan az volt a file név, akkor felül kell írni a file nevét az új e-mailcímre
+                File::delete(storage_path('app/public/images/' . $person->image)); //törlöm az előző file-t
             $person->image = $person->email . '.jpg';
             $img->save(storage_path('app/public/images/' . $person->image)); //mentem a mostanit
         }
@@ -153,23 +153,23 @@ class EmployeeController extends Controller
         $person->site_id = request('site_id');
 
         $person->save();
-        return $person;
-//        return redirect('/people/index')->with('success', 'Dolgozó adatai frissítve');
+        return response()->json(['person' => $person, 'notification' => 'A dolgozói adatok sikeresen fissítve!', 'notificationType' => 'alert-success']);
     }
 
     public function destroy($id)
     {
+        //Todo:Splice() jobb megoldás lenne
+
         $person = Employee::find($id);
         if ($person->image !== "default.jpg") {
             $img_path = storage_path('app/public/images/') . $person->image;
             File::delete($img_path);
         }
-//Ha az employee törlődik törlődjön a hozzátartozó user is
-        if ($person->user_id!==null){
+        //Ha az employee törlődik törlődjön a hozzátartozó user is
+        if ($person->user_id !== null) {
             User::find($person->user_id)->delete();
         }
-
         $person->delete();
-        return Employee::all();
+        return response()->json(['people' => Employee::all(), 'notification' => 'A dolgozó sikeresen törölve!', 'notificationType' => 'alert-success']);
     }
 }

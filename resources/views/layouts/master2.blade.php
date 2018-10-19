@@ -9,8 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
     {{--<link rel="stylesheet" href="/node_modules/admin-lte/dist/css/AdminLTE.min.css">--}}
 
@@ -153,7 +153,7 @@ desired effect
                         @can('isAdmin')
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>@endcan
                         @can('isAdmin')
-                            <li><a href="/indexUsers">Jogosultság kezelés</a></li>@endcan
+                            <li><a href="/users/index">Jogosultság kezelés</a></li>@endcan
 
                     </ul>
                 </li>
@@ -208,6 +208,17 @@ desired effect
               | Your Page Content Here |
               -------------------------->
             @yield('content')
+            <div id="app">
+                @if (session('notification'))
+                    <notification type="{{ session('notificationType') }}"
+                                  message="{{ session('notification') }}"></notification>
+                @elseif (session('status'))
+                    <notification type="alert-primary" message="{{ session('status') }}"></notification>
+                @else
+                    <notification></notification>
+                @endif
+            </div>
+
         </section>
         <!-- /.content -->
     </div>
@@ -304,11 +315,6 @@ desired effect
 
 </body>
 <script src="{{asset('js/app.js')}}"></script>
-//datarange
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 
 
 </html>

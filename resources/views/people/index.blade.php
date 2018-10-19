@@ -5,7 +5,7 @@
         <people></people>
     </div>
 
-
+    @include ('layouts.errors')
 
 @endsection
 

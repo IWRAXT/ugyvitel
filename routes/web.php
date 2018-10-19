@@ -41,9 +41,12 @@ Route::post('/userid/{id}','EmployeeController@user_id');
 //Users table
 Route::get('/people/edit_mount','EmployeeController@edit_mount'); //Auth User
 Route::post('people/editUser','UserController@update');
-Route::post('/user','UserController@store');
+Route::post('/users/{id}','UserController@destroy');
+Route::post('/users','UserController@store');
 Route::get('/users', 'UserController@getUsers');
-Route::get('/indexUsers', 'UserController@index');
+Route::get('/users/index', 'UserController@index');
+Route::get('/users/{id}/edit','UserController@edit');
+Route::post('/users/{id}/update','UserController@update');
 
 
 //permissions table
@@ -55,6 +58,10 @@ Route::get('/sites', 'SiteController@getSites');
 Route::post('/sites','SiteController@store');
 Route::get('/sites/create','SiteController@create');
 Route::get('/mysite','SiteController@mysite');
+Route::post('/sites/{id}','SiteController@destroy');
+Route::get('/sites/{id}/edit','SiteController@edit');
+Route::post('/sites/{id}/update','SiteController@update');
+//Todo: Telephelyen dolgozók listáját megírni
 
 
 
