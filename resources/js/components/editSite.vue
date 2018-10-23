@@ -13,7 +13,9 @@
                         <label for="image">Mostani képe: </label>
                         <img :src="url" id="image" name="image">
                         <input type="file" @change="onFileChange" class="form-control-file" id="file" name="file">
-                        <button @click="removeImage">Remove image</button>
+                        <button @click.prevent="removeImage">Remove image</button>
+
+                        <!--ha sima @click akkor az oldal frissül .preventtel nem-->
 
                     </div>
 

@@ -16,7 +16,7 @@
                             {{props.row.permission.name}}
                         </template>
                         <template slot="permission.sites" slot-scope="props">
-                            <span v-if="props.row.permission.sites=='1'" >Listázhatja a telephelyeket</span>
+                            <span v-if="props.row.permission.sites=='1'">Listázhatja a telephelyeket</span>
                             <span v-else>Csak a saját telephelyét</span>
                         </template>
                         <template slot="buttons" slot-scope="props">
@@ -28,19 +28,19 @@
                                 </button>
 
                                 <modal v-if="props.row.showModal_edit"
-                                @close=" props.row.showModal_edit = false; init()">
+                                       @close=" props.row.showModal_edit = false; init()">
 
-                                <h3 slot="header">Edit <b> {{props.row.name }} </b>
-                                </h3>
-                                <p slot="body">
-                                <edit_user :id="props.row.id"></edit_user>
+                                    <h3 slot="header">Edit <b> {{props.row.name }} </b>
+                                    </h3>
+                                    <p slot="body">
+                                        <edit_user :id="props.row.id" :permission_id="props.row.permission_id"></edit_user>
 
-                                </p>
+                                    </p>
 
                                 </modal>
 
                                 <!--Delete-->
-                                <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteUser(props.row)">
+                                <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteUser(props.row) " >
                                     Delete
                                 </button>
 
@@ -68,7 +68,7 @@
 
                 options: {
                     filterByColumn: true,
-                    filterable: ['name', 'email','permission_id'],
+                    filterable: ['name', 'email', 'permission_id'],
                     columnsDropdown: true,
                     clientMultiSorting: true,
                     columnsDisplay: {},
@@ -118,12 +118,24 @@
 
                 let conf = confirm("Tényleg törli a usert?");
                 if (conf === true) {
+                    console.log("A User id: " + user.id);
 
-                    axios.post('/users/' + user.id)
+                    axios.post('/users/' + user.id) //UserControllerbe küldi
                         .then(function (response) {
-                            console.log('Sikerült a usert törölni !');
-                            this.users = response.data.users;
-                            showNotification(response.data.notification, response.data.notificationType);
+
+                            console.log('employee_id: '+user.employee_id);
+                            // this.users = response.data.users;
+
+                            axios.delete('/userid/' + user.employee_id) //EmployeeControllerbe küldi kitörölni az employees táblából a user_id oszlop tartalmát
+                                .then(function (response) {
+                                    showNotification(response.data.notification, response.data.notificationType);
+                                })
+                                .catch(function (error) {
+                                    alert("Nem sikerült törölni az employees táblából a user_id oszlop tartalmát!");
+                                    showNotification('Nem sikerült a usert törölni!', 'alert-error');
+                                    console.log(error);
+                                });
+
                         })
 
                         .catch(function (error) {
@@ -133,6 +145,7 @@
 
                             }
                         );
+                    // this.init();
                 }
             }
             ,

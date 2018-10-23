@@ -2,14 +2,13 @@
     <div>
         <div class="card">
             <div class="card-header">
-                <b> {{person.last_name }} {{person.first_name }} </b>{{ person.job }}
-                <br> Home page
+                <h5> {{person.last_name }} {{person.first_name }} </h5>{{ person.job }} adatlapja
                 <!--({{ person.user.permission.name }})-->
 
             </div>
 
             <div class="card-body">
-                <h5>User adatlap: </h5>
+
                 <img :src="'/storage/images/'+person.image" style="min-width: 120px " alt="User Image">
                 <table class=" table table-striped">
                     <tbody>
@@ -77,7 +76,7 @@
                         <label for="image">Mostani profilképe: </label>
                         <img :src="url" id="image" name="image">
                         <input type="file" @change="onFileChange" class="form-control-file" id="file" name="file">
-                        <button @click="removeImage">Remove image</button>
+                        <button @click.prevent="removeImage">Remove image</button>
 
                     </div>
 
@@ -175,6 +174,7 @@
                 formData.append('job', this.person.job);
                 formData.append('comment', this.person.comment);
                 formData.append('principal_id', this.person.principal_id);
+                formData.append('site_id', this.person.site_id);
 
 
                 if (this.image !== '') {
@@ -216,7 +216,7 @@
 
 <style scoped>
     img {
-        width: 30%;
+        max-width: 220px;
         margin: auto;
         display: block;
         margin-bottom: 10px;

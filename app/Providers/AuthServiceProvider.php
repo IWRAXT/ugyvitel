@@ -20,15 +20,25 @@ class AuthServiceProvider extends ServiceProvider
 //
 //        //
 //    }
+
     public function boot (GateContract $gate){
         $this->registerPolicies($gate);
 
-        $gate->define('isAdmin',function ($user){
+        $gate->define('isAdmin',function ($user){ //Joga van Cost, Incomes, Leader, Sites láthatóság
             return $user->permission->name == 'Admin';
         });
 
-        $gate->define('isGuest',function ($user){
-            return $user->permission->name == 'Guest';
+        $gate->define('isCosts',function ($user){
+            return $user->permission->name == 'Costs handler';
+        });
+        $gate->define('isIncomes',function ($user){
+            return $user->permission->name == 'Incomes handler';
+        });
+        $gate->define('isLeader',function ($user){      //Cost-Incomes statistic and employees láthatóság
+            return $user->permission->name == 'Leader';
+        });
+        $gate->define('isSites',function ($user){
+            return $user->permission->sites == 1;  //Kezelheti az összes telephelyet vagy sem
         });
     }
 }

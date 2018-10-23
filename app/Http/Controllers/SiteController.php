@@ -96,8 +96,8 @@ class SiteController extends Controller
             $img->save(storage_path('app/public/images/' . $site->image)); //mentem a mostanit
         }
         if (request('delete') == 'true') {
-            $img_path = 'images/' . $site->image;
-            File::delete($img_path);
+            $img_path = 'app/public/images/' . $site->image;
+            File::delete(storage_path($img_path));
             $site->image = 'default-site.jpg';
         }
         $site->address = request('address');

@@ -36,13 +36,14 @@ Route::get('/people/{id}/edit','EmployeeController@edit');
 Route::post('/people/{id}/update','EmployeeController@update');
 Route::post('/people/{id}','EmployeeController@destroy');
 Route::post('/userid/{id}','EmployeeController@user_id');
+Route::delete('/userid/{id}','EmployeeController@delete_user_id');
 
 
 //Users table
 Route::get('/people/edit_mount','EmployeeController@edit_mount'); //Auth User
 Route::post('people/editUser','UserController@update');
 Route::post('/users/{id}','UserController@destroy');
-Route::post('/users','UserController@store');
+Route::post('/user','UserController@store');
 Route::get('/users', 'UserController@getUsers');
 Route::get('/users/index', 'UserController@index');
 Route::get('/users/{id}/edit','UserController@edit');

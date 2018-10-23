@@ -31,7 +31,14 @@ class EmployeeController extends Controller
         $person = Employee::find($id);
         $person->user_id = request('userID');
         $person->save();
-        return $person;
+        return response()->json(['person' => $person, 'notification' => 'User jog hozzáadva!', 'notificationType' => 'alert-success']);
+    }
+    public function delete_user_id( $id)
+    {
+        $person = Employee::find($id);
+        $person->user_id = null;
+        $person->save();
+        return response()->json(['person' => $person, 'notification' => 'User jog törölve!', 'notificationType' => 'alert-success']);
     }
 
     public function getDirects($id)
@@ -83,7 +90,7 @@ class EmployeeController extends Controller
         $person->principal_id = request('principal_id');
         $person->site_id = request('site_id');
         $person->save();
-        return response()->json(['person' => $person, 'notification' => 'A dolgozó sikeresen rögzítve!', 'notificationType' => 'alert-success']);
+        return response()->json(['person' => $person, 'notification' => 'User jog sikeresen hozzáadva a dolgozóhoz!', 'notificationType' => 'alert-success']);
     }
 
     public function edit($id)
@@ -95,7 +102,7 @@ class EmployeeController extends Controller
     public function edit_mount() //Auth User
     {
         $id = Auth::user()->employee_id;
-        $person = Employee::with('user', 'user.permission')->find($id);
+        $person = Employee::with('user', 'user.permission', 'site')->find($id);
         return response($person);
 
     }
@@ -138,8 +145,8 @@ class EmployeeController extends Controller
             $img->save(storage_path('app/public/images/' . $person->image)); //mentem a mostanit
         }
         if (request('delete') == 'true') {
-            $img_path = 'images/' . $person->image;
-            File::delete($img_path);
+            $img_path = 'app/public/images/' . $person->image;
+            File::delete(storage_path($img_path));
             $person->image = 'default.jpg';
         }
         $person->address = request('address');

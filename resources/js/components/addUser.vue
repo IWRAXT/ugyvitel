@@ -1,14 +1,13 @@
 <template>
     <div>
-    <!--<p class="text-center alert alert-danger"-->
-       <!--v-bind:class="{ hidden: hasError }">Please fill all fields!</p>-->
-
+        <!--<p class="text-center alert alert-danger"-->
+        <!--v-bind:class="{ hidden: hasError }">Please fill all fields!</p>-->
 
 
         <select v-model="newUser.permission">
             <option disabled value="">Please select one</option>
             <option v-for="p in permissions" :value="p.id">
-                {{p.name}}
+                {{p.name}} {{p.sites}}
             </option>
 
         </select>
@@ -17,13 +16,13 @@
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password"
                    v-model="newUser.password"
-                   required  placeholder="****"/>
+                   required placeholder="****"/>
         </div>
 
 
-    <button class="btn btn-primary" @click.prevent="createUser()" >
-        <span class="glyphicon glyphicon-plus"></span> ADD
-    </button>
+        <button class="btn btn-primary" @click.prevent="createUser()">
+            <span class="glyphicon glyphicon-plus"></span> ADD
+        </button>
     </div>
 </template>
 
@@ -37,20 +36,20 @@
             email: String,
             password: String,
             permission: Number,
-            id : Number,
+            id: Number,
         },
 
         data: function () {
-            return{
+            return {
                 permissions: [],
 
                 //nem kell formdata mert nem küldünk filet!
-                newUser:{
-                    'name':  this.last_name+' '+this.first_name,
+                newUser: {
+                    'name': this.last_name + ' ' + this.first_name,
                     'email': this.email,
-                    'password':'',
-                    'permission':''
-                    // 'employee_id' : this.employee_id
+                    'password': '',
+                    'permission': '',
+                    'employee_id' : this.id
                 }
             }
         },
@@ -64,30 +63,31 @@
                 })
                 .catch(function (error) {
                     // alert("Hiba történt a jogosultságok betöltése során!");
-                    showNotification('Hiba történt a jogosultságok betöltése során!','alert-error');
+                    showNotification('Hiba történt a jogosultságok betöltése során!', 'alert-error');
                     console.log(error);
                 });
         },
-        methods:{
-                createUser: function createUser() {
-                    // var _this = this;
-                    let input = this.newUser;
-                    let id = this.id;
+        methods: {
+            createUser: function createUser() {
+                // var _this = this;
+                let input = this.newUser;
+                let id = this.id;
 
 
-                    // if (input['permission'] === '' || input['site'] === ''|| input['password'] === '' ) {
-                    //     this.hasError = true;
-                    // } else {
-                    //     this.hasError = false;
+                // if (input['permission'] === '' || input['site'] === ''|| input['password'] === '' ) {
+                //     this.hasError = true;
+                // } else {
+                //     this.hasError = false;
 
-                    axios.post('/user', input).then(function (response) {
-                            var userid = response.data.id;
-                            console.log('User sorszáma: '+response.data.id);
-                            console.log('employee id: '+id);
-                            axios.post('/userid/' + id, {userID: userid}).then(function (response) {
+                axios.post('/user', input).then(function (response) { //UserControllerbe küldi
+                        var userid = response.data.user.id;
+                        console.log('User sorszáma: ' + userid);
+                        console.log('employee id: ' + id);
+                        axios.post('/userid/' + id, {userID: userid}).then(function (response) { //EmployeeControllerbe küldi
 
                                 console.log("Sikerült hozzáadni a UserId-t!!!");
                                 showNotification(response.data.notification, response.data.notificationType);
+
 
                             }
                         ).catch(function (error) {
@@ -96,16 +96,16 @@
                                 console.log(error);
                             }
                         );
-                        }
-                    ).catch(function (error) {
-                                showNotification('Nem sikerült a jogosultságot hozzáadni ', 'alert-error');
-                                alert("Nem sikerült a jogosultságot hozzáadni !");
-                                console.log(error);
-                            }
-                    );
-
                     }
-                }
+                ).catch(function (error) {
+                        showNotification('Nem sikerült a jogosultságot hozzáadni ', 'alert-error');
+                        alert("Nem sikerült a jogosultságot hozzáadni !");
+                        console.log(error);
+                    }
+                );
+
+            }
+        }
 
     }
 </script>

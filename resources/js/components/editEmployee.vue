@@ -23,7 +23,7 @@
                         <label for="image">Mostani profilképe: </label>
                         <img :src="url" id="image" name="image">
                         <input type="file" @change="onFileChange" class="form-control-file" id="file" name="file">
-                        <button @click="removeImage">Remove image</button>
+                        <button @click.prevent="removeImage">Remove image</button>
 
                     </div>
 
@@ -188,7 +188,6 @@
                     {headers: {'Content-Type': 'multipart/form-data'}}
                 ).then(function (response) {
                         // this.person = response.data.person;
-                        // Todo: employees,users,sites listázásnál, ne propsok legyenek hanem axios hívás, akkor nem kell majd az init()fg-se
 
                         showNotification(response.data.notification, response.data.notificationType);
                         console.log('Dolgozó adatai frissítve! !');
@@ -206,8 +205,8 @@
                 this.image = e.target.files[0];
                 this.url = URL.createObjectURL(this.image);
             },
-            removeImage: function (e) {
-                this.url = "/storage/images/default.jpg";
+            removeImage: function () {
+                this.url = '/storage/images/default.jpg';
                 this.image = '';
                 this.delete = true;
             }

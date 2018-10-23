@@ -6,14 +6,14 @@
             <div class="col-lg-9">
                 <div class="card">
                     <div class="card-header">
-                        <b>{{Auth::user()->employee->site->name}}</b>
-                        <br> Own Site
+                        Saját telephely adatlapja:  <h5>{{Auth::user()->employee->site->name}}</h5>
+
 
                     </div>
 
                     <div class="card-body">
-                        <h5>Site adatlap: </h5>
-                        <img src="/storage/images/{{Auth::user()->employee->site->image}}" style="min-width: 120px " alt="User Image">
+
+                        <img src="/storage/images/{{Auth::user()->employee->site->image}}" style="max-width: 220px; margin: auto; display: block; margin-bottom: 10px " alt="User Image">
                         <table class=" table table-striped">
                             <tbody>
 

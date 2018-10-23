@@ -25,9 +25,8 @@ class UserController extends Controller
         $user->name=request('name');
         $user->email=request('email');
         $user->password=bcrypt(request('password'));
-
-
         $user->permission_id=request('permission');
+        $user->employee_id=request('employee_id');
 
         //Site-ot az új permission hozzáadásánál lehessen beállítani
 //        $user->permission_id=request('site');
@@ -62,6 +61,6 @@ class UserController extends Controller
         $user = User::find($id);
 
         $user->delete();
-        return response()->json(['user' => User::all(), 'notification' => 'A user sikeresen törölve!', 'notificationType' => 'alert-success']);
+        return response()->json(['users' => User::all(), 'notification' => 'A user sikeresen törölve!', 'notificationType' => 'alert-success']);
     }
 }

@@ -1,11 +1,11 @@
 <template>
     <div>
 
-        <label for="user.permission_id">Permission: </label>
-        <select title="user.permission_id" id="user.permission_id" name="user.permission_id" v-model="user.permission_id">
+        <label for="permission_id">Permission: </label>
+        <select title="permission_id" id="permission_id" name="permission_id" v-model="user.permission_id">
             <option disabled value="">Please select one</option>
-            <option v-for="p in permissions" value="p.id">
-                {{p.name}}{{p.id}}
+            <option v-for="p in permissions" :value="p.id">
+                {{p.name}} /telephely:{{p.sites}}
             </option>
 
         </select>
@@ -18,7 +18,7 @@
         <!--</div>-->
 
 
-        <button class="btn btn-primary" @click.prevent="updateUser()">
+        <button class="btn btn-primary" @click="updateUser()">
             <span class="glyphicon glyphicon-plus"></span> ADD
         </button>
     </div>
@@ -29,6 +29,7 @@
         name: "editUser",
         props: {
             id : Number,
+            // permission_id: String,
         },
         data: function () {
             return {
@@ -53,8 +54,8 @@
                     this.permissions  = response.data;
                 })
                 .catch(function (error) {
-                    // alert("Hiba történt a jogosultságok betöltése során!");
-                    showNotification('Hiba történt a jogosultságok betöltése során!', 'alert-error');
+                    alert("Hiba történt a jogosultságok betöltése során!");
+                    // showNotification('Hiba történt a jogosultságok betöltése során!', 'alert-error');
                     console.log(error);
                 });
         },
@@ -69,8 +70,9 @@
                 //     this.hasError = false;
 
 
-                // this.user.permission_id=this.permission;
+
                 let input = this.user;
+                // input.permission_id=this.permission_id;
                 console.log(input.permission.name);
                 axios.post('/users/'+this.id+'/update', input).then(function (response) {
                     console.log('UpdateUser fg-ben...axiosban ');

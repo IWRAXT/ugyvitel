@@ -81,7 +81,7 @@ desired effect
 
                                 <p>
                                     {{ Auth::user()->name }}
-                                    {{--                                    {{ Auth::user()->permission() }}--}}
+
 
                                 </p>
                             </li>
@@ -132,6 +132,125 @@ desired effect
         <!-- /.search form -->
 
             <!-- Sidebar Menu -->
+            //--->ADMIN
+            @can('isAdmin')
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header"><b>ADMINISZTRÁTOR MÓD</b></li>
+                    <!-- Optionally, you can add icons to the links -->
+
+
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-users"></i> <span>Munkatársak</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/people/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/people/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+
+                            <li><a href="/people/create">Új munkatárs rögzítése</a></li>
+
+                            <li><a href="/users/index">Jogosultság kezelés</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-plus"></i> <span>Bevételek</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/incomes/index">Listázás</a></li>
+                            <li><a href="/incomes/create">Új bevétel rögzítése</a></li>
+                            <li><a href="/incomes/create">Új bevétel típus rögzítése</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-handshake-o"></i> <span>Ügyfelek</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/outcomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/outcomes/create">Új ügyfél rögzítése</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-minus"></i> <span>Kiadások</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/outcomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/outcomes/create">Új kiadás rögzítése</a></li>
+                            <li><a href="/outcomes/create">Új kiadás típus rögzítése</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-truck"></i> <span>Beszállítók</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/outcomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/outcomes/create">Új beszállító rögzítése</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/mysite">Saját telephely</a></li>
+                            @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
+
+                            <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
+
+
+                        </ul>
+                    </li>
+                    <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a></li>
+                    <li class="active"><a href=""><i class="fa fa-pie-chart"></i> <span>Statisztikák</span></a></li>
+                </ul>
+            @endcan
+            //--->Leader
+            @can('isLeader')
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"><b>DOLGOZÓK KEZELÉSE MÓD</b></li>
                 <!-- Optionally, you can add icons to the links -->
@@ -150,10 +269,10 @@ desired effect
                         <!--A Buttons oszlop ne látszódjon csak Admin módban-->
                         <li><a href="/people/index">Szerkesztő/Törlő</a></li>
                         {{--<li><a href="#">Kimutatások</a></li>--}}
-                        @can('isAdmin')
-                            <li><a href="/people/create">Új munkatárs rögzítése</a></li>@endcan
-                        @can('isAdmin')
-                            <li><a href="/users/index">Jogosultság kezelés</a></li>@endcan
+
+                            <li><a href="/people/create">Új munkatárs rögzítése</a></li>
+
+                            <li><a href="/users/index">Jogosultság kezelés</a></li>
 
                     </ul>
                 </li>
@@ -167,16 +286,144 @@ desired effect
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/mysite">Saját telephely</a></li>
-                        <li><a href="/sites/index">Összes telephely</a></li>
-                        @can('isAdmin')
+                        @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
+
                             <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
 
                     </ul>
                 </li>
                 <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a></li>
+                <li class="active"><a href=""><i class="fa fa-child"></i> <span>Statisztikák</span></a></li>
             </ul>
-            <!-- Sidebar user panel (optional) -->
+            @endcan
+            //--->INCOMES
+            @can('isIncomes')
+
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header"><b>BEVÉTELEK KEZELÉSE MÓD</b></li>
+                    <!-- Optionally, you can add icons to the links -->
+
+
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-plus"></i> <span>Bevételek</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/incomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/incomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/incomes/create">Új bevétel rögzítése</a></li>
+                            <li><a href="/incomes/create">Új bevétel típus rögzítése</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-handshake-o"></i> <span>Ügyfelek</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/outcomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/outcomes/create">Új ügyfél rögzítése</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/mysite">Saját telephely</a></li>
+                            @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
+
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
+
+
+                        </ul>
+                    </li>
+                    <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
+                    </li>
+                </ul>
+            @endcan
+            //--->OUTCOMES
+            @can('isOutcomes')
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header"><b>KIADÁSOK KEZELÉSE MÓD</b></li>
+                    <!-- Optionally, you can add icons to the links -->
+
+
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-minus"></i> <span>Kiadások</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/outcomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/outcomes/create">Új kiadás rögzítése</a></li>
+                            <li><a href="/outcomes/create">Új kiadás típus rögzítése</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-truck"></i> <span>Beszállítók</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li><a href="/outcomes/index">Listázás</a></li>
+                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
+                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
+                            {{--<li><a href="#">Kimutatások</a></li>--}}
+                            <li><a href="/outcomes/create">Új beszállító rögzítése</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+
+                         </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/mysite">Saját telephely</a></li>
+                            @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
+
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
+
+
+                        </ul>
+                    </li>
+                    <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
+                    </li>
+                </ul>
+        @endcan
+
+        <!-- Sidebar user panel (optional) -->
             <div class="user-panel" style="padding-bottom: 50px">
                 <div class="pull-left image">
                     <img src="/storage/images/{{ Auth::user()->employee->image }}"
