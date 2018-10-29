@@ -45,15 +45,15 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="/home" class="logo" style="padding-bottom: 70px">
+        <a href="/home" class="logo" style="padding-bottom: 60px">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><img src="/images/icon.png" style="width:60px;height:60px;border:0;"></span>
+            <span class="logo-mini"><img src="/images/icon.png" style="width:50px;height:50px;border:0;"></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><img src="/images/icon.png" style="width:60px;height:60px;border:0;"><b> Ügyvitel</b></span>
+            <span class="logo-lg"><img src="/images/icon.png" style="width:60px;height:60px;border:0;"> Ügyvitel</span>
         </a>
 
         <!-- Header Navbar -->
-        <nav class="navbar nnavbar-expand-md" role="navigation">
+        <nav class="navbar nnavbar-expand-lg" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
@@ -81,8 +81,6 @@ desired effect
 
                                 <p>
                                     {{ Auth::user()->name }}
-
-
                                 </p>
                             </li>
 
@@ -113,7 +111,7 @@ desired effect
     <!-- Left side column. contains the logo and sidebar -->
 
 
-    <aside class="main-sidebar" style="padding-top: 70px">
+    <aside class="main-sidebar" style="padding-top: 60px">
 
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
@@ -132,7 +130,7 @@ desired effect
         <!-- /.search form -->
 
             <!-- Sidebar Menu -->
-            //--->ADMIN
+            {{--ADMIN--}}
             @can('isAdmin')
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header"><b>ADMINISZTRÁTOR MÓD</b></li>
@@ -149,14 +147,8 @@ desired effect
                         <ul class="treeview-menu">
 
                             <li><a href="/people/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/people/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>
-
                             <li><a href="/users/index">Jogosultság kezelés</a></li>
-
                         </ul>
                     </li>
 
@@ -184,11 +176,8 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/outcomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-                            <li><a href="/outcomes/create">Új ügyfél rögzítése</a></li>
+                            <li><a href="/costs/index">Listázás</a></li>
+                            <li><a href="/costs/create">Új ügyfél rögzítése</a></li>
                         </ul>
                     </li>
 
@@ -201,12 +190,9 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/outcomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-                            <li><a href="/outcomes/create">Új kiadás rögzítése</a></li>
-                            <li><a href="/outcomes/create">Új kiadás típus rögzítése</a></li>
+                            <li><a href="/costs/index">Listázás</a></li>
+                            <li><a href="/costs/create">Új kiadás rögzítése</a></li>
+                            <li><a href="/costs/create">Új kiadás típus rögzítése</a></li>
 
 
                         </ul>
@@ -220,11 +206,8 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/outcomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-                            <li><a href="/outcomes/create">Új beszállító rögzítése</a></li>
+                            <li><a href="/costs/index">Listázás</a></li>
+                            <li><a href="/costs/create">Új beszállító rögzítése</a></li>
 
                         </ul>
                     </li>
@@ -237,67 +220,64 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">Saját telephely</a></li>
-                            @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
-
-                            <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
+                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            @can('isSites')
+                                <li><a href="/sites/index">Összes telephely</a></li>
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
 
                         </ul>
                     </li>
-                    <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a></li>
+                    <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
+                    </li>
                     <li class="active"><a href=""><i class="fa fa-pie-chart"></i> <span>Statisztikák</span></a></li>
                 </ul>
             @endcan
-            //--->Leader
+            {{--Leader--}}
             @can('isLeader')
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header"><b>DOLGOZÓK KEZELÉSE MÓD</b></li>
-                <!-- Optionally, you can add icons to the links -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header"><b>DOLGOZÓK KEZELÉSE MÓD</b></li>
+                    <!-- Optionally, you can add icons to the links -->
 
 
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-users"></i> <span>Munkatársak</span>
-                        <span class="pull-right-container">
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-users"></i> <span>Munkatársak</span>
+                            <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
 
                          </span>
-                    </a>
-                    <ul class="treeview-menu">
+                        </a>
+                        <ul class="treeview-menu">
 
-                        <li><a href="/people/index">Listázás</a></li>
-                        <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                        <li><a href="/people/index">Szerkesztő/Törlő</a></li>
-                        {{--<li><a href="#">Kimutatások</a></li>--}}
-
+                            <li><a href="/people/index">Listázás</a></li>
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>
-
                             <li><a href="/users/index">Jogosultság kezelés</a></li>
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
 
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
-                        <span class="pull-right-container">
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
+                            <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
 
                          </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="/mysite">Saját telephely</a></li>
-                        @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            @can('isSites')
+                                <li><a href="/sites/index">Összes telephely</a></li>
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
-                            <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
-
-                    </ul>
-                </li>
-                <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a></li>
-                <li class="active"><a href=""><i class="fa fa-child"></i> <span>Statisztikák</span></a></li>
-            </ul>
+                        </ul>
+                    </li>
+                    <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
+                    </li>
+                    <li class="active"><a href=""><i class="fa fa-child"></i> <span>Statisztikák</span></a></li>
+                </ul>
             @endcan
-            //--->INCOMES
+            {{--INCOMES--}}
             @can('isIncomes')
 
                 <ul class="sidebar-menu" data-widget="tree">
@@ -315,9 +295,6 @@ desired effect
                         <ul class="treeview-menu">
 
                             <li><a href="/incomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/incomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
                             <li><a href="/incomes/create">Új bevétel rögzítése</a></li>
                             <li><a href="/incomes/create">Új bevétel típus rögzítése</a></li>
 
@@ -332,11 +309,8 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/outcomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-                            <li><a href="/outcomes/create">Új ügyfél rögzítése</a></li>
+                            <li><a href="/costs/index">Listázás</a></li>
+                            <li><a href="/costs/create">Új ügyfél rögzítése</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -347,9 +321,9 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">Saját telephely</a></li>
-                            @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
-
+                            <li><a href="/mysite">{{Auth::user()->employee->site->name}} </a></li>
+                            @can('isSites')
+                                <li><a href="/sites/index">Összes telephely</a></li>
                                 <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
 
@@ -359,8 +333,8 @@ desired effect
                     </li>
                 </ul>
             @endcan
-            //--->OUTCOMES
-            @can('isOutcomes')
+            {{--CostS--}}
+            @can('isCosts')
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header"><b>KIADÁSOK KEZELÉSE MÓD</b></li>
                     <!-- Optionally, you can add icons to the links -->
@@ -375,12 +349,9 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/outcomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-                            <li><a href="/outcomes/create">Új kiadás rögzítése</a></li>
-                            <li><a href="/outcomes/create">Új kiadás típus rögzítése</a></li>
+                            <li><a href="/costs/index">Listázás</a></li>
+                            <li><a href="/costs/create">Új kiadás rögzítése</a></li>
+                            <li><a href="/costs/create">Új kiadás típus rögzítése</a></li>
 
 
                         </ul>
@@ -394,11 +365,8 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/outcomes/index">Listázás</a></li>
-                            <!--A Buttons oszlop ne látszódjon csak Admin módban-->
-                            <li><a href="/outcomes/index">Szerkesztő/Törlő</a></li>
-                            {{--<li><a href="#">Kimutatások</a></li>--}}
-                            <li><a href="/outcomes/create">Új beszállító rögzítése</a></li>
+                            <li><a href="/costs/index">Listázás</a></li>
+                            <li><a href="/costs/create">Új beszállító rögzítése</a></li>
 
                         </ul>
                     </li>
@@ -410,9 +378,9 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">Saját telephely</a></li>
-                            @can('isSites')<li><a href="/sites/index">Összes telephely</a></li>
-
+                            <li><a href="/mysite">{{Auth::user()->employee->site->name}} </a></li>
+                            @can('isSites')
+                                <li><a href="/sites/index">Összes telephely</a></li>
                                 <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
 
@@ -455,7 +423,8 @@ desired effect
               | Your Page Content Here |
               -------------------------->
             @yield('content')
-            <div id="app">
+
+            <div>
                 @if (session('notification'))
                     <notification type="{{ session('notificationType') }}"
                                   message="{{ session('notification') }}"></notification>

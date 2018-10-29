@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p v-if="directs!=0">
+        <p v-if="directs!==null">
             <directs :last_name="last_name" :directs="directs"></directs>
         </p>
         <p v-else>Nincs beosztottja!</p>

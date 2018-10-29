@@ -15,8 +15,8 @@
                         <input type="text" class="form-control" id="first_name" name="first_name" :value=person.first_name>
                     </div>
                     <div class="form-group">
-                        <label for="born">Born</label>
-                        <input type="date" class="form-control" id="born" name="born" :value="person.born">
+                        <label for="birth">Birth</label>
+                        <input type="date" class="form-control" id="birth" name="birth" :value="person.birth">
                     </div>
 
                     <div class="form-group">
@@ -63,17 +63,17 @@
                         <label for="comment">Comment</label>
                         <input type="text" class="form-control" id="comment" name="comment" :value="person.comment">
                     </div>
-                    <div class="form-group">
-                        <label for="principal_id">Felettes: </label>
-                        <select title="principal_id" id="principal_id" name="principal_id">
+                    <!--<div class="form-group">-->
+                        <!--<label for="principal_id">Felettes: </label>-->
+                        <!--<select title="principal_id" id="principal_id" name="principal_id">-->
 
-                            <option disabled value="">Please select one</option>
-                            <option v-for="p in people" :value="p.id">
-                                <span v-if="p.principal_id!==null && p.id!==person.id">{{p.last_name}} {{p.first_name}}</span>
-                            </option>
+                            <!--<option disabled value="">Please select one</option>-->
+                            <!--<option v-for="p in people" :value="p.id">-->
+                                <!--<span v-if="p.principal_id!==null && p.id!==person.id">{{p.last_name}} {{p.first_name}}</span>-->
+                            <!--</option>-->
 
-                        </select>
-                    </div>
+                        <!--</select>-->
+                    <!--</div>-->
                     <div class="form-group">
                         <label for="site_id">Telephely</label>
                         <select title="site_id" id="site_id" name="site_id" >
@@ -162,7 +162,7 @@
 
         },
         methods: {
-            updateEmployee: function createEmployee(e) {
+            updateEmployee(e) {
 
                 // let input = this.newEmployee;
                 // let id = this.id;

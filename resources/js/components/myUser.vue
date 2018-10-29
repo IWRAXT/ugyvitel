@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="app">
         <div class="card">
             <div class="card-header">
                 <h5> {{person.last_name }} {{person.first_name }} </h5>{{ person.job }} adatlapja
@@ -22,19 +22,25 @@
                     </tr>
                     <tr>
                         <td><span><i class="fa fa-birthday-cake"></i> Birth:</span></td>
-                        <td>{{person.born }}</td>
+                        <td>{{person.birth }}</td>
                     </tr>
                     <tr>
                         <td><span><i class="fa fa-phone"></i> Phone</span></td>
                         <td>{{person.phone_number }}</td>
                     </tr>
                     <tr>
-                        <td><span><i class="fa fa-euro"></i> Salary</span></td>
-                        <td>{{person.month_salary }}</td>
+                        <td><span><i class="fa fa-bank"></i> Telephely</span></td>
+                        <td>{{person.site.name }}</td>
                     </tr>
+                    <tr v-if="person.site.name!=='Igazgatóság'">
+
+                        <td><span><i class="fa fa-tree"></i> Felettes</span></td>
+                        <td v-if="person.site.leader_id != person.id">{{person.site.leader.last_name }} {{person.site.leader.first_name }}</td>
+                        <td v-else> Igazgatóság főnöke</td>
+                    </tr>
+
                     </tbody>
                 </table>
-                <p>Lehessen a password-ot is váloztatni</p>
                 <!--@if (session('status'))-->
                 <!--<div class="alert alert-success" role="alert">-->
                 <!--{{ session('status') }}-->
@@ -68,8 +74,8 @@
 
         <div v-if="edit" class="row justify-content-center">
             <div class="col-lg-9">
-
-                <form id="editForm" name="editForm" enctype="multipart/form-data">
+                <!--Employee data change-->
+                <form id="editEmployeeForm" name="editEmployeeForm" enctype="multipart/form-data">
 
 
                     <div class="form-group">
@@ -81,22 +87,35 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email: </label>
                         <input type="text" class="form-control" id="email" name="email" :value="person.email">
                     </div>
+                    <!--todo: vagy legyen 1 email vagy mind2 helyen frissüljön, ahogy a név is-->
 
                     <div class="form-group">
-                        <label for="phone_number">Phone</label>
+                        <label for="phone_number">Phone: </label>
                         <input type="text" class="form-control" id="phone_number" name="phone_number"
                                :value="person.phone_number">
                     </div>
 
-
-                    <div class="btn btn-primary" @click.prevent="updateEmployee(); edit=false">
+                    <div class="btn btn-primary" @click.prevent="updateEmployee()">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
-
                 </form>
+                <!--User data change-->
+                <form id="editUserForm" name="editUserForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="password">New Password: </label>
+                        <input type="password" class="form-control" id="password" name="password"
+                               :value="person.user.password"
+                               required placeholder="****">
+                    </div>
+
+                    <div class="btn btn-primary" @click.prevent="updateUser() ">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -106,51 +125,38 @@
 <script>
     export default {
         name: "myUser",
-        // props: {
-        //     id: String, //linkel küldött {id}
-        //     image: String,  //képneve
-        //     last_name: String,
-        //     first_name:String,
-        //     born:String, //Date
-        //     email:String,
-        //     address:String,
-        //     phone_number:String,
-        //     month_salary:String,//Number
-        //     definite_employment: String,//Boolean
-        //     recruitment_date:String,//Date
-        //     job:String,
-        //     comment:String,
-        //     principal_id:Number,
-        // },
+
         data: function () {
 
             return {
                 url: '',
                 image: '',
-                person: {},
+                person: [],
                 delete: false, //kép törlése
                 edit: false,
                 id: '',
             }
         },
         mounted() {
-
-            axios.get('/people/edit_mount')
-                .then(response => {
-                    this.person = response.data;
-                    console.log(response.data);
-                    this.image=this.person.image;
-                    this.url = "/storage/images/" + this.person.image;
-                })
-                .catch(function (error) {
-                    alert("Hiba történt a user adatok betöltése során!");
-                    console.log(error);
-                });
+            this.init();
 
 
         },
         methods: {
-            updateEmployee: function createEmployee(e) {
+            init() {
+                axios.get('/people/edit_mount')
+                    .then(response => {
+                        this.person = response.data;
+                        console.log(response.data);
+                        this.image = this.person.image;
+                        this.url = "/storage/images/" + this.person.image;
+                    })
+                    .catch(function (error) {
+                        alert("Hiba történt a user adatok betöltése során!");
+                        console.log(error);
+                    });
+            },
+            updateEmployee(e) {
 
                 // let input = this.newEmployee;
                 // let id = this.id;
@@ -161,19 +167,19 @@
 
                 this.edit = false;
                 //Formdata használatánál a template-nél kell a form
-                let editForm = document.getElementById('editForm');
-                console.log(editForm);
-                const formData = new FormData(editForm);
+                let editEmployeeForm = document.getElementById('editEmployeeForm');
+                console.log(editEmployeeForm);
+                const formData = new FormData(editEmployeeForm);
                 formData.append('last_name', this.person.last_name);
                 formData.append('first_name', this.person.first_name);
-                formData.append('born', this.person.born);
+                formData.append('birth', this.person.birth);
                 formData.append('address', this.person.address);
                 formData.append('month_salary', this.person.month_salary);
                 formData.append('definite_employment', this.person.definite_employment);
                 formData.append('recruitment_date', this.person.recruitment_date);
                 formData.append('job', this.person.job);
                 formData.append('comment', this.person.comment);
-                formData.append('principal_id', this.person.principal_id);
+                // formData.append('principal_id', this.person.principal_id);
                 formData.append('site_id', this.person.site_id);
 
 
@@ -187,16 +193,52 @@
 
                     {headers: {'Content-Type': 'multipart/form-data'}}
                 ).then(function (response) {
-                        //TODO: myuser adatok frissítése nem automatikus, kell az oldal újratöltés
                         // this.person=response.data.person;
+
                         showNotification(response.data.notification, response.data.notificationType);
+
                     }
                 ).catch(function (error) {
                         alert("User adatok frissítése sikertelen!!");
-                        showNotification('User adatok frissítése sikertelen!!', 'alert-error');
                         console.log(error);
                     }
                 );
+                this.init();
+
+
+            },
+            updateUser(e) {
+
+                // let input = this.newEmployee;
+                // let id = this.id;
+                // if (input['permission'] === '' || input['site'] === ''|| input['password'] === '' ) {
+                //     this.hasError = true;
+                // } else {
+                //     this.hasError = false;
+
+                this.edit = false;
+
+                let editUserForm = document.getElementById('editUserForm');
+                console.log(editUserForm);
+                const formData = new FormData(editUserForm);
+                formData.append('name', this.person.user.email);
+                formData.append('permission_id', this.person.user.permission_id);
+
+
+                axios.post('/users/' + this.person.user.id + '/update', formData,
+
+                    {headers: {'Content-Type': 'multipart/form-data'}}
+                ).then(function (response) {
+                        // this.person=response.data.person;
+                        showNotification(response.data.notification, response.data.notificationType);
+
+                    }
+                ).catch(function (error) {
+                        alert("User adatok frissítése sikertelen!!");
+                        console.log(error);
+                    }
+                );
+                this.init();
 
             },
             onFileChange(e) {

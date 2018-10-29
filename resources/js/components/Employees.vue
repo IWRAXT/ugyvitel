@@ -16,8 +16,9 @@
                         <template slot="name" slot-scope="props">
                             {{props.row.last_name}} {{props.row.first_name}}
                         </template>
-                        <template slot="principal name" slot-scope="props">
-                            {{props.row.principal.last_name}} {{props.row.principal.first_name}}
+                        <template slot="leader" slot-scope="props">
+                            <span v-if="props.row.site.leader_id==null"> - </span>
+                            <span v-else>{{props.row.site.leader.last_name}} {{props.row.site.leader.first_name}}</span>
                         </template>
                         <template slot="definite_employment" slot-scope="props">
                             <i v-if="props.row.definite_employment=='true'" class="fa fa-check"></i>
@@ -44,43 +45,28 @@
                                     </h3>
                                     <p slot="body">
                                         <edit_employee :id="props.row.id"></edit_employee>
-                                                       <!--:image="props.row.image"-->
-                                                       <!--:last_name="props.row.last_name"-->
-                                                       <!--:first_name="props.row.first_name"-->
-                                                       <!--:born="props.row.born"-->
-                                                       <!--:email="props.row.email"-->
-                                                       <!--:address="props.row.address"-->
-                                                       <!--:phone_number="props.row.phone_number"-->
-                                                       <!--:month_salary="props.row.month_salary"-->
-                                                       <!--:definite_employment="props.row.definite_employment"-->
-                                                       <!--:recruitment_date="props.row.recruitment_date"-->
-                                                       <!--:job="props.row.job"-->
-                                                       <!--:comment="props.row.comment"-->
-                                                       <!--:site_id="props.row.site_id"-->
-
-
 
                                     </p>
 
                                 </modal>
 
-                                <!--Directs - Át kell írni lastname firstname-re-->
-                                <button @click="props.row.showModal_directs = true"
-                                        class="edit-modal btn btn-outline-secondary btn-sm">Directs
-                                </button>
+                                <!--&lt;!&ndash;Directs - Át kell írni lastname firstname-re&ndash;&gt;-->
+                                <!--<button @click="props.row.showModal_directs = true"-->
+                                        <!--class="edit-modal btn btn-outline-secondary btn-sm">Directs-->
+                                <!--</button>-->
 
 
-                                <modal v-if="props.row.showModal_directs"
-                                       @close="props.row.showModal_directs = false">
+                                <!--<modal v-if="props.row.showModal_directs"-->
+                                       <!--@close="props.row.showModal_directs = false">-->
 
-                                    <h3 slot="header">{{props.row.last_name}} {{props.row.first_name}}
-                                        beosztottjai:</h3>
-                                    <p slot="body">
-                                        <directsList :id="props.row.id"
-                                                     :last_name="props.row.last_name"></directsList>
-                                    </p>
+                                    <!--<h3 slot="header">{{props.row.last_name}} {{props.row.first_name}}-->
+                                        <!--beosztottjai:</h3>-->
+                                    <!--<p slot="body">-->
+                                        <!--<directsList :id="props.row.id"-->
+                                                     <!--:last_name="props.row.last_name"></directsList>-->
+                                    <!--</p>-->
 
-                                </modal>
+                                <!--</modal>-->
 
                                 <!--Delete-->
                                 <button class="edit-modal btn btn-danger btn-sm"
@@ -255,22 +241,22 @@
             return {
                 people: [],
                 hasError: true,
-                columns: ['id', 'image', 'name', 'born', 'email', 'address', 'phone_number', 'month_salary', 'definite_employment', 'recruitment_date', 'job', 'comment', 'principal name', 'user.permission.name', 'site.name', 'buttons'],
+                columns: ['id', 'image', 'name', 'birth', 'email', 'address', 'phone_number', 'month_salary', 'definite_employment', 'recruitment_date', 'job', 'comment', 'leader', 'user.permission.name', 'site.name', 'buttons'],
 
                 options: {
                     filterByColumn: true,
-                    toMomentFormat: 'born',
+                    toMomentFormat: 'birth',
                     listColumns: {
                         name: [],
                     },
-                    filterable: ['name', 'born', 'email', 'address'],
+                    filterable: ['name', 'birth', 'email', 'address'],
                     columnsDropdown: true,
                     clientMultiSorting: true,
                     columnsDisplay: {},
                     footerHeadings: true,
                     // datepickerPerColumnOptions:{},
 
-                    // dateColumns: ['born'],
+                    // dateColumns: ['birth'],
                     // dateFormat: 'YYYY-MM-DD',
                     datepickerOptions: {
                         showDropdowns: true,
@@ -278,7 +264,6 @@
                     headings: {
                         name: 'Name',
                         id: '#',
-                        'principal.last_name': 'Principal',
                         'user.permission.name': 'Permission',
                         'site.name': 'Site',
                     },
@@ -317,7 +302,7 @@
 
             },
 
-            deletePerson: function (person) {
+            deletePerson (person) {
 
                 let conf = confirm("Tényleg törli a dolgozót?");
                 if (conf === true) {
@@ -325,7 +310,7 @@
                     axios.post('/people/' + person.id)
                         .then(function (response) {
                             console.log('Sikerült a dolgozót törölni !');
-                            this.people = response.data.people;
+                            // this.people = response.data.people;
                             showNotification(response.data.notification, response.data.notificationType);
                         })
 

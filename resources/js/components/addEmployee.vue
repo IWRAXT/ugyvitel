@@ -16,8 +16,8 @@
                                 <input type="text" class="form-control" id="first_name" name="first_name">
                             </div>
                             <div class="form-group">
-                                <label for="born">Born</label>
-                                <input type="date" class="form-control" id="born" name="born">
+                                <label for="birth">Birth</label>
+                                <input type="date" class="form-control" id="birth" name="birth">
                             </div>
 
                             <!--Képet külön appenddel kell hozzáadni-->
@@ -62,23 +62,24 @@
                                 <label for="comment">Comment</label>
                                 <input type="text" class="form-control" id="comment" name="comment">
                             </div>
-                            <div class="form-group">
-                                <label for="principal_id">Felettes: </label>
-                                <select title="principal_id" id="principal_id" name="principal_id">
+                            <!--<div class="form-group">-->
+                                <!--<label for="principal_id">Felettes: </label>-->
+                                <!--<select title="principal_id" id="principal_id" name="principal_id">-->
 
-                                    <option disabled value="">Please select one</option>
-                                    <option v-for="p in people" :value="p.id">
-                                        <span v-if="p.principal_id!==null">{{p.last_name}} {{p.first_name}}</span>
-                                    </option>
+                                    <!--<option disabled value="">Please select one</option>-->
+                                    <!--<option v-for="p in people" :value="p.id">-->
+                                        <!--<span v-if="p.principal_id!==null">{{p.last_name}} {{p.first_name}}</span>-->
+                                    <!--</option>-->
 
-                                </select>
-                            </div>
+                                <!--</select>-->
+                            <!--</div>-->
 
                             <div class="form-group">
                                 <label for="site_id">Telephely</label>
                                 <select title="site_id" id="site_id" name="site_id">
 
                                     <option disabled value="">Please select one</option>
+                                    <!--<option v-if="" value="">Please select one</option>-->
                                     <option v-for="s in sites" :value="site_id=s.id">
                                         <span v-if="s.id!==null">{{s.name}}</span>
                                     </option>
@@ -119,6 +120,7 @@
                     alert("Hiba történt a dolgozók betöltése során!");
                     console.log(error);
                 });
+
             axios.get('/sites')
                 .then(response => {
                     this.sites = response.data;
@@ -153,6 +155,7 @@
                 ).then(function (response) {
                         console.log('Sikerült a dolgozót hozzáadni !');
                         showNotification(response.data.notification, response.data.notificationType);
+
                     }
                 ).catch(function (error) {
                         alert("Nem sikerült a dolgozót hozzáadni !");

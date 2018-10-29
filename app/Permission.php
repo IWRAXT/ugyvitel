@@ -11,7 +11,4 @@ class Permission extends Model
     ];
 
 
-//    public function permission(){
-//        return $this->hasOne(User::class);
-//    }
 }

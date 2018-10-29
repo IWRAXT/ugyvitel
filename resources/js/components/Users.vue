@@ -33,14 +33,16 @@
                                     <h3 slot="header">Edit <b> {{props.row.name }} </b>
                                     </h3>
                                     <p slot="body">
-                                        <edit_user :id="props.row.id" :permission_id="props.row.permission_id"></edit_user>
+                                        <edit_user :id="props.row.id"
+                                                   :permission_id="props.row.permission_id"></edit_user>
 
                                     </p>
 
                                 </modal>
 
                                 <!--Delete-->
-                                <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteUser(props.row) " >
+                                <button class="edit-modal btn btn-danger btn-sm"
+                                        @click.prevent="deleteUser(props.row)">
                                     Delete
                                 </button>
 
@@ -103,54 +105,41 @@
                         this.users = users;
                         console.log(users);
                     })
-
-
                     .catch(function (error) {
                         alert("Hiba történt az oldal betöltése során!");
                         console.log(error);
                     });
-
-
             }
             ,
 
-            deleteUser: function (user) {
+            deleteUser(user) {
 
                 let conf = confirm("Tényleg törli a usert?");
                 if (conf === true) {
                     console.log("A User id: " + user.id);
 
                     axios.post('/users/' + user.id) //UserControllerbe küldi
-                        .then(function (response) {
+                        .then(response => {
 
-                            console.log('employee_id: '+user.employee_id);
-                            // this.users = response.data.users;
 
-                            axios.delete('/userid/' + user.employee_id) //EmployeeControllerbe küldi kitörölni az employees táblából a user_id oszlop tartalmát
-                                .then(function (response) {
-                                    showNotification(response.data.notification, response.data.notificationType);
-                                })
-                                .catch(function (error) {
-                                    alert("Nem sikerült törölni az employees táblából a user_id oszlop tartalmát!");
-                                    showNotification('Nem sikerült a usert törölni!', 'alert-error');
-                                    console.log(error);
-                                });
+                            showNotification(response.data.notification, response.data.notificationType);
+                            // this.users=response.data.users;
+                            console.log(this.users);
+                            this.init();
 
                         })
 
                         .catch(function (error) {
                                 alert("Nem sikerült törölni!");
-                                showNotification('Nem sikerült a usert törölni!', 'alert-error');
+                                // showNotification('Nem sikerült a usert törölni!', 'alert-error');
                                 console.log(error);
 
                             }
                         );
-                    // this.init();
+
                 }
             }
             ,
-
-
         }
 
     }

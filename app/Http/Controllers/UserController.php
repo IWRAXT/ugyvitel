@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUser;
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -14,26 +16,52 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        $users =User::with( 'permission')->get();
-        return $users;
+
+//        if (Auth::user()->can('isSites')) {
+            $users =User::with( 'permission','employee')->get();
+            return $users;
+//        }else{
+//            $users =User::with( 'permission', 'employee')
+//                ->where('employee.site_id', Auth::user()->employee->site->id)
+//                ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
+//            return $users;
+//        }
+
+
+
+
+    }
+    public function getLeaders()
+    {
+        //Csak a permission_id
+        $leaders = User::with('permission')
+            ->where('permission_id', 3, 2)
+            ->get();
+        return $leaders;
+
 
     }
 
-    public function store(Request $request)
+
+    public function store(StoreUser $request)
     {
-        $user= new User();
+        $user=new User();
         $user->name=request('name');
         $user->email=request('email');
         $user->password=bcrypt(request('password'));
         $user->permission_id=request('permission');
-        $user->employee_id=request('employee_id');
 
-        //Site-ot az új permission hozzáadásánál lehessen beállítani
-//        $user->permission_id=request('site');
 
+//        $user=User::create([
+//            'name'=> request('name'),
+//            'employee'=>request('email'),
+//            'password'=>bcrypt(request('password')),
+//            'permission_id'=>request('permission'),
+//        ])->with('employee');
+//        $user->employee->id=request('employee_id');
 
         $user->save();
-        return response()->json(['user' => $user, 'notification' => 'A usert sikeresen hozzáadta!', 'notificationType' => 'alert-success']);
+        return response()->json(['user' => $user, 'notification' => 'A User hozzáadva a Userstáblához!', 'notificationType' => 'alert-success']);
     }
     public function edit($id)
     {
@@ -45,11 +73,12 @@ class UserController extends Controller
     public function update(Request $request, $id){
 
         $user = User::with('permission')->find($id);
-
         $user->name=request('name');
         $user->email=request('email');
         $user->password=bcrypt(request('password'));
-        $user->permission_id=request('permission');
+        $user->permission_id=request('permission_id');
+
+        $user->save();
 
         return response()->json(['user' => $user, 'notification' => 'A user sikeresen frissítve!', 'notificationType' => 'alert-success']);
 
@@ -59,7 +88,7 @@ class UserController extends Controller
         //Todo:Splice() jobb megoldás lenne
 
         $user = User::find($id);
-
+        $user->employee->user_id='';
         $user->delete();
         return response()->json(['users' => User::all(), 'notification' => 'A user sikeresen törölve!', 'notificationType' => 'alert-success']);
     }

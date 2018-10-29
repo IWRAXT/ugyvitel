@@ -12,7 +12,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'image','permission_id', 'employee_id'
+        'name', 'email', 'password', 'image','permission_id', 'employee',
     ];
 
 
@@ -24,6 +24,7 @@ class User extends Authenticatable
         return $this->belongsTo(Permission::class);
     }
     public function employee(){
-        return $this->belongsTo(Employee::class);
+        return $this->hasOne(Employee::class);
     }
+    //Már van egy kapcsolat a User és az Employee modellben szóval elég a visszafelé hivatkozó hasOne
 }

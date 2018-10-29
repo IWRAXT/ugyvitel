@@ -13,22 +13,30 @@ class CreateEmployeesTable extends Migration
             $table->increments('id');
             $table->string('last_name');
             $table->string('first_name');
-            $table->date('born');//birth
+            $table->date('birth');
             $table->string('image')->default('default.jpg');
-            $table->string('email')->nullable()->unique();
             $table->string('address');
             $table->string('phone_number')->nullable();
             $table->integer('month_salary');
-            $table->boolean('definite_employment')->default(false);
             $table->date('recruitment_date');
             $table->string('job');
             $table->string('comment')->nullable();
 
             $table->timestamps();
 
-            $table->integer('principal_id')->nullable();
+//            $table->integer('principal_id')->nullable();
+
             $table->integer('user_id')->nullable();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+
             $table->integer('site_id')->nullable();
+            $table->foreign('site_id')
+                ->references('id')
+                ->on('sites');
+
+
         });
 
         //csekk phone, email, nullable (constraint)

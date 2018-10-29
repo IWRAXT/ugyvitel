@@ -45,6 +45,7 @@ Route::post('people/editUser','UserController@update');
 Route::post('/users/{id}','UserController@destroy');
 Route::post('/user','UserController@store');
 Route::get('/users', 'UserController@getUsers');
+Route::get('/leaders', 'UserController@getLeaders');
 Route::get('/users/index', 'UserController@index');
 Route::get('/users/{id}/edit','UserController@edit');
 Route::post('/users/{id}/update','UserController@update');
@@ -56,6 +57,8 @@ Route::get('/permission', 'PermissionController@getPermission');
 //Sites table
 Route::get('/sites/index','SiteController@index');
 Route::get('/sites', 'SiteController@getSites');
+Route::get('/getEmployees/{id}','SiteController@getEmployees');
+Route::get('/getAuthUserSiteId','SiteController@getAuthUserSiteId');
 Route::post('/sites','SiteController@store');
 Route::get('/sites/create','SiteController@create');
 Route::get('/mysite','SiteController@mysite');

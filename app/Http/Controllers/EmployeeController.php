@@ -22,8 +22,16 @@ class EmployeeController extends Controller
 
     public function getPeople()
     {
-        $people = Employee::with('user', 'user.permission', 'principal', 'site')->get();
-        return $people;
+        if (Auth::user()->can('isSites')) {
+            $people = Employee::with('user', 'user.permission', 'site','site.leader')->get();
+            return $people;
+        }else{
+            $people = Employee::with('user', 'user.permission', 'site', 'site.leader')
+                ->where('site_id', Auth::user()->employee->site->id)
+                ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
+            return $people;
+        }
+
     }
 
     public function user_id(Request $request, $id)
@@ -36,7 +44,7 @@ class EmployeeController extends Controller
     public function delete_user_id( $id)
     {
         $person = Employee::find($id);
-        $person->user_id = null;
+        $person->user->id = null;
         $person->save();
         return response()->json(['person' => $person, 'notification' => 'User jog törölve!', 'notificationType' => 'alert-success']);
     }
@@ -79,7 +87,7 @@ class EmployeeController extends Controller
         } else {
             $person->image = 'default.jpg';
         }
-        $person->born = request('born');
+        $person->birth = request('birth');
         $person->address = request('address');
         $person->phone_number = request('phone_number');
         $person->month_salary = request('month_salary');
@@ -87,10 +95,11 @@ class EmployeeController extends Controller
         $person->recruitment_date = request('recruitment_date');
         $person->job = request('job');
         $person->comment = request('comment');
-        $person->principal_id = request('principal_id');
+//        $person->principal_id = request('principal_id');
         $person->site_id = request('site_id');
         $person->save();
-        return response()->json(['person' => $person, 'notification' => 'User jog sikeresen hozzáadva a dolgozóhoz!', 'notificationType' => 'alert-success']);
+        return response()->json(['person' => $person, 'notification' => 'Az új munkatárs sikeresen hozzáadva!', 'notificationType' => 'alert-success']);
+        //Dolgozók listájára kéne mutatnia
     }
 
     public function edit($id)
@@ -101,8 +110,8 @@ class EmployeeController extends Controller
 
     public function edit_mount() //Auth User
     {
-        $id = Auth::user()->employee_id;
-        $person = Employee::with('user', 'user.permission', 'site')->find($id);
+        $id = Auth::user()->employee->id;
+        $person = Employee::with('user', 'user.permission', 'site','site.leader')->find($id);
         return response($person);
 
     }
@@ -130,7 +139,7 @@ class EmployeeController extends Controller
                 $person->image = $person->email . '.jpg';
             }
         }
-        $person->born = request('born');
+        $person->birth = request('birth');
         if ($request->hasFile('file')) {
             $decode = file_get_contents($request['image']); //Blob file-t küldtünk a Vue-ból
             $img = Image::make($decode);
@@ -144,7 +153,7 @@ class EmployeeController extends Controller
             $person->image = $person->email . '.jpg';
             $img->save(storage_path('app/public/images/' . $person->image)); //mentem a mostanit
         }
-        if (request('delete') == 'true') {
+        if (request('delete') == 'true' &&  $person->image!='default.jpg') {
             $img_path = 'app/public/images/' . $person->image;
             File::delete(storage_path($img_path));
             $person->image = 'default.jpg';
@@ -156,7 +165,7 @@ class EmployeeController extends Controller
         $person->recruitment_date = request('recruitment_date');
         $person->job = request('job');
         $person->comment = request('comment');
-        $person->principal_id = request('principal_id');
+//        $person->principal_id = request('principal_id');
         $person->site_id = request('site_id');
 
         $person->save();
@@ -173,8 +182,9 @@ class EmployeeController extends Controller
             File::delete($img_path);
         }
         //Ha az employee törlődik törlődjön a hozzátartozó user is
-        if ($person->user_id !== null) {
-            User::find($person->user_id)->delete();
+        //todo: ha leader akkor törlődjön a telephelyekből is
+        if ($person->user->id !== null) {
+            User::find($person->user->id)->delete();
         }
         $person->delete();
         return response()->json(['people' => Employee::all(), 'notification' => 'A dolgozó sikeresen törölve!', 'notificationType' => 'alert-success']);

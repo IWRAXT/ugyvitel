@@ -6,12 +6,22 @@
                     <div class="card-header">
                         <h1>Új telephely rögzítése</h1></div>
                     <div class="card-body">
+
+                        <!--@if ($errors->any())-->
+                        <!--<div class="alert alert-danger">-->
+                            <!--<ul>-->
+                                <!--@foreach ($errors->all() as $error)-->
+                                <!--<li>{{ $error }}</li>-->
+                                <!--@endforeach-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                        <!--@endif-->
+
                         <form id="myForm" name="myForm" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" id="name" name="name">
                             </div>
-
 
                             <!--Képet külön appenddel kell hozzáadni-->
                             <div v-if="!url">
@@ -31,11 +41,18 @@
                                 <label for="phone_number">Phone</label>
                                 <input type="text" class="form-control" id="phone_number" name="phone_number">
                             </div>
-                            <div class="form-group">
-                                <label for="leader">Leader</label>
-                                <input type="text" class="form-control" id="leader" name="leader">
-                            </div>
+                            <!--<p><i>(leader hozzáadásánál győződjön meg arról, hogy van olyan felhasználó akinek 'Leader' jogot állított be)</i></p>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="leader_id">Leader</label>-->
+                                <!--<select title="leader_id" id="leader_id" name="leader_id" >-->
 
+                                    <!--<option disabled value="">Please select one</option>-->
+                                    <!--<option v-for="p in leaders" :value="p.id">-->
+                                        <!--<span >{{p.name}} </span>-->
+                                    <!--</option>-->
+
+                                <!--</select>-->
+                            <!--</div>-->
 
                             <div class="btn btn-primary" @click.prevent="createSite()">
                                 <button type="submit" class="btn btn-primary">Rögzít</button>
@@ -57,11 +74,33 @@
                 image: '',
                 url: null,
                 sites: [],
+                people: [],
+                leaders: [],
             }
+        },
+        mounted() {
+
+            // axios.get('/people')
+            //     .then(response => {
+            //         this.people = response.data;
+            //     })
+            //     .catch(function (error) {
+            //         alert("Hiba történt a vezetői adatok betöltése során!");
+            //         console.log(error);
+            //     });
+            axios.get('/leaders')
+                .then(response => {
+                    this.leaders = response.data;
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    alert("Hiba történt a dolgozói adatok betöltése során!");
+                    console.log(error);
+                });
         },
 
         methods: {
-            createSite: function createSite(e) {
+            createSite(e) {
 
                 // let input = this.newEmployee;
                 // let id = this.id;
@@ -78,6 +117,8 @@
                 if (this.image !== '') {
                     formData.append('image', (new Blob([this.image])));
                 }
+                let leader_id=
+                formData.append('leader_id',leader_id);
 
                 axios.post('/sites', formData,
 
@@ -90,6 +131,7 @@
                         alert("Nem sikerült a telephelyet hozzáadni !");
                         showNotification('Nem sikerült a telephelyet hozzáadni!', 'alert-error')
                         console.log(error);
+
                     }
                 );
                 // axios.get('/people/index').then().catch(function (error) {

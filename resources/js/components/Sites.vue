@@ -13,6 +13,10 @@
                             <div><img :src="'/storage/images/'+props.row.image">
                             </div>
                         </template>
+                        <template slot="leader" slot-scope="props">
+                            <span v-if="props.row.leader_id==null"> - </span>
+                            <span v-else>{{props.row.leader.last_name}} {{props.row.leader.first_name}}</span>
+                        </template>
                         <template slot="buttons" slot-scope="props">
                             <div class="table-button-container">
                                 <!--Edit-->
@@ -33,27 +37,27 @@
 
                                 </modal>
 
-                                <!--Directs - Át kell írni lastname firstname-re-->
                                 <button @click="props.row.showModal_employees = true"
                                         class="edit-modal btn btn-outline-secondary btn-sm">Dolgozók
                                 </button>
 
 
-                                <!--<modal v-if="props.row.showModal_directs"-->
-                                       <!--@close="props.row.showModal_directs = false">-->
+                                <modal v-if="props.row.showModal_employees"
+                                       @close="props.row.showModal_employees = false">
 
-                                    <!--<h3 slot="header">{{props.row.last_name}} {{props.row.first_name}}-->
-                                        <!--beosztottjai:</h3>-->
-                                    <!--<p slot="body">-->
-                                        <!--<directsList :id="props.row.id"-->
-                                                     <!--:last_name="props.row.last_name"></directsList>-->
-                                    <!--</p>-->
+                                    <h3 slot="header">{{props.row.name}} dolgozói:</h3>
+                                    <p slot="body">
+                                        <site_employees :siteid="props.row.id"></site_employees>
+                                    </p>
 
-                                <!--</modal>-->
+                                </modal>
 
                                 <!--Delete-->
                                 <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteSite(props.row)">
-                                    Delete
+                                   Site Delete
+                                </button>
+                                <button class="edit-modal btn btn-danger btn-sm" >
+                                     Delete Site's employees
                                 </button>
 
                             </div>
@@ -74,14 +78,14 @@
             return {
                 sites: [],
                 hasError: true,
-                columns: ['id', 'image', 'name', 'address', 'phone_number',  'leader', 'buttons'],
+                columns: ['id', 'image', 'name', 'address', 'phone_number', 'leader', 'buttons'],
 
                 options: {
                     filterByColumn: true,
                     listColumns: {
-                        name:[],
+                        name: [],
                     },
-                    filterable: ['name', 'address', 'phone_number',  'leader'],
+                    filterable: ['name', 'address', 'phone_number', 'leader'],
                     columnsDropdown: true,
                     clientMultiSorting: true,
                     columnsDisplay: {},
@@ -135,7 +139,14 @@
                 if (conf === true) {
 
                     axios.post('/sites/' + site.id)
-                        .then(response => this.sites = response.data)
+                        .then(response => {
+                                if (response.data) {
+                                    this.sites = response.data
+                                }
+
+                                showNotification(response.data.notification, response.data.notificationType);
+                            }
+                        )
 
                         .catch(function (error) {
                                 alert("Nem sikerült törölni!");

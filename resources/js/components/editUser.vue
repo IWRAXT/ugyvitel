@@ -1,26 +1,30 @@
 <template>
     <div>
+        <!--<form id="editForm" name="editForm" enctype="multipart/form-data">-->
 
-        <label for="permission_id">Permission: </label>
-        <select title="permission_id" id="permission_id" name="permission_id" v-model="user.permission_id">
-            <option disabled value="">Please select one</option>
-            <option v-for="p in permissions" :value="p.id">
-                {{p.name}} /telephely:{{p.sites}}
-            </option>
+        <div class="form-group">
+            <label for="permission_id">Permission: </label>
+            <select title="permission_id" id="permission_id" name="permission_id" v-model="user.permission_id">
+                <option disabled value="">Please select one</option>
+                <option v-for="p in permissions" :value="p.id">
+                    {{p.name}} /telephely:{{p.sites}}
+                </option>
 
-        </select>
+            </select>
+        </div>
 
-        <!--<div class="form-group">-->
-            <!--<label for="password">Password:</label>-->
-            <!--<input type="password" class="form-control" id="password" name="password"-->
-                   <!--:value="user.password"-->
-                   <!--required placeholder="****"/>-->
-        <!--</div>-->
+        <div class="form-group">
+            <label for="password">New password:</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   v-model="user.password"
+                   required placeholder="****"/>
+        </div>
 
 
         <button class="btn btn-primary" @click="updateUser()">
             <span class="glyphicon glyphicon-plus"></span> ADD
         </button>
+        <!--</form>-->
     </div>
 </template>
 
@@ -28,13 +32,13 @@
     export default {
         name: "editUser",
         props: {
-            id : Number,
+            id: Number, //user id
             // permission_id: String,
         },
         data: function () {
             return {
                 permissions: [],
-                user:[],
+                user: [],
             }
         },
 
@@ -42,7 +46,7 @@
             axios.get('/users/' + this.id + '/edit')
                 .then(response => {
                     this.user = response.data;
-                    console.log(response.data);
+                    console.log('User permission: '+response.data.permission.name);
 
                 })
                 .catch(function (error) {
@@ -51,7 +55,8 @@
                 });
             axios.get('/permission')
                 .then(response => {
-                    this.permissions  = response.data;
+                    this.permissions = response.data;
+                    console.log('Permissions: '+response.data);
                 })
                 .catch(function (error) {
                     alert("Hiba történt a jogosultságok betöltése során!");
@@ -60,7 +65,7 @@
                 });
         },
         methods: {
-            updateUser: function updateUser() {
+            updateUser() {
                 // var _this = this;
 
 
@@ -70,16 +75,14 @@
                 //     this.hasError = false;
 
 
+                // let editForm = document.getElementById('editForm');
+                // const formData = new FormData(editForm);
 
-                let input = this.user;
-                // input.permission_id=this.permission_id;
-                console.log(input.permission.name);
-                axios.post('/users/'+this.id+'/update', input).then(function (response) {
-                    console.log('UpdateUser fg-ben...axiosban ');
-                        var userid = response.data.user.id;
-                        console.log('User sorszáma: '+response.data.user.id);
-                        console.log('User permission name: '+response.data.user.permission.name);
-                        // this.user=response.data.user;
+                let input= this.user;
+
+                axios.post('/users/' + this.id + '/update', input).then(function (response) {
+
+                        // this.user = response.data.user;
                         showNotification(response.data.notification, response.data.notificationType);
                     }
                 ).catch(function (error) {
@@ -96,5 +99,5 @@
 </script>
 
 <style scoped>
-    /*Todo: Megírni!*/
+
 </style>

@@ -23,16 +23,24 @@
                             </tr>
 
                             <tr>
-                                <td><span><i class="fa fa-phone"></i> Phone</span></td>
+                                <td><span><i class="fa fa-phone"></i> Phone: </span></td>
                                 <td>{{ Auth::user()->employee->site->phone_number}}</td>
                             </tr>
                             <tr>
-                                <td><span><i class="fa fa-child"></i> Leader</span></td>
-                                <td>{{ Auth::user()->employee->site->leader}}</td>
+                                <td><span><i class="fa fa-child"></i> Leader: </span></td>
+                                <td><h5>{{ Auth::user()->employee->site->leader->last_name}} {{ Auth::user()->employee->site->leader->first_name}}</h5>
+                                    <span><i class="fa fa-phone"> {{ Auth::user()->employee->site->leader->phone_number}}</i></span>
+                                    <br><span><i class="fa fa-address-book"> {{ Auth::user()->employee->site->leader->email}}</i></span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
-                            <p>Lista az itt dolgozókról..</p>
+                        <h5>Dolgozók</h5>
+                        <div id="app" >
+                            <site_employees :siteid="null"></site_employees>
+                        </div>
+
+
 
                     </div>
 

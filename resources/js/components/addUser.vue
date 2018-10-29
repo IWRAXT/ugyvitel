@@ -3,8 +3,8 @@
         <!--<p class="text-center alert alert-danger"-->
         <!--v-bind:class="{ hidden: hasError }">Please fill all fields!</p>-->
 
-
-        <select v-model="newUser.permission">
+        <label for="permission">Permission: </label>
+        <select v-model="newUser.permission" id="permission">
             <option disabled value="">Please select one</option>
             <option v-for="p in permissions" :value="p.id">
                 {{p.name}} {{p.sites}}
@@ -48,8 +48,7 @@
                     'name': this.last_name + ' ' + this.first_name,
                     'email': this.email,
                     'password': '',
-                    'permission': '',
-                    'employee_id' : this.id
+                    'permission': ''
                 }
             }
         },
@@ -68,10 +67,9 @@
                 });
         },
         methods: {
-            createUser: function createUser() {
+            createUser() {
                 // var _this = this;
-                let input = this.newUser;
-                let id = this.id;
+                // let input = this.newUser;
 
 
                 // if (input['permission'] === '' || input['site'] === ''|| input['password'] === '' ) {
@@ -79,11 +77,13 @@
                 // } else {
                 //     this.hasError = false;
 
-                axios.post('/user', input).then(function (response) { //UserControllerbe küldi
-                        var userid = response.data.user.id;
-                        console.log('User sorszáma: ' + userid);
-                        console.log('employee id: ' + id);
-                        axios.post('/userid/' + id, {userID: userid}).then(function (response) { //EmployeeControllerbe küldi
+                let id=this.id;
+
+                axios.post('/user', this.newUser).then(function (response) { //UserControllerbe küldi
+                    let user_id=response.data.user.id;
+                    console.log("User_id: "+user_id);
+                    // showNotification(response.data.notification, response.data.notificationType);
+                        axios.post('/userid/' + id, {userID: user_id}).then(function (response) { //EmployeeControllerbe küldi
 
                                 console.log("Sikerült hozzáadni a UserId-t!!!");
                                 showNotification(response.data.notification, response.data.notificationType);

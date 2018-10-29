@@ -19,7 +19,10 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             $table->integer('permission_id')->nullable();
-            $table->integer('employee_id')->nullable();
+            $table->foreign('permission_id')
+                  ->references('id')
+                  ->on('permissions');
+
         });
     }
 
@@ -27,5 +30,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+
     }
 }

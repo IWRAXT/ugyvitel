@@ -16,8 +16,9 @@ class CreatePermissionsTable extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->boolean('sites'); //1: Csak a sajátját láthtja 0: Összes telephelyet láthatja
-//            $table->timestamps();
+            $table->boolean('sites'); //0: Csak a sajátját láthtja
+                                              //1: Összes telephelyet láthatja
+            $table->timestamps();
         });
     }
 

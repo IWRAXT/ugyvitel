@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as Image;
 use App\Site;
+use Auth;
 use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\Http\Requests\StoreSite;
 
 class SiteController extends Controller
 {
@@ -14,24 +16,53 @@ class SiteController extends Controller
     {
         return view('sites.MySite');
     }
+
     public function index()
     {
         return view('sites.index');
     }
+
     public function getSites()
     {
-        $sites = Site::with('employee')->get();
-        return $sites;
+
+
+        if (Auth::user()->can('isSites')) {
+            $sites = Site::with('leader')->get();
+            return $sites;
+        }else{
+            $sites = Site::with('leader')
+                ->where('id', Auth::user()->employee->site->id)
+                ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
+            return $sites;
+        }
+
+
+
     }
+
+    public function getEmployees($id)
+    {
+        return Site::find($id)->printEmployees();
+    }
+
+    public function getAuthUserSiteId()
+    {
+        return Auth::user()->employee->site->id;
+    }
+
     public function create()
     {
         return view('sites.create');
     }
-    public function store(Request $request)
+
+    public function store(StoreSite $request)
     {
-        $this->validate($request, [
-            'file' => 'mimes:jpeg',
-        ]);
+//        $this->validate($request, [
+//            'file' => 'mimes:jpeg',
+//        ]);
+
+
+
         $site = new Site();
         $site->name = request('name');
 
@@ -47,18 +78,19 @@ class SiteController extends Controller
             $img = Image::make($decode);
             $img->save(storage_path('app/public/images/' . $site->image));
             //Todo: A képet 500x500s formátumba mentse méretarány megtartásával
-        }else{
-            $site->image ='default-site.jpg';
+        } else {
+            $site->image = 'default-site.jpg';
         }
 
         $site->address = request('address');
         $site->phone_number = request('phone_number');
 
-        $site->leader = request('leader');
+        $site->leader_id = request('leader_id');
         $site->save();
 
         return response()->json(['site' => $site, 'notification' => 'A telephely sikeresen rögzítve!', 'notificationType' => 'alert-success']);
     }
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -95,38 +127,42 @@ class SiteController extends Controller
             $site->image = $site->name . '.jpg';
             $img->save(storage_path('app/public/images/' . $site->image)); //mentem a mostanit
         }
-        if (request('delete') == 'true') {
+        if (request('delete') == 'true' && $site->image != 'default-site.jpg') {
             $img_path = 'app/public/images/' . $site->image;
             File::delete(storage_path($img_path));
             $site->image = 'default-site.jpg';
         }
         $site->address = request('address');
         $site->phone_number = request('phone_number');
-        $site->leader = request('leader');
-
-        $site->employee_id = request('employee_id');
+        $site->leader_id = request('leader_id');
 
 
         $site->save();
         return response()->json(['site' => $site, 'notification' => 'A telephely sikeresen frissítve!', 'notificationType' => 'alert-success']);
     }
+
     public function edit($id)
     {
-        $site = Site::with('employee')->find($id);
+        $site = Site::with('leader')->find($id);
         return $site;
     }
 
     public function destroy($id)
     {
         //Todo:Splice() jobb megoldás lenne
+        //Ha a telephely törlődik figyelmeztessen, ha van még a telephelyen dolgozó munkatársak akik a rendszerben maradtak
+        if (Site::find($id)->employees) {
+            return response()->json(['notification' => 'A telephelyhez dolgozók tartoznak, nem lehet törölni', 'notificationType' => 'alert-danger']);
+        } else {
+            $site = Site::find($id);
+            if ($site->image !== "default-site.jpg") {
+                $img_path = storage_path('app/public/images/') . $site->image;
+                File::delete($img_path);
+            }
+            $site->delete();
+            return response()->json(['site' => Site::all(), 'notification' => 'A telephely sikeresen törölve!', 'notificationType' => 'alert-success']);
 
-        $site = Site::find($id);
-        if ($site->image !== "default-site.jpg") {
-            $img_path = storage_path('app/public/images/') . $site->image;
-            File::delete($img_path);
         }
-        //Todo: Ha a telephely törlődik figyelmeztessen, ha van még a telephelyen dolgozó munkatársak akik a rendszerben maradtak
 
-        return response()->json(['site' => Site::all(), 'notification' => 'A telephely sikeresen törölve!', 'notificationType' => 'alert-success']);
     }
 }

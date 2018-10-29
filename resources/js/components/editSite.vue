@@ -1,5 +1,5 @@
 <template>
-    <div><p>EditSite</p>
+
         <div class="row justify-content-center">
             <div class="col-lg-9">
 
@@ -29,9 +29,15 @@
                                :value="site.phone_number">
                     </div>
                     <div class="form-group">
-                        <label for="leader">Leader</label>
-                        <input type="text" class="form-control" id="leader" name="leader"
-                               :value="site.leader">
+                        <label for="leader_id">Leader</label>
+                        <select title="leader_id" id="leader_id" name="leader_id" v-model="leader_id">
+
+                            <option disabled value="">Please select one</option>
+                            <option v-for="e in leaders" :value="e.id">
+                                {{e.name}}
+                            </option>
+
+                        </select>
                     </div>
 
                     <div class="btn btn-primary" @click.prevent="updateSite()">
@@ -41,7 +47,7 @@
                 </form>
             </div>
         </div>
-    </div>
+
 
 </template>
 
@@ -59,6 +65,9 @@
                 image:'',
                 site: {},
                 delete: false,
+                // employees: [],
+                leaders: [],
+                leader_id:'',
             }
         },
         mounted() {
@@ -75,11 +84,28 @@
                     alert("Hiba történt a telephely adatok betöltése során!");
                     console.log(error);
                 });
+            // axios.get('/getEmployees/' + this.id)
+            //     .then(response => {
+            //         this.employees = response.data;
+            //     })
+            //     .catch(function (error) {
+            //         alert("Hiba történt a dolgozók kiiratásában!");
+            //         console.log(error);
+            //     });
+            axios.get('/leaders')
+                .then(response => {
+                    this.leaders = response.data;
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    alert("Hiba történt a dolgozói adatok betöltése során!");
+                    console.log(error);
+                });
 
 
         },
         methods: {
-            updateSite: function createSite(e) {
+            updateSite(e) {
 
                 // let input = this.newEmployee;
                 // let id = this.id;
@@ -91,7 +117,6 @@
 
                 //Formdata használatánál a template-nél kell a form
                 let editForm = document.getElementById('editForm');
-                console.log(editForm);
                 const formData = new FormData(editForm);
                 if (this.image !== '') {
                     formData.append('image', (new Blob([this.image])));
@@ -104,8 +129,6 @@
                     {headers: {'Content-Type': 'multipart/form-data'}}
                 ).then(function (response) {
 
-                        // Todo: employees,users,sites listázásnál, ne propsok legyenek hanem axios hívás, akkor nem kell majd az init()fg-se
-
                         showNotification(response.data.notification, response.data.notificationType);
                         console.log('Telephely adatai frissítve! !');
                     }
@@ -115,6 +138,26 @@
                         console.log(error);
                     }
                 );
+                // let permission_id;
+                // if(this.site.name='Igazgatóság'){
+                //     permission_id=2;
+                // }else{
+                //     permission_id=1;
+                // }
+                // axios.post('/users/' + this.id + '/update', permission_id
+                //
+                // ).then(function (response) {
+                //
+                //         showNotification(response.data.notification, response.data.notificationType);
+                //         console.log('Telephely vezető frissítve! !');
+                //     }
+                // ).catch(function (error) {
+                //
+                //         showNotification('Telephely adatok frissítése sikertelen volt!', 'alert-error');
+                //         console.log(error);
+                //     }
+                // );
+
 
             },
             onFileChange(e) {
