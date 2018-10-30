@@ -1,18 +1,22 @@
 <template>
     <div>
-        <!--<ul v-for="e in employees">-->
-        <!--<li>{{e.last_name}} {{e.first_name}} ({{e.job}})</li>-->
-        <!--</ul>-->
 
-        <v-client-table :data="employees" :columns="columns" :options="options" :show-sort-icons="true">
-            <template slot="name" slot-scope="props">
-                {{props.row.last_name}} {{props.row.first_name}}
-            </template>
-            <template slot="image" slot-scope="props">
-                <div><img :src="'/storage/images/'+props.row.image">
-                </div>
-            </template>
-        </v-client-table>
+        <div v-if="employees==''">
+
+            <p>Nincs dolgozó hozzárendelve!</p>
+        </div>
+        <div v-else>
+            <v-client-table :data="employees" :columns="columns" :options="options" :show-sort-icons="true">
+                <template slot="name" slot-scope="props">
+                    {{props.row.last_name}} {{props.row.first_name}}
+                </template>
+                <template slot="image" slot-scope="props">
+                    <div><img :src="'/storage/images/'+props.row.image">
+                    </div>
+                </template>
+            </v-client-table>
+        </div>
+
     </div>
 </template>
 
@@ -24,10 +28,12 @@
         },
         data() {
             return {
-                employees: {},
+                employees: [],
                 columns: ['id', 'image', 'name', 'email', 'phone_number', 'job'],
+
                 options: {
                     filterByColumn: true,
+                    filterable: ['id','name', 'email', 'phone_number', 'job'],
 
                 }
 

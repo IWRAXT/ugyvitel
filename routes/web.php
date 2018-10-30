@@ -65,7 +65,36 @@ Route::get('/mysite','SiteController@mysite');
 Route::post('/sites/{id}','SiteController@destroy');
 Route::get('/sites/{id}/edit','SiteController@edit');
 Route::post('/sites/{id}/update','SiteController@update');
-//Todo: Telephelyen dolgozók listáját megírni
+
+//Costs table
+Route::post('/costs/{id}','CostController@destroy');
+Route::post('/cost','CostController@store');
+Route::get('/costs', 'CostController@getCosts');
+Route::get('/costs/create','CostController@create');
+Route::get('/costs/index', 'CostController@index');
+Route::get('/costs/{id}/edit','CostController@edit');
+Route::post('/costs/{id}/update','CostController@update');
+Route::get('/costs/sum','CostController@summary');
+
+//Cost_types table
+Route::post('/cost_types/{id}','CostTypeController@destroy');
+Route::post('/cost_type','CostTypeController@store');
+Route::get('/cost_types', 'CostTypeController@getCost_types');
+Route::get('/cost_types/create','CostTypeController@create');
+Route::get('/cost_types/{id}/edit','CostTypeController@edit');
+Route::post('/cost_types/{id}/update','CostTypeController@update');
+
+//Suppliers table
+Route::get('/suppliers/index','SupplierController@index');
+Route::post('/supplier/{id}','SupplierController@destroy');
+Route::post('/supplier','SupplierController@store');
+Route::get('/suppliers', 'SupplierController@getSuppliers');
+Route::get('/suppliers/create','SupplierController@create');
+Route::get('/supplier/{id}/edit','SupplierController@edit');
+Route::post('/supplier/{id}/update','SupplierController@update');
+
+
+
 
 
 

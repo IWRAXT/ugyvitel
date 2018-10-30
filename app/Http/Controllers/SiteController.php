@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSite;
 use App\Site;
 use Auth;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Image;
-use App\Http\Requests\StoreSite;
 
 class SiteController extends Controller
 {
@@ -29,13 +29,12 @@ class SiteController extends Controller
         if (Auth::user()->can('isSites')) {
             $sites = Site::with('leader')->get();
             return $sites;
-        }else{
+        } else {
             $sites = Site::with('leader')
                 ->where('id', Auth::user()->employee->site->id)
                 ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
             return $sites;
         }
-
 
 
     }
@@ -60,7 +59,6 @@ class SiteController extends Controller
 //        $this->validate($request, [
 //            'file' => 'mimes:jpeg',
 //        ]);
-
 
 
         $site = new Site();
@@ -149,9 +147,9 @@ class SiteController extends Controller
 
     public function destroy($id)
     {
-        //Todo:Splice() jobb megoldás lenne
+
         //Ha a telephely törlődik figyelmeztessen, ha van még a telephelyen dolgozó munkatársak akik a rendszerben maradtak
-        if (Site::find($id)->employees) {
+        if (Site::find($id)->printEmployees()) {
             return response()->json(['notification' => 'A telephelyhez dolgozók tartoznak, nem lehet törölni', 'notificationType' => 'alert-danger']);
         } else {
             $site = Site::find($id);
@@ -160,7 +158,19 @@ class SiteController extends Controller
                 File::delete($img_path);
             }
             $site->delete();
-            return response()->json(['site' => Site::all(), 'notification' => 'A telephely sikeresen törölve!', 'notificationType' => 'alert-success']);
+
+            //Todo:Splice() jobb megoldás lenne:
+            if (Auth::user()->can('isSites')) {
+                $sites = Site::with('leader')->get();
+                return response()->json(['sites' => $sites, 'notification' => 'A telephely sikeresen törölve!', 'notificationType' => 'alert-success']);;
+            } else {
+                $sites = Site::with('leader')
+                    ->where('id', Auth::user()->employee->site->id)
+                    ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
+                return response()->json(['sites' => $sites, 'notification' => 'A telephely sikeresen törölve!', 'notificationType' => 'alert-success']);;
+
+            }
+
 
         }
 

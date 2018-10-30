@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Site extends Model
 {
     protected $fillable = [
-        'image','name', 'address','leader_id',
+        'id','image','name', 'address','leader_id',
     ];
 
     public function leader(){

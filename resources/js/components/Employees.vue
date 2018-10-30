@@ -17,16 +17,16 @@
                             {{props.row.last_name}} {{props.row.first_name}}
                         </template>
                         <template slot="leader" slot-scope="props">
-                            <span v-if="props.row.site.leader_id==null"> - </span>
+                            <span v-if="props.row.site.leader_id==null || props.row.id==2"> - </span>
                             <span v-else>{{props.row.site.leader.last_name}} {{props.row.site.leader.first_name}}</span>
                         </template>
-                        <template slot="definite_employment" slot-scope="props">
-                            <i v-if="props.row.definite_employment=='true'" class="fa fa-check"></i>
-                            <i v-else="props.row.definite_employment=='false'" class="fa fa-close"></i>
-                        </template>
+                        <!--<template slot="definite_employment" slot-scope="props">-->
+                            <!--<i v-if="props.row.definite_employment=='true'" class="fa fa-check"></i>-->
+                            <!--<i v-else="props.row.definite_employment=='false'" class="fa fa-close"></i>-->
+                        <!--</template>-->
                         <!--<template  slot="user.permission.name" slot-scope="props">-->
-                        <!--<span v-if="props.row.user_id=='null'" > - </span>-->
-                        <!--<span v-else > {{props.row.permission.name}} </span>-->
+                        <!--<span v-if="props.row.user_id=null" > - </span>-->
+                        <!--<span v-else > {{props.row.user.permission.name}} </span>-->
 
                         <!--</template>-->
 
@@ -241,7 +241,7 @@
             return {
                 people: [],
                 hasError: true,
-                columns: ['id', 'image', 'name', 'birth', 'email', 'address', 'phone_number', 'month_salary', 'definite_employment', 'recruitment_date', 'job', 'comment', 'leader', 'user.permission.name', 'site.name', 'buttons'],
+                columns: ['id', 'image', 'name', 'birth', 'email', 'address', 'phone_number', 'month_salary', 'recruitment_date', 'job', 'comment', 'leader', 'site.name', 'buttons'],
 
                 options: {
                     filterByColumn: true,

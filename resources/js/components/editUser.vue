@@ -7,7 +7,7 @@
             <select title="permission_id" id="permission_id" name="permission_id" v-model="user.permission_id">
                 <option disabled value="">Please select one</option>
                 <option v-for="p in permissions" :value="p.id">
-                    {{p.name}} /telephely:{{p.sites}}
+                    {{p.name}}
                 </option>
 
             </select>

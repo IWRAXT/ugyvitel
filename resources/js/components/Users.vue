@@ -4,9 +4,20 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
 
-                    <h1>Userek listája</h1></div>
+                    <h1>Userek listája</h1>
+                </div>
+
 
                 <div id="users">
+
+                    <div @click="seen = !seen" class="control">
+                        <button>Jogosultság típusok</button>
+                    </div>
+
+                    <div v-if="seen" id="hide">
+                        <permission></permission>
+                    </div>
+
                     <v-client-table :data="users" :columns="columns" :options="options">
                         <!--<template slot="employee.image" slot-scope="props">-->
                         <!--<div><img :src="'/storage/images/'+props.row.image">-->
@@ -16,8 +27,8 @@
                             {{props.row.permission.name}}
                         </template>
                         <template slot="permission.sites" slot-scope="props">
-                            <span v-if="props.row.permission.sites=='1'">Listázhatja a telephelyeket</span>
-                            <span v-else>Csak a saját telephelyét</span>
+                            <span v-if="props.row.permission.sites=='1'">Listázhatja az összes telephelyet</span>
+                            <span v-else>Csak a saját telephelyét listázhatja</span>
                         </template>
                         <template slot="buttons" slot-scope="props">
                             <div class="table-button-container">
@@ -65,6 +76,7 @@
             return {
                 users: [],
                 hasError: true,
+                seen: false,
 
                 columns: ['id', 'name', 'email', 'permission_id', 'permission.sites', 'buttons'],
 

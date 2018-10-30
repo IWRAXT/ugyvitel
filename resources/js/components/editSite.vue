@@ -30,11 +30,11 @@
                     </div>
                     <div class="form-group">
                         <label for="leader_id">Leader</label>
-                        <select title="leader_id" id="leader_id" name="leader_id" v-model="leader_id">
+                        <select title="leader_id" id="leader_id" name="leader_id" v-model="site.leader_id">
 
-                            <option disabled value="">Please select one</option>
-                            <option v-for="e in leaders" :value="e.id">
-                                {{e.name}}
+                            <option :value="2">Igazgatóság főnök</option>
+                            <option v-for="p in leaders" :value="p.id">
+                            <span >{{p.first_name}} {{p.last_name}} </span>
                             </option>
 
                         </select>
@@ -65,7 +65,6 @@
                 image:'',
                 site: {},
                 delete: false,
-                // employees: [],
                 leaders: [],
                 leader_id:'',
             }
@@ -84,15 +83,9 @@
                     alert("Hiba történt a telephely adatok betöltése során!");
                     console.log(error);
                 });
-            // axios.get('/getEmployees/' + this.id)
-            //     .then(response => {
-            //         this.employees = response.data;
-            //     })
-            //     .catch(function (error) {
-            //         alert("Hiba történt a dolgozók kiiratásában!");
-            //         console.log(error);
-            //     });
-            axios.get('/leaders')
+
+            //Csak a saját telephelyéről választhat leadert
+            axios.get('/getEmployees/'+this.id)
                 .then(response => {
                     this.leaders = response.data;
                     console.log(response.data);

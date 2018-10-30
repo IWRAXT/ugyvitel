@@ -19,10 +19,8 @@ class CreateSitesTable extends Migration
             $table->string('name')->unique();
             $table->string('address');
             $table->string('phone_number');
-
             $table->timestamps();
-
-            $table->integer('leader_id')->nullable();
+            $table->integer('leader_id')->nullable(); //->default(2);
             $table->foreign('leader_id')
                 ->references('id')
                 ->on('employees');

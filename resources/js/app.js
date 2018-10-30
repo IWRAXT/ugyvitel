@@ -22,13 +22,30 @@ Vue.component('edit_employee',require('./components/editEmployee'));
 Vue.component('addUser',require('./components/addUser'));
 Vue.component('users',require('./components/Users'));
 Vue.component('my_user',require('./components/myUser'));
-Vue.component('permission',require('./components/addPermission'));
+Vue.component('permission',require('./components/Permissions'));
 Vue.component('edit_user',require('./components/editUser'));
 
 //Sites
 Vue.component('index_sites',require('./components/Sites'));
 Vue.component('create_site',require('./components/addSite'));
 Vue.component('edit_site',require('./components/editSite'));
+Vue.component('site_employees',require('./components/Site_employees'));
+
+//Costs-cost_types
+Vue.component('costs',require('./components/Costs'));
+Vue.component('cost',require('./components/addCost'));
+Vue.component('edit_cost',require('./components/editCost'));
+Vue.component('cost_types',require('./components/Cost_types'));
+Vue.component('cost_type',require('./components/addCost_type'));
+Vue.component('edit_cost_type',require('./components/editCost_type'));
+
+//Suppliers
+Vue.component('index_suppliers',require('./components/Suppliers'));
+Vue.component('create_supplier',require('./components/addSupplier'));
+Vue.component('edit_supplier',require('./components/editSupplier'));
+
+
+
 
 
 // function install(Vue){

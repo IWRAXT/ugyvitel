@@ -46,10 +46,10 @@
                                 <label for="month_salary">Salary</label>
                                 <input type="number" class="form-control" id="month_salary" name="month_salary">
                             </div>
-                            <div class="checkbox">
-                                <label for="definite_employment">Definite employment</label>
-                                <input type="checkbox" id="definite_employment" name="definite_employment" >
-                            </div>
+                            <!--<div class="checkbox">-->
+                                <!--<label for="definite_employment">Definite employment</label>-->
+                                <!--<input type="checkbox" id="definite_employment" name="definite_employment" >-->
+                            <!--</div>-->
                             <div class="form-group">
                                 <label for="recruitment_date">Recruitment date</label>
                                 <input type="date" class="form-control" id="recruitment_date" name="recruitment_date">
@@ -78,10 +78,9 @@
                                 <label for="site_id">Telephely</label>
                                 <select title="site_id" id="site_id" name="site_id">
 
-                                    <option disabled value="">Please select one</option>
-                                    <!--<option v-if="" value="">Please select one</option>-->
+                                    <option :value="1">Igazgatóság</option>
                                     <option v-for="s in sites" :value="site_id=s.id">
-                                        <span v-if="s.id!==null">{{s.name}}</span>
+                                        <span v-if="s.id!==null && s.id!==1">{{s.name}}</span>
                                     </option>
 
                                 </select>
@@ -148,7 +147,7 @@
                 if(this.image!==''){
                     formData.append('image', (new Blob([this.image])));
                 }
-//ToDo: Főnöke ne lehessen önmaga!
+
                 axios.post('/people', formData,
 
                     {headers: {'Content-Type': 'multipart/form-data'}}

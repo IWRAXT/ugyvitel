@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\User;
+use App\Permission;
 use Auth;
 use File;
 use Illuminate\Http\Request;
@@ -23,9 +24,9 @@ class EmployeeController extends Controller
     public function getPeople()
     {
         if (Auth::user()->can('isSites')) {
-            $people = Employee::with('user', 'user.permission', 'site','site.leader')->get();
+            $people = Employee::with('user', 'user.permission', 'site', 'site.leader')->get();
             return $people;
-        }else{
+        } else {
             $people = Employee::with('user', 'user.permission', 'site', 'site.leader')
                 ->where('site_id', Auth::user()->employee->site->id)
                 ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
@@ -41,7 +42,8 @@ class EmployeeController extends Controller
         $person->save();
         return response()->json(['person' => $person, 'notification' => 'User jog hozzáadva!', 'notificationType' => 'alert-success']);
     }
-    public function delete_user_id( $id)
+
+    public function delete_user_id($id)
     {
         $person = Employee::find($id);
         $person->user->id = null;
@@ -91,27 +93,25 @@ class EmployeeController extends Controller
         $person->address = request('address');
         $person->phone_number = request('phone_number');
         $person->month_salary = request('month_salary');
-        $person->definite_employment = request('definite_employment');
         $person->recruitment_date = request('recruitment_date');
         $person->job = request('job');
         $person->comment = request('comment');
-//        $person->principal_id = request('principal_id');
         $person->site_id = request('site_id');
         $person->save();
         return response()->json(['person' => $person, 'notification' => 'Az új munkatárs sikeresen hozzáadva!', 'notificationType' => 'alert-success']);
-        //Dolgozók listájára kéne mutatnia
+        //people/indexre kéne mutatnia
     }
 
     public function edit($id)
     {
-        $person = Employee::with('user', 'user.permission', 'site')->find($id);
+        $person = Employee::with('user', 'user.permission', 'site.leader')->find($id);
         return $person;
     }
 
     public function edit_mount() //Auth User
     {
         $id = Auth::user()->employee->id;
-        $person = Employee::with('user', 'user.permission', 'site','site.leader')->find($id);
+        $person = Employee::with('user', 'user.permission', 'site', 'site.leader')->find($id);
         return response($person);
 
     }
@@ -153,7 +153,7 @@ class EmployeeController extends Controller
             $person->image = $person->email . '.jpg';
             $img->save(storage_path('app/public/images/' . $person->image)); //mentem a mostanit
         }
-        if (request('delete') == 'true' &&  $person->image!='default.jpg') {
+        if (request('delete') == 'true' && $person->image != 'default.jpg') {
             $img_path = 'app/public/images/' . $person->image;
             File::delete(storage_path($img_path));
             $person->image = 'default.jpg';
@@ -161,11 +161,9 @@ class EmployeeController extends Controller
         $person->address = request('address');
         $person->phone_number = request('phone_number');
         $person->month_salary = request('month_salary');
-        $person->definite_employment = request('definite_employment');
         $person->recruitment_date = request('recruitment_date');
         $person->job = request('job');
         $person->comment = request('comment');
-//        $person->principal_id = request('principal_id');
         $person->site_id = request('site_id');
 
         $person->save();
@@ -174,19 +172,43 @@ class EmployeeController extends Controller
 
     public function destroy($id)
     {
-        //Todo:Splice() jobb megoldás lenne
+
 
         $person = Employee::find($id);
-        if ($person->image !== "default.jpg") {
-            $img_path = storage_path('app/public/images/') . $person->image;
-            File::delete($img_path);
+
+        if ($person->user->permission == 2) {
+            return response()->json(['notification' => 'A user a Kft vezetője nem lehet törölni!', 'notificationType' => 'alert-danger']);
+        } elseif ($person->user->permission == 1) {
+            return response()->json(['notification' => 'A user a rendszer Adminja nem lehet törölni!', 'notificationType' => 'alert-danger']);
+        } else {
+            if ($person->image !== "default.jpg") {
+                $img_path = storage_path('app/public/images/') . $person->image;
+                File::delete($img_path);
+            }
+            //Ha az employee törlődik törlődjön a hozzátartozó user is
+            if ($person->user->id !== null) {
+                if ($person->site->leader_id == $id) {
+
+//                    $boss=Permission::find(2)->users->employee->id; //Printuserben kéne keresni
+                    $person->site->leader_id = 2; //ha leader akkor törlődjön a telephelyekből is->igazgatóság főnöke fennhatóságba lesz a site
+                }
+                User::find($person->user->id)->delete();
+            }
+
+            $person->delete();
+
+            //Todo:Splice() jobb megoldás lenne mint ez:
+            if (Auth::user()->can('isSites')) {
+                $people = Employee::with('user', 'user.permission', 'site', 'site.leader')->get();
+                return response()->json(['people' => $people, 'notification' => 'A dolgozó sikeresen törölve!', 'notificationType' => 'alert-success']);
+            } else {
+                $people = Employee::with('user', 'user.permission', 'site', 'site.leader')
+                    ->where('site_id', Auth::user()->employee->site->id)
+                    ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
+                return response()->json(['people' => $people, 'notification' => 'A dolgozó sikeresen törölve!', 'notificationType' => 'alert-success']);;
+            }
         }
-        //Ha az employee törlődik törlődjön a hozzátartozó user is
-        //todo: ha leader akkor törlődjön a telephelyekből is
-        if ($person->user->id !== null) {
-            User::find($person->user->id)->delete();
-        }
-        $person->delete();
-        return response()->json(['people' => Employee::all(), 'notification' => 'A dolgozó sikeresen törölve!', 'notificationType' => 'alert-success']);
+
+
     }
 }

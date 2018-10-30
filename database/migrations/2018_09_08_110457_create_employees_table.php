@@ -15,16 +15,16 @@ class CreateEmployeesTable extends Migration
             $table->string('first_name');
             $table->date('birth');
             $table->string('image')->default('default.jpg');
+            $table->string('email')->nullable()->unique();
             $table->string('address');
             $table->string('phone_number')->nullable();
             $table->integer('month_salary');
+//            $table->boolean('definite_employment')->default(false);
             $table->date('recruitment_date');
             $table->string('job');
             $table->string('comment')->nullable();
 
             $table->timestamps();
-
-//            $table->integer('principal_id')->nullable();
 
             $table->integer('user_id')->nullable();
             $table->foreign('user_id')

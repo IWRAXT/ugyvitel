@@ -21,8 +21,8 @@
                                 <tr v-for="permission in permissions">
                                     <td>{{permission.id}}</td>
                                     <td>{{ permission.name }}</td>
-                                    <td v-if="permission.sites==1" > Listázhatja a telephelyeket</td>
-                                    <td v-if="permission.sites==0" >Csak a saját telephelyét</td>
+                                    <td v-if="permission.sites==1" >Listázhatja az összes telephelyet</td>
+                                    <td v-if="permission.sites==0" >Csak a saját telephelyét listázhatja</td>
                                 </tr>
                                 </tbody>
                             </table>

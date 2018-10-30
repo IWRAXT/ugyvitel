@@ -27,10 +27,10 @@
 
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" :value="person.email">
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label for="email">Email</label>-->
+                        <!--<input type="text" class="form-control" id="email" name="email" :value="person.email">-->
+                    <!--</div>-->
                     <div class="form-group">
                         <label for="address">Address</label>
                         <input type="text" class="form-control" id="address" name="address" :value="person.address">
@@ -45,11 +45,11 @@
                         <input type="number" class="form-control" id="month_salary" name="month_salary"
                                :value="person.month_salary">
                     </div>
-                    <div class="checkbox">
-                        <label for="definite_employment">Definite employment</label>
-                        <input type="checkbox" id="definite_employment" name="definite_employment"
-                               :value="person.definite_employment">
-                    </div>
+                    <!--<div class="checkbox">-->
+                        <!--<label for="definite_employment">Definite employment</label>-->
+                        <!--<input type="checkbox" id="definite_employment" name="definite_employment"-->
+                               <!--:value="person.definite_employment">-->
+                    <!--</div>-->
                     <div class="form-group">
                         <label for="recruitment_date">Recruitment date</label>
                         <input type="date" class="form-control" id="recruitment_date" name="recruitment_date"
@@ -102,20 +102,7 @@
         name: "editEmployee",
         props: {
             id: Number, //linkel küldött {id}
-            // image: String,  //képneve
-            // last_name: String,
-            // first_name: String,
-            // born: String, //Date
-            // email: String,
-            // address: String,
-            // phone_number: String,
-            // month_salary: String,//Number
-            // definite_employment: String,//Boolean
-            // recruitment_date: String,//Date
-            // job: String,
-            // comment: String,
-            // principal_id: Number,
-            // site_id: String,
+
         },
         data: function () {
 
@@ -182,7 +169,7 @@
                 } else {
                     formData.append('delete', this.delete);
                 }
-
+                formData.append('email', this.person.email);
                 axios.post('/people/' + this.id + '/update', formData,
 
                     {headers: {'Content-Type': 'multipart/form-data'}}

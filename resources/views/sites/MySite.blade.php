@@ -27,7 +27,7 @@
                                 <td>{{ Auth::user()->employee->site->phone_number}}</td>
                             </tr>
                             <tr>
-                                <td><span><i class="fa fa-child"></i> Leader: </span></td>
+                                <td><span><i class="fa fa-deaf"></i> Leader: </span></td>
                                 <td><h5>{{ Auth::user()->employee->site->leader->last_name}} {{ Auth::user()->employee->site->leader->first_name}}</h5>
                                     <span><i class="fa fa-phone"> {{ Auth::user()->employee->site->leader->phone_number}}</i></span>
                                     <br><span><i class="fa fa-address-book"> {{ Auth::user()->employee->site->leader->email}}</i></span>

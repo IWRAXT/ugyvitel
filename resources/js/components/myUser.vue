@@ -67,12 +67,16 @@
 
 
                 <!--</div>-->
-                <button @click="edit=true">Személyes adatok módosítása</button>
+                <div @click="seen = !seen" class="control">
+                    <button >Személyes adatok módosítása</button>
+                </div>
+
+
             </div>
 
         </div>
 
-        <div v-if="edit" class="row justify-content-center">
+        <div v-if="seen" class="row justify-content-center" id="hide">
             <div class="col-lg-9">
                 <!--Employee data change-->
                 <form id="editEmployeeForm" name="editEmployeeForm" enctype="multipart/form-data">
@@ -86,10 +90,10 @@
 
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email: </label>
-                        <input type="text" class="form-control" id="email" name="email" :value="person.email">
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label for="email">Email: </label>-->
+                        <!--<input type="text" class="form-control" id="email" name="email" :value="person.email">-->
+                    <!--</div>-->
                     <!--todo: vagy legyen 1 email vagy mind2 helyen frissüljön, ahogy a név is-->
 
                     <div class="form-group">
@@ -133,7 +137,7 @@
                 image: '',
                 person: [],
                 delete: false, //kép törlése
-                edit: false,
+                seen: false,
                 id: '',
             }
         },

@@ -141,7 +141,7 @@
                     axios.post('/sites/' + site.id)
                         .then(response => {
                                 if (response.data) {
-                                    this.sites = response.data
+                                    this.sites = response.data.sites;
                                 }
 
                                 showNotification(response.data.notification, response.data.notificationType);

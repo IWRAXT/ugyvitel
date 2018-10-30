@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreUser;
 use App\User;
-use Auth;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -16,10 +15,10 @@ class UserController extends Controller
 
     public function getUsers()
     {
-
+//Todo: Megírni
 //        if (Auth::user()->can('isSites')) {
-            $users =User::with( 'permission','employee')->get();
-            return $users;
+        $users = User::with('permission', 'employee')->get();
+        return $users;
 //        }else{
 //            $users =User::with( 'permission', 'employee')
 //                ->where('employee.site_id', Auth::user()->employee->site->id)
@@ -28,12 +27,11 @@ class UserController extends Controller
 //        }
 
 
-
-
     }
-    public function getLeaders()
+
+    public function getLeaders() //Todo: Átgondolni
     {
-        //Csak a permission_id
+
         $leaders = User::with('permission')
             ->where('permission_id', 3, 2)
             ->get();
@@ -45,24 +43,16 @@ class UserController extends Controller
 
     public function store(StoreUser $request)
     {
-        $user=new User();
-        $user->name=request('name');
-        $user->email=request('email');
-        $user->password=bcrypt(request('password'));
-        $user->permission_id=request('permission');
-
-
-//        $user=User::create([
-//            'name'=> request('name'),
-//            'employee'=>request('email'),
-//            'password'=>bcrypt(request('password')),
-//            'permission_id'=>request('permission'),
-//        ])->with('employee');
-//        $user->employee->id=request('employee_id');
+        $user = new User();
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->password = bcrypt(request('password'));
+        $user->permission_id = request('permission');
 
         $user->save();
         return response()->json(['user' => $user, 'notification' => 'A User hozzáadva a Userstáblához!', 'notificationType' => 'alert-success']);
     }
+
     public function edit($id)
     {
         $user = User::with('permission')->find($id);
@@ -70,26 +60,41 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
         $user = User::with('permission')->find($id);
-        $user->name=request('name');
-        $user->email=request('email');
-        $user->password=bcrypt(request('password'));
-        $user->permission_id=request('permission_id');
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->password = bcrypt(request('password'));
+        $user->permission_id = request('permission_id');
 
         $user->save();
 
         return response()->json(['user' => $user, 'notification' => 'A user sikeresen frissítve!', 'notificationType' => 'alert-success']);
 
     }
+
     public function destroy($id)
     {
-        //Todo:Splice() jobb megoldás lenne
+
+        if ($id == 2) {
+            return response()->json(['notification' => 'A user a Kft vezetője nem lehet törölni!', 'notificationType' => 'alert-danger']);
+        }
+        if ($id == 1) {
+            return response()->json(['notification' => 'A user a rendszer Adminja nem lehet törölni!', 'notificationType' => 'alert-danger']);
+        }
 
         $user = User::find($id);
-        $user->employee->user_id='';
+        $user->employee->user_id = '';
+
+        //ha telephely leader akkor a site leader_id->igazgatóság főnöke fennhatóságba lesz a site
+        if ($user->employee->site->leader_id == $user->employee->id) {
+            $user->employee->site->leader_id = 2;
+        }
+
         $user->delete();
+        //Todo:Splice() jobb megoldás lenne:
         return response()->json(['users' => User::all(), 'notification' => 'A user sikeresen törölve!', 'notificationType' => 'alert-success']);
     }
 }

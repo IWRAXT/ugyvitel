@@ -117,7 +117,7 @@
                 if (this.image !== '') {
                     formData.append('image', (new Blob([this.image])));
                 }
-                let leader_id=
+                let leader_id='2';
                 formData.append('leader_id',leader_id);
 
                 axios.post('/sites', formData,

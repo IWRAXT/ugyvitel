@@ -21,23 +21,31 @@ class AuthServiceProvider extends ServiceProvider
 //        //
 //    }
 
-    public function boot (GateContract $gate){
+    public function boot(GateContract $gate)
+    {
         $this->registerPolicies($gate);
 
-        $gate->define('isAdmin',function ($user){ //Joga van Cost, Incomes, Leader, Sites láthatóság
+        $gate->define('isAdmin', function ($user) { //Joga van Cost, Incomes, Leader, Sites láthatóság
             return $user->permission->name == 'Admin';
         });
 
-        $gate->define('isCosts',function ($user){
-            return $user->permission->name == 'Costs handler';
+        $gate->define('isDirectorateLeader', function ($user) {
+            return $user->permission->name == 'Directorate Leader';
         });
-        $gate->define('isIncomes',function ($user){
-            return $user->permission->name == 'Incomes handler';
+
+        $gate->define('isCosts', function ($user) {
+            return $user->permission->id == 6 ||$user->permission->id == 7;
         });
-        $gate->define('isLeader',function ($user){      //Cost-Incomes statistic and employees láthatóság
-            return $user->permission->name == 'Leader';
+        $gate->define('isIncomes', function ($user) {
+
+            return $user->permission->id == 4 || $user->permission->id == 5;
+
+
         });
-        $gate->define('isSites',function ($user){
+        $gate->define('isLeader', function ($user) {      //Cost-Incomes statistic and employees láthatóság
+            return $user->permission->id == 3;
+        });
+        $gate->define('isSites', function ($user) {
             return $user->permission->sites == 1;  //Kezelheti az összes telephelyet vagy sem
         });
     }

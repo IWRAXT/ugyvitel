@@ -18,7 +18,7 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::forceCreate([
-            'name' => 'Leader',
+            'name' => 'Directorate Leader',     //Kft Főnök, Igazgatóság vezető
             'sites' => '1',
         ]);
 
@@ -28,7 +28,7 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::forceCreate([
-            'name' => 'Incomes handler',
+            'name' => 'Directorate incomes handler', //Igazgatóság bevétel kezelő
             'sites' => '1',
         ]);
 
@@ -38,7 +38,7 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::forceCreate([
-            'name' => 'Costs handler',
+            'name' => 'Directorate costs handler', //Igazgatóság kiadás kezelő
             'sites' => '1',
         ]);
 
