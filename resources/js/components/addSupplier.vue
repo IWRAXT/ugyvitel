@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h1>Új beszállító rögzítése</h1></div>
-                    <div class="card-body">
+                    <div class="card-body ">
 
                         <form id="addForm" name="addForm" enctype="multipart/form-data">
                             <div class="form-group">

@@ -1,10 +1,10 @@
 @extends ('layouts.master2')
 
 @section ('content')
-
-    <div id="app" >
-        <add-cost_type></add-cost_type>
+    <div id="app">
+        <cost_chart></cost_chart>
     </div>
+
     @include ('layouts.errors')
 
 @endsection

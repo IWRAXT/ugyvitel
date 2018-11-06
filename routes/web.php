@@ -65,6 +65,11 @@ Route::get('/mysite','SiteController@mysite');
 Route::post('/sites/{id}','SiteController@destroy');
 Route::get('/sites/{id}/edit','SiteController@edit');
 Route::post('/sites/{id}/update','SiteController@update');
+Route::get('/sites/statistic','SiteController@statistic');
+Route::get('/sites/report','SiteController@report');
+Route::get('/sites/statistic_data','SiteController@statistic_data');
+Route::get('/sites/statistic_data/{id}','SiteController@statistic_data2');
+
 
 //Costs table
 Route::post('/costs/{id}','CostController@destroy');
@@ -75,6 +80,7 @@ Route::get('/costs/index', 'CostController@index');
 Route::get('/costs/{id}/edit','CostController@edit');
 Route::post('/costs/{id}/update','CostController@update');
 Route::get('/costs/sum','CostController@summary');
+
 
 //Cost_types table
 Route::post('/cost_types/{id}','CostTypeController@destroy');

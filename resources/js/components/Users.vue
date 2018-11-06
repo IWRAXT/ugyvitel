@@ -115,7 +115,7 @@
                             return user
                         });
                         this.users = users;
-                        console.log(users);
+                        console.log(response.data);
                     })
                     .catch(function (error) {
                         alert("Hiba történt az oldal betöltése során!");

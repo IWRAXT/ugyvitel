@@ -25,7 +25,7 @@ class StoreSite extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique',
+            'name' => 'required|string',//unique
             'image' => 'jpg',
             'address' =>'string|required',
             'phone_number' =>'string|required|max:11',

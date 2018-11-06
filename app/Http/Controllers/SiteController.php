@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSite;
+use Illuminate\Support\Collection as collection;
 use App\Site;
 use Auth;
 use File;
@@ -28,11 +29,37 @@ class SiteController extends Controller
 
         if (Auth::user()->can('isSites')) {
             $sites = Site::with('leader')->get();
+
+
+
+                $sites->map(function ($site){
+
+                    $site['types']=$site->sumCost_type();
+                    $site['cost'] = $site->sumSiteCosts();
+                    $site['types']->transform(function ($value,$key){
+                        $sum['type']=$key;
+                        $sum['sum']=$value;
+                        return $sum;
+                    });
+                    return $site;
+                });
+
             return $sites;
         } else {
             $sites = Site::with('leader')
                 ->where('id', Auth::user()->employee->site->id)
                 ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
+
+            $sites->map(function ($site){
+
+                $site['types']=$site->sumCost_type();
+                $site['types']->transform(function ($value,$key){
+                    $sum['type']=$key;
+                    $sum['sum']=$value;
+                    return $sum;
+                });
+                return $site;
+            });
             return $sites;
         }
 
@@ -174,5 +201,58 @@ class SiteController extends Controller
 
         }
 
+    }
+
+    public function statistic()
+    {
+        return view('sites.statistic');
+    }
+
+    public function statistic_data()
+    {
+        $sites = Site::all();
+        $sites_name = [];
+        $costs = [];
+        $j = 0;
+        $statistic = [];
+        foreach ($sites as $site) {
+            $sites_name[$j] = $site->name;
+            $costs[$j] = $site->sumSiteCosts();
+            $statistic[$j] = ['x' => $sites_name[$j], 'y' => $costs[$j]];
+            $j++;
+        }
+
+
+        return response()->json(['statistic' => $statistic]);
+    }
+
+    public function statistic_data2($id)
+    {
+
+        $types = Site::find($id)->sumCost_type()->keys();
+
+        $values = Site::find($id)->sumCost_type()->values();
+        return response()->json(['types' => $types, 'values' => $values]);
+    }
+
+
+//        $sites = Site::all();
+//        $sites_name = [];
+//        $costs = [];
+//        $j = 0;
+//        $statistic=[];
+//        foreach ($sites as $site) {
+////            $sites_name[$j] = $site->name;
+//            $costs[$j]=$site->sumCost_type();
+//
+////            $statistic[$j]=['x'=> $sites_name[$j],'y'=> $costs[$j]];
+//            $j++;
+//        }
+//        return response()->json(['statistic' => $costs]);
+
+
+    public function report()
+    { //saját telephelyen
+        return view('sites.report');
     }
 }

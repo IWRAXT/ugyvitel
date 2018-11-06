@@ -57,7 +57,7 @@
                                    Site Delete
                                 </button>
                                 <button class="edit-modal btn btn-danger btn-sm" >
-                                     Delete Site's employees
+                                     Delete employees
                                 </button>
 
                             </div>

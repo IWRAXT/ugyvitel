@@ -23,9 +23,11 @@
     },
     "dependencies": {
         "admin-lte": "^2.4.8",
+        "apexcharts": "^2.1.8",
         "bootstrap-sass": "^3.3.7",
         "bootstrap-vue": "^2.0.0-rc.11",
         "npm": "^6.4.1",
+        "vue-apexcharts": "^1.2.2",
         "vue-tables-2": "^1.4.70"
     }
 }

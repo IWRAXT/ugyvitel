@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use App\Http\Requests\StoreUser;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,15 +15,14 @@ class UserController extends Controller
         return view('people.indexUsers');
     }
 
-    public function getUsers()
+    public function getUsers() //todo:próba join-nal
     {
-//Todo: Megírni
 //        if (Auth::user()->can('isSites')) {
         $users = User::with('permission', 'employee')->get();
         return $users;
 //        }else{
-//            $users =User::with( 'permission', 'employee')
-//                ->where('employee.site_id', Auth::user()->employee->site->id)
+//            $users =User::with( 'permission', 'employee')->join('employees','employees.id','=','employee_id')
+//                ->where('employees.site_id', Auth::user()->employee->site->id)
 //                ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
 //            return $users;
 //        }

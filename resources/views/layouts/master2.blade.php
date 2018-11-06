@@ -148,7 +148,7 @@ desired effect
 
                             <li><a href="/people/index">Listázás</a></li>
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>
-                            <li><a href="/users/index">Jogosultság kezelés</a></li>
+                            <li><a href="/users/index"><i class="fa fa-user-o"></i>Jogosultság kezelés</a></li>
                         </ul>
                     </li>
 
@@ -164,7 +164,7 @@ desired effect
                             <li><a href="/incomes/index">Listázás</a></li>
                             <li><a href="/incomes/create">Új bevétel rögzítése</a></li>
                             <li><a href="/incomes/create">Új bevétel típus rögzítése</a></li>
-
+                            <li><a href="/incomes/report"><i class="fa fa-table"></i>Összesítők</a></li>
 
                         </ul>
                     </li>
@@ -193,7 +193,7 @@ desired effect
                             <li><a href="/costs/index">Listázás</a></li>
                             <li><a href="/costs/create">Új kiadás rögzítése</a></li>
                             <li><a href="/cost_types/create">Új kiadás típus rögzítése</a></li>
-
+                            <li><a href="/costs/report"><i class="fa fa-table "></i>Összesítők</a></li>
 
                         </ul>
                     </li>
@@ -221,16 +221,19 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
-                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>
 
 
                         </ul>
                     </li>
+
+                    <li><a href="/sites/statistic"><i class="fa fa-pie-chart"></i> <span>Statisztikák</span></a>
+                    </li>@endcan
                     <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
                     </li>
-                    <li class="active"><a href=""><i class="fa fa-pie-chart"></i> <span>Statisztikák</span></a></li>
                 </ul>
             @endcan
 
@@ -241,7 +244,7 @@ desired effect
                     <!-- Optionally, you can add icons to the links -->
 
 
-                    <li >
+                    <li>
                         <a href="/people/index"><i class="fa fa-users"></i> <span>Munkatársak</span>
                         </a>
                     </li>
@@ -254,8 +257,9 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/incomes/create">Összesítő</a></li>
+                            <li><a href="/incomes/report"><i class="fa fa-table "></i>Összesítő</a></li>
                             <li><a href="/incomes/index">Listázás</a></li>
+
 
                         </ul>
                     </li>
@@ -269,13 +273,14 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><a href="/costs/index">Összesítő</a></li>
+                            <li><i class="fa fa-table "></i><a href="/costs/report"><i class="fa fa-table "></i>Összesítő
+                                </a></li>
                             <li><a href="/costs/index">Listázás</a></li>
 
 
                         </ul>
                     </li>
-                    <li ><a href=""><i class="fa fa-pie-chart"></i> <span>Statisztikák</span></a></li>
+                    <li><a href="/sites/statistic"><i class="fa fa-pie-chart"></i> <span>Statisztikák</span></a></li>
 
                     <li class="treeview">
                         <a href="#"><i class="fa fa-bank"></i> <span>Telephely</span>
@@ -286,9 +291,10 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/sites/report"><i class="fa fa-table"></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
-                            @endcan
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
 
 
                         </ul>
@@ -317,7 +323,7 @@ desired effect
 
                             <li><a href="/people/index">Listázás</a></li>
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>
-                            <li><a href="/users/index">Jogosultság kezelés</a></li>
+                            <li><i class="fa fa-user-o"></i><a href="/users/index">Jogosultság kezelés</a></li>
 
                         </ul>
                     </li>
@@ -331,6 +337,7 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li></i><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
                                 <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
@@ -338,9 +345,11 @@ desired effect
 
                         </ul>
                     </li>
+                    <li class="active"><a href="/sites/statistic"><i class="fa fa-pie-chart"></i>
+                            <span>Statisztikák</span></a></li>
                     <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
                     </li>
-                    <li class="active"><a href=""><i class="fa fa-child"></i> <span>Statisztikák</span></a></li>
+
                 </ul>
             @endcan
             {{--INCOMES--}}
@@ -362,7 +371,7 @@ desired effect
                             <li><a href="/incomes/index">Listázás</a></li>
                             <li><a href="/incomes/create">Új bevétel rögzítése</a></li>
                             <li><a href="/incomes/create">Új bevétel típus rögzítése</a></li>
-
+                            <li><a href="/incomes/report"><i class="fa fa-table "></i>Bevétel összesítő</a></li>
 
                         </ul>
                     </li>
@@ -386,7 +395,8 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}} </a></li>
+                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
                                 <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
@@ -417,6 +427,7 @@ desired effect
                             <li><a href="/costs/index">Listázás</a></li>
                             <li><a href="/costs/create">Új kiadás rögzítése</a></li>
                             <li><a href="/cost_types/create">Új kiadás típus rögzítése</a></li>
+                            <li><a href="/costs/report"><i class="fa fa-table "></i>Összesítő</a></li>
 
 
                         </ul>
@@ -443,19 +454,17 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}} </a></li>
+                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
-                                <li><a href="/sites/create">Új telephely felvétele</a></li>
-                            @endcan
-
-
+                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
                         </ul>
                     </li>
                     <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
                     </li>
                 </ul>
-            @endcan
+        @endcan
 
         <!-- Sidebar user panel (optional) -->
             <div class="user-panel" style="padding-bottom: 50px">

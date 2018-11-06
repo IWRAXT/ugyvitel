@@ -9,6 +9,10 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import Vuetable from 'vue-tables-2';
 
+import VueApexCharts from 'vue-apexcharts'
+
+Vue.use(VueApexCharts)
+
 
 
 Vue.use(BootstrapVue);

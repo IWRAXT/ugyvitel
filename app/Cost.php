@@ -19,4 +19,5 @@ class Cost extends Model
     public function cost_type(){
         return $this->belongsTo(Cost_type::class, 'cost_type_id','id');
     }
+
 }

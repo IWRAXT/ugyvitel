@@ -10,7 +10,19 @@ class Cost_type extends Model
         'id','name','group'
     ];
 
-    public function cost(){
+    public function costs(){
         return $this->hasMany(Cost::class);
     }
+
+
+    //Össze lehet hasonlítani, hogy mennyi chips és Ropi
+//    public function sum(){
+//        $summary=0;
+//        $costs[] = $this->costs();
+//        for ($i=0;$i<count($costs);$i++){
+//            $summary+=$costs[$i]->sum;
+//        }
+//        return $summary;
+//    }
+
 }

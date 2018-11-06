@@ -55,7 +55,7 @@ class CostController extends Controller
         $cost->date = request('date');
         $cost->account_number = request('account_number');
         $cost->comment = request('comment');
-//        $cost->sum = request('sum');
+        $cost->sum = request('sum');
         $cost->site_id = request('site_id');
         $cost->supplier_id = request('supplier_id');
         $cost->cost_type_id = request('cost_type_id');
@@ -88,6 +88,7 @@ class CostController extends Controller
             return $summary;
         }
     }
+
 
 
 }
