@@ -88,6 +88,10 @@ class CostController extends Controller
             return $summary;
         }
     }
+    public function report()
+    {
+        return view('costs.report');
+    }
 
 
 

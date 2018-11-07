@@ -34,7 +34,7 @@
                     </tr>
                     <tr v-if="person.site.name!=='Igazgatóság'">
 
-                        <td><span><i class="fa fa-tree"></i> Felettes</span></td>
+                        <td><span><i class="fa fa-user-secret"></i> Felettes</span></td>
                         <td v-if="person.site.leader_id != person.id">{{person.site.leader.last_name }} {{person.site.leader.first_name }}</td>
                         <td v-else> Igazgatóság főnöke</td>
                     </tr>

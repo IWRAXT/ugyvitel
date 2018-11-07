@@ -220,7 +220,7 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank"></i>{{Auth::user()->employee->site->name}}</a></li>
                             <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -290,7 +290,7 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
                             <li><a href="/sites/report"><i class="fa fa-table"></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -323,7 +323,7 @@ desired effect
 
                             <li><a href="/people/index">Listázás</a></li>
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>
-                            <li><i class="fa fa-user-o"></i><a href="/users/index">Jogosultság kezelés</a></li>
+                            @can('isSites')<li><a href="/users/index"><i class="fa fa-user-o"></i>Jogosultság kezelés</a></li>@endcan
 
                         </ul>
                     </li>
@@ -336,7 +336,7 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
                             <li></i><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -345,7 +345,7 @@ desired effect
 
                         </ul>
                     </li>
-                    <li class="active"><a href="/sites/statistic"><i class="fa fa-pie-chart"></i>
+                    <li ><a href="/sites/statistic"><i class="fa fa-pie-chart"></i>
                             <span>Statisztikák</span></a></li>
                     <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
                     </li>
@@ -395,7 +395,7 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
                             <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -454,7 +454,7 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite">{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
                             <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>

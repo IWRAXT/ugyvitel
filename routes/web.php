@@ -80,6 +80,7 @@ Route::get('/costs/index', 'CostController@index');
 Route::get('/costs/{id}/edit','CostController@edit');
 Route::post('/costs/{id}/update','CostController@update');
 Route::get('/costs/sum','CostController@summary');
+Route::get('/costs/report','CostController@report');
 
 
 //Cost_types table

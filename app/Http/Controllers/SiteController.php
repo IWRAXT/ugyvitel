@@ -252,7 +252,7 @@ class SiteController extends Controller
 
 
     public function report()
-    { //saját telephelyen
+    {
         return view('sites.report');
     }
 }

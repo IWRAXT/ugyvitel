@@ -112,7 +112,7 @@ class EmployeeController extends Controller
     {
         $id = Auth::user()->employee->id;
         $person = Employee::with('user', 'user.permission', 'site', 'site.leader')->find($id);
-        return response($person);
+        return $person;
 
     }
 
