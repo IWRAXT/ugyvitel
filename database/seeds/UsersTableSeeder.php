@@ -12,23 +12,30 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::forceCreate([
+        User::create([
             'name'=>'Harangozó Dóra',
-            'email' =>'doraharangozo1994@gmail.com',
-            'password' => '$2y$10$pF7r8UiQZXgil4DqALWraO6Rtf95KVHTIObkpEV2g8i6HNvBVpN/G',
+            'email' =>'doraharangozo1994@example.hu',
+            'password' => bcrypt('asdf'),
             'permission_id'=>1,
         ]);
-        User::forceCreate([
+        User::create([
             'name'=> 'Nagy Péter',
-            'email' =>'nagy.peter@gmail.com',
-            'password' => '$2y$10$Zqb8rj707ImeRf5hrb2hReqOoa0W9Jxpn4NaM09SheKQQRc92ohnu', //nagy.peter
+            'email' =>'nagy.peter@example.hu',
+            'password' => bcrypt('nagy.peter'),
             'permission_id'=>2, //Kft főnök
         ]);
-//        User::forceCreate([
-//            'name'=> 'Nagy Lili',
-//            'email' =>'nagy.lili@gmail.com',
-//            'password' => '$2y$10$Zqb8rj707ImeRf5hrb2hReqOoa0W9Jxpn4NaM09SheKQQRc92ohnu', //nagy.peter
-//            'permission_id'=>2,
-//        ]);
+        User::create([
+            'name'=> 'Nagy Lili',
+            'email' =>'nagy.lili@example.hu',
+            'password' => bcrypt('nagy.lili'),
+            'permission_id'=>7,
+        ]);
+        User::create([
+            'name'=> 'Nagy Luca',
+            'email' =>'nagy.luca@example.hu',
+            'password' => bcrypt('nagy.luca'),
+            'permission_id'=>3,
+        ]);
+
     }
 }

@@ -42,6 +42,10 @@
                                     </option>
 
                                 </select>
+                                <button class="btn btn-primary">
+                                    <a href="/suppliers/create"></a>
+                                    <span class="glyphicon glyphicon-plus"></span> New
+                                </button>
                             </div>
                             <div class="form-group">
                                 <label for="cost_type_id">Kiadás típus: </label>

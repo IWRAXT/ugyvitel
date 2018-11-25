@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     protected $fillable = [
-        'id', 'name', 'sites',
+      'name', 'sites',
     ];
     public function users(){
         return $this->hasMany(User::class);

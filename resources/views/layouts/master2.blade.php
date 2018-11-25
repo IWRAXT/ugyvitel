@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/ugyvitel.css')}}">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
@@ -45,7 +46,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="/home" class="logo" style="padding-bottom: 60px">
+        <a href="/home" class="logo" style="padding-bottom:65px">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><img src="/images/icon.png" style="width:50px;height:50px;border:0;"></span>
             <!-- logo for regular state and mobile devices -->
@@ -53,58 +54,58 @@ desired effect
         </a>
 
         <!-- Header Navbar -->
-        <nav class="navbar nnavbar-expand-lg" role="navigation">
+        <nav class="navbar navbar-expand-lg" role="navigation">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <a href="#" class="sidebar-toggle justify-content-start" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
             <!-- Navbar Right Menu -->
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
+            {{--<div class="navbar-custom-menu justify-content-end">--}}
+            {{--<ul class="nav navbar-nav">--}}
 
 
-                    <!-- User Account Menu -->
-                    <li class="dropdown user user-menu">
-                        <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!-- The user image in the navbar-->
-                            <img src="/storage/images/{{ Auth::user()->employee->image }}" class="user-image"
-                                 alt="User Image">
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{ Auth::user()->name }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- The user image in the menu -->
-                            <li class="user-header">
-                                <img src="/storage/images/{{ Auth::user()->employee->image }}" class="img-circle"
-                                     alt="User Image">
+            {{--<!-- User Account Menu -->--}}
+            {{--<li class="dropdown user user-menu">--}}
+            {{--<!-- Menu Toggle Button -->--}}
+            {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
+            {{--<!-- The user image in the navbar-->--}}
+            {{--<img src="/storage/images/{{ Auth::user()->employee->image }}" class="user-image"--}}
+            {{--alt="User Image">--}}
+            {{--<!-- hidden-xs hides the username on small devices so only the image appears. -->--}}
+            {{--<span class="hidden-xs">{{ Auth::user()->name }}</span>--}}
+            {{--</a>--}}
+            {{--<ul class="dropdown-menu">--}}
+            {{--<!-- The user image in the menu -->--}}
+            {{--<li class="user-header">--}}
+            {{--<img src="/storage/images/{{ Auth::user()->employee->image }}" class="img-circle"--}}
+            {{--alt="User Image">--}}
 
-                                <p>
-                                    {{ Auth::user()->name }}
-                                </p>
-                            </li>
+            {{--<p>--}}
+            {{--{{ Auth::user()->name }}--}}
+            {{--</p>--}}
+            {{--</li>--}}
 
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
+            {{--<!-- Menu Footer-->--}}
+            {{--<li class="user-footer">--}}
 
-                                <div class="pull-right">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+            {{--<div class="pull-right">--}}
+            {{--<a class="dropdown-item" href="{{ route('logout') }}"--}}
+            {{--onclick="event.preventDefault();--}}
+            {{--document.getElementById('logout-form').submit();">--}}
+            {{--{{ __('Logout') }}--}}
+            {{--</a>--}}
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+            {{--<form id="logout-form" action="{{ route('logout') }}" method="POST"--}}
+            {{--style="display: none;">--}}
+            {{--@csrf--}}
+            {{--</form>--}}
+            {{--</div>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
+            {{--</li>--}}
 
-                </ul>
-            </div>
+            {{--</ul>--}}
+            {{--</div>--}}
         </nav>
     </header>
 
@@ -220,7 +221,8 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite"><i class="fa fa-bank"></i>{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank"></i>{{Auth::user()->employee->site->name}}</a>
+                            </li>
                             <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -273,8 +275,8 @@ desired effect
                         </a>
                         <ul class="treeview-menu">
 
-                            <li><i class="fa fa-table "></i><a href="/costs/report"><i class="fa fa-table "></i>Összesítő
-                                </a></li>
+                            <li><a href="/costs/report"><i class="fa fa-table "></i>Összesítő
+                            </a></li>
                             <li><a href="/costs/index">Listázás</a></li>
 
 
@@ -290,12 +292,12 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a>
+                            </li>
                             <li><a href="/sites/report"><i class="fa fa-table"></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
-                                <li><a href="/sites/create">Új telephely felvétele</a></li>@endcan
-
+                            @endcan
 
                         </ul>
                     </li>
@@ -323,7 +325,9 @@ desired effect
 
                             <li><a href="/people/index">Listázás</a></li>
                             <li><a href="/people/create">Új munkatárs rögzítése</a></li>
-                            @can('isSites')<li><a href="/users/index"><i class="fa fa-user-o"></i>Jogosultság kezelés</a></li>@endcan
+                            @can('isSites')
+                                <li><a href="/users/index"><i class="fa fa-user-o"></i>Jogosultság kezelés</a>
+                                </li>@endcan
 
                         </ul>
                     </li>
@@ -336,7 +340,8 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a>
+                            </li>
                             <li></i><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -345,7 +350,7 @@ desired effect
 
                         </ul>
                     </li>
-                    <li ><a href="/sites/statistic"><i class="fa fa-pie-chart"></i>
+                    <li><a href="/sites/statistic"><i class="fa fa-pie-chart"></i>
                             <span>Statisztikák</span></a></li>
                     <li class="active"><a href="/home"><i class="fa fa-child"></i> <span>Saját fiók kezelése</span></a>
                     </li>
@@ -395,7 +400,8 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a>
+                            </li>
                             <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -454,7 +460,8 @@ desired effect
                          </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a></li>
+                            <li><a href="/mysite"><i class="fa fa-bank "></i>{{Auth::user()->employee->site->name}}</a>
+                            </li>
                             <li><a href="/sites/report"><i class="fa fa-table "></i>Telephelyi összesítő</a></li>
                             @can('isSites')
                                 <li><a href="/sites/index">Összes telephely</a></li>
@@ -468,17 +475,36 @@ desired effect
 
         <!-- Sidebar user panel (optional) -->
             <div class="user-panel" style="padding-bottom: 50px">
-                <div class="pull-left image">
+                <div class="col-lg-4">
                     <img src="/storage/images/{{ Auth::user()->employee->image }}"
-                         style="border-radius: 50%; width: 40px; height: 40px;" alt="User Image">
+                         style="border-radius: 50%; width: 50px; height: 50px;" alt="User Image">
                 </div>
-                <div class="pull-left info">
-                    <p>{{ Auth::user()->name }}</p>
+                <div class="col-lg-8">
 
-                    <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> {{ Auth::user()->permission->name }}
-                        Online</a>
+                    <div>
+                        <!-- Status -->
+                        <a href="#"><i class="fa fa-circle text-success"></i> {{ Auth::user()->permission->name }}
+                            Online</a>
+                    </div>
+                    <div>
+                        <i class="fa fa-power-off text-danger"></i>
+                        <a href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+
                 </div>
+
+            </div>
+            <div class="pull-left info">
+
             </div>
             <!-- /.sidebar-menu -->
         </section>

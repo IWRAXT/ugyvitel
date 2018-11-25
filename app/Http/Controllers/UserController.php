@@ -26,8 +26,6 @@ class UserController extends Controller
 //                ->get(); //Csak azokat a site-okat amik megegyeznek az ő sitejával
 //            return $users;
 //        }
-
-
     }
 
     public function getLeaders() //Todo: Átgondolni
@@ -37,8 +35,6 @@ class UserController extends Controller
             ->where('permission_id', 3, 2)
             ->get();
         return $leaders;
-
-
     }
 
 
@@ -51,7 +47,8 @@ class UserController extends Controller
         $user->permission_id = request('permission');
 
         $user->save();
-        return response()->json(['user' => $user, 'notification' => 'A User hozzáadva a Userstáblához!', 'notificationType' => 'alert-success']);
+        return response()->json(['user' => $user, 'notification'
+        => 'A User hozzáadva a Userstáblához!', 'notificationType' => 'alert-success']);
     }
 
     public function edit($id)

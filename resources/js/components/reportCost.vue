@@ -2,30 +2,41 @@
     <div>
         <div class="row justify-content-center">
             <div class="col-lg-9">
-                <div class="card">
+                <div class="card ">
                     <div class="card-header">
                         <h1>Költségtípusok összesítése (telephelyenként)</h1></div>
                     <div class="card-body">
-                        <table id="table_id" class="table table-responsive table-hover ">
-                            <tbody v-for="site in sites">
-                            <tr></tr>
-                            <tr>
-                                <th>{{ site.name}} költségtípusai:</th>
-                                <td></td>
-                            </tr>
-                            <tr v-for="t in site.types">
-                                <th rowspan="count(site.types)"></th>
-                                <td>{{t.type}}:</td>
-                                <td> {{t.sum}} Ft</td>
-                            </tr>
-                            <tr>
-                                <th>{{ site.name}}</th>
-                                <td></td>
-                                <td>Ʃ: {{site.cost}} Ft</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <h5>Összes kiadás: {{summary}} Ft</h5>
+                        <div>
+                            <div class="alert alert-dark ">
+                                <h4>Összes kiadás: {{summary}} Ft</h4>
+                            </div>
+                            <div class="col-md-4" v-for="site in sites">
+                                <table class="table table-responsive table-hover">
+                                    <tbody>
+                                    <tr></tr>
+                                    <tr>
+                                        <th>{{ site.name}} költségtípusai:</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-for="t in site.types">
+                                        <th rowspan="count(site.types)"></th>
+                                        <td>{{t.type}}:</td>
+                                        <td> {{t.sum}} Ft</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">
+
+                                            <div class="alert alert-secondary ">
+                                                {{ site.name}}
+                                                Ʃ: {{site.cost}} Ft
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -65,5 +76,7 @@
 </script>
 
 <style scoped>
-
+    tbody{
+        font-size: 14px;
+    }
 </style>

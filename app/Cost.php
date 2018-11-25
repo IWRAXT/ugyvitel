@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cost extends Model
 {
     protected $fillable = [
-        'id','date','account_number', 'comment','sum','site_id','supplier_id','cost_type_id',
+        'date','account_number', 'comment','sum','site_id','supplier_id','cost_type_id',
     ];
 
     public function site(){

@@ -40,6 +40,7 @@ Vue.component('cost_types',require('./components/Cost_types'));
 Vue.component('add-cost_type',require('./components/addCost_type'));
 Vue.component('edit_cost_type',require('./components/editCost_type'));
 Vue.component('cost_chart',require('./components/Cost_chart'));
+Vue.component('reportcost',require('./components/reportCost'));
 
 
 //Suppliers

@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Cost_type extends Model
 {
     protected $fillable = [
-        'id','name','group'
+        'name','group'
     ];
 
     public function costs(){
         return $this->hasMany(Cost::class);
     }
-
 
     //Össze lehet hasonlítani, hogy mennyi chips és Ropi
 //    public function sum(){

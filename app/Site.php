@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Site extends Model
 {
     protected $fillable = [
-        'id', 'image', 'name', 'address', 'leader_id',
+        'image', 'name', 'address', 'leader_id',
     ];
 
     public function leader()

@@ -11,6 +11,6 @@ class Cost_TypesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(\App\Cost_type::class, 10)->create();
     }
 }

@@ -1,32 +1,35 @@
 <template>
     <div>
         <div class="row justify-content-center">
-            <div class="col-lg-9">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <h1>Dashboard</h1></div>
                     <div class="card-body">
-                        <apexcharts width="500" type="bar" :options="chartoptions" :series="series"></apexcharts>
-
-
-
-
-                        <div class="btn-group" v-for="s in sites">
-
-                            <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                    data-target="#cartcollapse"  aria-controls="cartcollapse" @click="piemount(s.id)">
-                                {{s.name}}
-                            </button>
-
+                        <div class="row justify-content-center">
+                            <apexcharts width="500"  type="bar" :options="chartoptions" :series="series"></apexcharts>
                         </div>
-                        <div class="collapse" id="cartcollapse">
-                            <div class="card card-body">
 
-                                <!--<p>{{s.name}}</p>-->
-                                <apexcharts width="400" height="200" type="donut" :options="piechartoptions"
-                                            :series="pieseries" ></apexcharts>
+
+                        <div class="row">
+                            <div class="btn-group" v-for="s in sites">
+
+                                <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse"
+                                        data-target="#cartcollapse" aria-controls="cartcollapse"
+                                        @click="piemount(s.id)">
+                                    {{s.name}}
+                                </button>
+
                             </div>
                         </div>
+                            <div class="collapse" id="cartcollapse">
+                                <div class="card card-body">
+
+                                    <!--<p>{{s.name}}</p>-->
+                                    <apexcharts width="400" height="200" type="donut" :options="piechartoptions"
+                                                :series="pieseries"></apexcharts>
+                                </div>
+                            </div>
 
                     </div>
                 </div>
@@ -63,7 +66,7 @@
                     plotOptions: {
                         bar: {
                             dataLabels: {
-                                position: 'top', // top, center, bottom
+                                position: 'center', // top, center, bottom
                             },
                         }
                     },
@@ -72,10 +75,10 @@
                         formatter: function (val) {
                             return val + " Ft";
                         },
-                        offsetY: -20,
+                        // offsetY: -25,
                         style: {
                             fontSize: '12px',
-                            colors: ["#304758"]
+                            colors: ["white"]
                         }
                     },
                     title: {
@@ -106,9 +109,7 @@
                         id: 'vuechart-example-pie',
 
                     },
-                    dataLabels: {
-
-                    },
+                    dataLabels: {},
                     plotOptions: {
                         xaxis: {
                             categories: []
@@ -123,18 +124,16 @@
             }
         },
         methods: {
-            piemount(id){
-                axios.get('/sites/statistic_data/'+id)
+            piemount(id) {
+                axios.get('/sites/statistic_data/' + id)
                     .then(response => {
-                        this.pieseries=response.data.values;
-                        this.piechartoptions={labels: response.data.types};
+                        this.pieseries = response.data.values;
+                        this.piechartoptions = {labels: response.data.types};
                     })
                     .catch(function (error) {
                         alert("Hiba történt a statisztikai adatok betöltése során!");
                         console.log(error);
                     });
-
-
 
 
             },
@@ -183,5 +182,7 @@
 </script>
 
 <style scoped>
-
+    .row {
+        margin-left: 20px;
+    }
 </style>

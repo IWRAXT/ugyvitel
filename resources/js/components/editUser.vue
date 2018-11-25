@@ -22,7 +22,7 @@
 
 
         <button class="btn btn-primary" @click="updateUser()">
-            <span class="glyphicon glyphicon-plus"></span> ADD
+            Rögzít
         </button>
         <!--</form>-->
     </div>

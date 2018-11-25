@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model
 {
     protected $fillable = [
-        'id','name','fiscal_number','address','webpage_address','contact_name','contact_title','contact_email','contact_phone_number'
+        'name','fiscal_number','address','webpage_address','contact_name','contact_title','contact_email','contact_phone_number'
     ];
     public function cost(){
         return $this->hasMany(Cost::class);

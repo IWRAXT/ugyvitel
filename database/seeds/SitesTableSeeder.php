@@ -14,11 +14,10 @@ class SitesTableSeeder extends Seeder
     {
         Site::forceCreate([
             'name' => 'Igazgatóság',
-
             'image' =>'default-site.jpg',
             'address' => 'Fő tér 3.',
             'phone_number' => '1234567899',
-            'leader_id'=>2,
+            'leader_id'=>'2', //Nagy Péter
 
         ]);
         Site::forceCreate([
@@ -26,21 +25,21 @@ class SitesTableSeeder extends Seeder
             'image' =>'default-site.jpg',
             'address' => 'Fő tér 2.',
             'phone_number' => '1234567899',
-            'leader_id'=>2,
+            'leader_id'=>'3',//Nagy Luca
         ]);
         Site::forceCreate([
             'name' => 'Piac',
             'image' =>'default-site.jpg',
             'address' => 'Kossuth utca 31.',
             'phone_number' => '1234567899',
-            'leader_id'=>2,
+            'leader_id'=>'2', //Nagy Péter
         ]);
         Site::forceCreate([
             'name' => 'Uszoda',
             'image' =>'default-site.jpg',
             'address' => 'Uszoda út 3.',
             'phone_number' => '1234567899',
-            'leader_id'=>2,
+            'leader_id'=>'2', //Nagy Péter
         ]);
     }
 }
